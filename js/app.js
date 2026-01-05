@@ -142,9 +142,19 @@ class RoninHub {
             screenshotsContainer.style.display = 'none';
         }
 
-        // Launch button
+        // Launch button - use externalUrl if set, otherwise use path
         const launchBtn = document.getElementById('modal-launch');
-        launchBtn.href = project.path;
+        const launchUrl = project.externalUrl || project.path;
+        launchBtn.href = launchUrl;
+        // Open in new tab for all experiences
+        launchBtn.target = '_blank';
+        launchBtn.rel = 'noopener noreferrer';
+        
+        // Update button text based on type
+        const isExternal = !!project.externalUrl;
+        launchBtn.innerHTML = isExternal 
+            ? '<span class="btn-icon">↗</span> Open Site'
+            : '<span class="btn-icon">▶</span> Launch Experience';
         
         // Source button
         const sourceBtn = document.getElementById('modal-source');

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search | Ronin Ventures</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-primary: #07080c;
+            --bg-secondary: #0d0f14;
+            --bg-card: #0a0c10;
+            --text-primary: #e8eaed;
+            --text-secondary: #8b919a;
+            --text-muted: #4a5060;
+            --accent-primary: #00d4aa;
+            --accent-secondary: #0099cc;
+            --accent-glow: rgba(0, 212, 170, 0.15);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+        }
+        
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+        
+        .game-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .grid-wrapper {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 2px;
+            user-select: none;
+        }
+        
+        .cell {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 500;
+            background: var(--bg-card);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-transform: uppercase;
+        }
+        
+        .cell:hover {
+            background: var(--accent-glow);
+            color: var(--accent-primary);
+        }
+        
+        .cell.selected {
+            background: var(--accent-secondary);
+            color: var(--bg-primary);
+        }
+        
+        .cell.found {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            animation: found-pulse 0.5s ease;
+        }
+        
+        @keyframes found-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .sidebar {
+            min-width: 200px;
+        }
+        
+        .word-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .word-list-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-primary);
+        }
+        
+        .score {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .score span {
+            color: var(--accent-primary);
+        }
+        
+        .word-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .word-item {
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+        
+        .word-item.found {
+            background: var(--accent-glow);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            text-decoration: line-through;
+        }
+        
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+        
+        button {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        button:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+        
+        button.primary {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+        
+        button.primary:hover {
+            filter: brightness(1.1);
+        }
+        
+        .theme-select {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+        
+        .theme-select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .win-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            z-index: 100;
+            box-shadow: 0 0 60px var(--accent-glow);
+            display: none;
+        }
+        
+        .win-message.show {
+            display: block;
+            animation: pop-in 0.3s ease;
+        }
+        
+        @keyframes pop-in {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        .win-message h2 {
+            color: var(--accent-primary);
+            margin-bottom: 12px;
+        }
+        
+        .win-message p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 99;
+            display: none;
+        }
+        
+        .overlay.show {
+            display: block;
+        }
+        
+        @media (max-width: 700px) {
+            .game-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cell {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-header">
+        <h1>Word Search</h1>
+        <p class="subtitle">Find all the hidden words</p>
+    </div>
+    
+    <div class="game-container">
+        <div class="grid-wrapper">
+            <div class="grid" id="grid"></div>
+            <div class="controls">
+                <select class="theme-select" id="theme-select">
+                    <option value="tech">Tech</option>
+                    <option value="space">Space</option>
+                    <option value="nature">Nature</option>
+                    <option value="food">Food</option>
+                </select>
+                <button class="primary" id="new-game">New Puzzle</button>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="word-list-header">
+                <span class="word-list-title">Words to Find</span>
+                <span class="score"><span id="found-count">0</span>/<span id="total-count">0</span></span>
+            </div>
+            <ul class="word-list" id="word-list"></ul>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+    <div class="win-message" id="win-message">
+        <h2>Puzzle Complete!</h2>
+        <p>You found all the words!</p>
+        <button class="primary" id="play-again">Play Again</button>
+    </div>
+    
+    <!-- Back to Hub -->
+    <script src="/components/back-to-hub.js"></script>
+    
+    <script>
+        const GRID_SIZE = 12;
+        const DIRECTIONS = [
+            [0, 1],   // right
+            [1, 0],   // down
+            [1, 1],   // diagonal down-right
+            [-1, 1],  // diagonal up-right
+            [0, -1],  // left
+            [-1, 0],  // up
+            [-1, -1], // diagonal up-left
+            [1, -1]   // diagonal down-left
+        ];
+        
+        const THEMES = {
+            tech: ['PYTHON', 'REACT', 'CODING', 'GITHUB', 'SERVER', 'CLOUD', 'DATA', 'PIXEL', 'CACHE', 'DEBUG'],
+            space: ['GALAXY', 'PLANET', 'ROCKET', 'LUNAR', 'COMET', 'ORBIT', 'NEBULA', 'STAR', 'MARS', 'VENUS'],
+            nature: ['FOREST', 'RIVER', 'OCEAN', 'CANYON', 'DESERT', 'FLOWER', 'MEADOW', 'STORM', 'LEAF', 'CORAL'],
+            food: ['PIZZA', 'SUSHI', 'PASTA', 'MANGO', 'CHEESE', 'BREAD', 'SALAD', 'TACO', 'CURRY', 'STEAK']
+        };
+        
+        let grid = [];
+        let words = [];
+        let foundWords = new Set();
+        let selectedCells = [];
+        let isSelecting = false;
+        let wordPositions = {};
+        
+        function init() {
+            const theme = document.getElementById('theme-select').value;
+            words = [...THEMES[theme]].sort(() => Math.random() - 0.5).slice(0, 8);
+            foundWords.clear();
+            wordPositions = {};
+            createGrid();
+            placeWords();
+            fillEmptyCells();
+            renderGrid();
+            renderWordList();
+            updateScore();
+            hideWinMessage();
+        }
+        
+        function createGrid() {
+            grid = [];
+            for (let i = 0; i < GRID_SIZE; i++) {
+                grid.push(new Array(GRID_SIZE).fill(''));
+            }
+        }
+        
+        function placeWords() {
+            for (const word of words) {
+                let placed = false;
+                let attempts = 0;
+                
+                while (!placed && attempts < 100) {
+                    const direction = DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)];
+                    const row = Math.floor(Math.random() * GRID_SIZE);
+                    const col = Math.floor(Math.random() * GRID_SIZE);
+                    
+                    if (canPlaceWord(word, row, col, direction)) {
+                        placeWord(word, row, col, direction);
+                        placed = true;
+                    }
+                    attempts++;
+                }
+            }
+        }
+        
+        function canPlaceWord(word, row, col, [dr, dc]) {
+            for (let i = 0; i < word.length; i++) {
+                const newRow = row + i * dr;
+                const newCol = col + i * dc;
+                
+                if (newRow < 0 || newRow >= GRID_SIZE || newCol < 0 || newCol >= GRID_SIZE) {
+                    return false;
+                }
+                
+                if (grid[newRow][newCol] !== '' && grid[newRow][newCol] !== word[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        function placeWord(word, row, col, [dr, dc]) {
+            const positions = [];
+            for (let i = 0; i < word.length; i++) {
+                const newRow = row + i * dr;
+                const newCol = col + i * dc;
+                grid[newRow][newCol] = word[i];
+                positions.push(`${newRow}-${newCol}`);
+            }
+            wordPositions[word] = positions;
+        }
+        
+        function fillEmptyCells() {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    if (grid[i][j] === '') {
+                        grid[i][j] = letters[Math.floor(Math.random() * letters.length)];
+                    }
+                }
+            }
+        }
+        
+        function renderGrid() {
+            const gridEl = document.getElementById('grid');
+            gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
+            gridEl.innerHTML = '';
+            
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.textContent = grid[i][j];
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    gridEl.appendChild(cell);
+                }
+            }
+        }
+        
+        function renderWordList() {
+            const listEl = document.getElementById('word-list');
+            listEl.innerHTML = '';
+            document.getElementById('total-count').textContent = words.length;
+            
+            for (const word of words) {
+                const li = document.createElement('li');
+                li.className = 'word-item';
+                li.textContent = word;
+                li.dataset.word = word;
+                if (foundWords.has(word)) {
+                    li.classList.add('found');
+                }
+                listEl.appendChild(li);
+            }
+        }
+        
+        function updateScore() {
+            document.getElementById('found-count').textContent = foundWords.size;
+        }
+        
+        function getCellKey(row, col) {
+            return `${row}-${col}`;
+        }
+        
+        function getSelectedWord() {
+            return selectedCells.map(key => {
+                const [row, col] = key.split('-').map(Number);
+                return grid[row][col];
+            }).join('');
+        }
+        
+        function checkWord() {
+            const selectedWord = getSelectedWord();
+            const reversedWord = selectedWord.split('').reverse().join('');
+            
+            for (const word of words) {
+                if (!foundWords.has(word) && (selectedWord === word || reversedWord === word)) {
+                    foundWords.add(word);
+                    markWordFound(word);
+                    updateScore();
+                    
+                    if (foundWords.size === words.length) {
+                        setTimeout(showWinMessage, 500);
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function markWordFound(word) {
+            // Mark cells
+            for (const key of wordPositions[word]) {
+                const cell = document.querySelector(`.cell[data-row="${key.split('-')[0]}"][data-col="${key.split('-')[1]}"]`);
+                if (cell) {
+                    cell.classList.add('found');
+                }
+            }
+            
+            // Mark word in list
+            const wordItem = document.querySelector(`.word-item[data-word="${word}"]`);
+            if (wordItem) {
+                wordItem.classList.add('found');
+            }
+        }
+        
+        function clearSelection() {
+            selectedCells = [];
+            document.querySelectorAll('.cell.selected').forEach(cell => {
+                cell.classList.remove('selected');
+            });
+        }
+        
+        function showWinMessage() {
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('win-message').classList.add('show');
+        }
+        
+        function hideWinMessage() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('win-message').classList.remove('show');
+        }
+        
+        // Event Listeners
+        const gridEl = document.getElementById('grid');
+        
+        gridEl.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('cell')) {
+                isSelecting = true;
+                clearSelection();
+                const key = getCellKey(e.target.dataset.row, e.target.dataset.col);
+                selectedCells.push(key);
+                e.target.classList.add('selected');
+            }
+        });
+        
+        gridEl.addEventListener('mouseover', (e) => {
+            if (isSelecting && e.target.classList.contains('cell')) {
+                const key = getCellKey(e.target.dataset.row, e.target.dataset.col);
+                if (!selectedCells.includes(key)) {
+                    // Check if selection is in a valid line
+                    if (selectedCells.length === 1 || isValidSelection(key)) {
+                        selectedCells.push(key);
+                        e.target.classList.add('selected');
+                    }
+                }
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isSelecting) {
+                isSelecting = false;
+                if (!checkWord()) {
+                    clearSelection();
+                } else {
+                    clearSelection();
+                }
+            }
+        });
+        
+        // Touch support
+        gridEl.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            const cell = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (cell && cell.classList.contains('cell')) {
+                isSelecting = true;
+                clearSelection();
+                const key = getCellKey(cell.dataset.row, cell.dataset.col);
+                selectedCells.push(key);
+                cell.classList.add('selected');
+            }
+        });
+        
+        gridEl.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const cell = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (isSelecting && cell && cell.classList.contains('cell')) {
+                const key = getCellKey(cell.dataset.row, cell.dataset.col);
+                if (!selectedCells.includes(key)) {
+                    if (selectedCells.length === 1 || isValidSelection(key)) {
+                        selectedCells.push(key);
+                        cell.classList.add('selected');
+                    }
+                }
+            }
+        });
+        
+        gridEl.addEventListener('touchend', () => {
+            if (isSelecting) {
+                isSelecting = false;
+                if (!checkWord()) {
+                    clearSelection();
+                } else {
+                    clearSelection();
+                }
+            }
+        });
+        
+        function isValidSelection(newKey) {
+            if (selectedCells.length < 2) return true;
+            
+            const [firstRow, firstCol] = selectedCells[0].split('-').map(Number);
+            const [lastRow, lastCol] = selectedCells[selectedCells.length - 1].split('-').map(Number);
+            const [newRow, newCol] = newKey.split('-').map(Number);
+            
+            // Calculate direction
+            const dr = Math.sign(lastRow - firstRow);
+            const dc = Math.sign(lastCol - firstCol);
+            
+            // Check if new cell continues the line
+            const expectedRow = lastRow + dr;
+            const expectedCol = lastCol + dc;
+            
+            return newRow === expectedRow && newCol === expectedCol;
+        }
+        
+        document.getElementById('new-game').addEventListener('click', init);
+        document.getElementById('play-again').addEventListener('click', init);
+        document.getElementById('theme-select').addEventListener('change', init);
+        
+        // Start game
+        init();
+    </script>
+</body>
+</html>

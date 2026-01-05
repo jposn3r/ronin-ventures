@@ -28,7 +28,8 @@ const projects = [
     { name: 'snake', label: 'SNAKE', color: '#22c55e' },
     { name: 'markdown', label: 'INKWELL', color: '#8b5cf6' },
     { name: 'particles', label: 'PARTICLES', color: '#f43f5e' },
-    { name: 'tetris', label: 'BLOCK DROP', color: '#0ea5e9' }
+    { name: 'tetris', label: 'BLOCK DROP', color: '#0ea5e9' },
+    { name: 'wordsearch', label: 'WORD SEARCH', color: '#f472b6' }
 ];
 
 function generateSVG(label, color, width = 800, height = 450) {

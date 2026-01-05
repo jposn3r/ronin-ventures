@@ -586,10 +586,46 @@ body {
     letter-spacing: 0.15em;
 }
 
+.modal-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-lg);
+    margin: var(--space-sm) 0;
+}
+
 .modal-title {
     font-size: 2rem;
     font-weight: 600;
-    margin: var(--space-sm) 0;
+    margin: 0;
+}
+
+.btn-launch {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-launch:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.btn-launch .btn-icon {
+    font-size: 0.8rem;
 }
 
 .modal-description {
@@ -804,11 +840,21 @@ body {
         grid-template-columns: 1fr;
     }
     
+    .modal-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-md);
+    }
+    
+    .btn-launch {
+        width: 100%;
+        justify-content: center;
+    }
+    
     .modal-actions {
         flex-direction: column;
     }
     
-    .btn-primary,
     .btn-secondary {
         justify-content: center;
     }
