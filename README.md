@@ -1,6 +1,6 @@
-# Ronin Ventures
+# Ronin Ventures Dev
 
-A refined sci-fi terminal aesthetic project hub for Jake Posner's digital experiments.
+Software & experiments hub for Ronin Ventures, built by Jake Posner.
 
 ## Quick Start
 
@@ -222,4 +222,4 @@ Upload the entire folder. No build step required.
 
 ## License
 
-Personal project by Jake Posner. All rights reserved.
+© 2025 Ronin Ventures. All rights reserved.

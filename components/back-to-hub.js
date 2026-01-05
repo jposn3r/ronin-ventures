@@ -12,7 +12,7 @@
     // Configuration
     const config = {
         hubUrl: '/',
-        label: 'Ronin Ventures',
+        label: 'RV Dev',
         position: 'top-left', // 'top-left', 'top-right', 'bottom-left', 'bottom-right'
         showOnMobile: true,
         fadeInDelay: 500

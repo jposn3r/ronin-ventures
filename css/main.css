@@ -628,6 +628,35 @@ body {
     font-size: 0.8rem;
 }
 
+.modal-stats {
+    display: flex;
+    gap: var(--space-xl);
+    padding: var(--space-lg) 0;
+    margin-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stat-value {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+.stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
 .modal-description {
     font-size: 1rem;
     color: var(--text-secondary);
@@ -828,6 +857,10 @@ body {
     .modal-meta {
         flex-direction: column;
         gap: var(--space-md);
+    }
+    
+    .modal-stats {
+        gap: var(--space-lg);
     }
 }
 
