@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronin Ventures | Jake Posner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Subtle ambient background -->
+    <div class="ambient-bg">
+        <div class="grid-overlay"></div>
+        <div class="scanline"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="hub-container">
+        <!-- Header -->
+        <header class="hub-header">
+            <div class="logo-section">
+                <div class="logo-mark">
+                    <span class="logo-symbol">浪</span>
+                </div>
+                <div class="logo-text">
+                    <h1>Ronin Ventures</h1>
+                    <span class="tagline">Digital Experiments by Jake Posner</span>
+                </div>
+            </div>
+            <nav class="hub-nav">
+                <button class="nav-btn active" data-filter="all">All Projects</button>
+                <button class="nav-btn" data-filter="featured">Featured</button>
+                <button class="nav-btn" data-filter="3d">3D</button>
+                <button class="nav-btn" data-filter="game">Games</button>
+                <button class="nav-btn" data-filter="tool">Tools</button>
+            </nav>
+        </header>
+
+        <!-- Featured Section -->
+        <section class="featured-section" id="featured-grid">
+            <div class="section-header">
+                <span class="section-label">Featured Projects</span>
+                <span class="section-line"></span>
+            </div>
+            <div class="featured-grid" id="featured-projects">
+                <!-- Featured projects injected via JS -->
+            </div>
+        </section>
+
+        <!-- All Projects Grid -->
+        <section class="projects-section">
+            <div class="section-header">
+                <span class="section-label">All Projects</span>
+                <span class="section-count" id="project-count">0 projects</span>
+                <span class="section-line"></span>
+            </div>
+            <div class="projects-grid" id="projects-grid">
+                <!-- Projects injected via JS -->
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="hub-footer">
+            <div class="footer-left">
+                <span class="status-indicator"></span>
+                <span class="status-text">System Online</span>
+            </div>
+            <div class="footer-center">
+                <span>© 2024 Jake Posner</span>
+            </div>
+            <div class="footer-right">
+                <span class="version">v1.0.0</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div class="modal-overlay" id="project-modal">
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close">
+                <span>×</span>
+            </button>
+            <div class="modal-content">
+                <div class="modal-hero">
+                    <img src="" alt="" id="modal-hero-img">
+                    <div class="modal-hero-overlay"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-header">
+                        <span class="modal-category" id="modal-category"></span>
+                        <h2 class="modal-title" id="modal-title"></h2>
+                        <p class="modal-description" id="modal-description"></p>
+                    </div>
+                    <div class="modal-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Status</span>
+                            <span class="meta-value" id="modal-status"></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Tech Stack</span>
+                            <span class="meta-value" id="modal-tech"></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Last Updated</span>
+                            <span class="meta-value" id="modal-date"></span>
+                        </div>
+                    </div>
+                    <div class="modal-screenshots" id="modal-screenshots">
+                        <!-- Screenshots injected via JS -->
+                    </div>
+                    <div class="modal-actions">
+                        <a href="#" class="btn-primary" id="modal-launch">
+                            <span class="btn-icon">▶</span>
+                            Launch Experience
+                        </a>
+                        <a href="#" class="btn-secondary" id="modal-source" target="_blank">
+                            <span class="btn-icon">◇</span>
+                            View Source
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js" type="module"></script>
+</body>
+</html>
