@@ -39,7 +39,11 @@ function getLatestModTime(dir) {
 }
 
 function formatDate(date) {
-    return date.toISOString().split('T')[0]; // YYYY-MM-DD
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    }); // "Jan 7, 2026"
 }
 
 function updateDates() {

@@ -1,7 +1,7 @@
 {
     "meta": {
         "version": "2.1.0",
-        "lastUpdated": "2026-01-07",
+        "lastUpdated": "Jan 7, 2026",
         "author": "Jake Posner"
     },
     "projects": [
@@ -46,7 +46,7 @@
             "status": "active",
             "featured": true,
             "comingSoon": false,
-            "lastUpdated": "2026-01-07"
+            "lastUpdated": "Jan 7, 2026"
         },
         {
             "id": "word-search",
@@ -68,7 +68,7 @@
             "status": "active",
             "featured": true,
             "comingSoon": false,
-            "lastUpdated": "2026-01-05"
+            "lastUpdated": "Jan 5, 2026"
         },
         {
             "id": "brickbreaker",
@@ -90,7 +90,7 @@
             "status": "active",
             "featured": false,
             "comingSoon": false,
-            "lastUpdated": "2026-01-07"
+            "lastUpdated": "Jan 7, 2026"
         },
         {
             "id": "metakaizen",
