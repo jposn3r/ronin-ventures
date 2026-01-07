@@ -1,6 +1,6 @@
 {
     "meta": {
-        "version": "2.0.0",
+        "version": "2.1.0",
         "lastUpdated": "2025-01-05",
         "author": "Jake Posner"
     },
@@ -20,6 +20,28 @@
             "tech": [
                 "Web",
                 "Personal"
+            ],
+            "status": "active",
+            "featured": true,
+            "comingSoon": false,
+            "lastUpdated": "2025-01-05"
+        },
+        {
+            "id": "investment-calculator",
+            "title": "Wealth Architect Pro",
+            "shortDescription": "Investment growth calculator with loan payoff analysis.",
+            "description": "A comprehensive financial planning tool featuring investment projections with compound growth, periodic contributions, and multi-asset portfolio tracking. Includes a loan prepayment calculator to visualize interest savings and payoff timelines.",
+            "category": "tool",
+            "categoryLabel": "Tool",
+            "thumbnail": "/assets/thumbnails/investment-calculator.svg",
+            "screenshots": [],
+            "path": "/projects/investment-calculator/",
+            "externalUrl": "",
+            "sourceUrl": "",
+            "tech": [
+                "JavaScript",
+                "Chart.js",
+                "CSS"
             ],
             "status": "active",
             "featured": true,
@@ -66,7 +88,7 @@
                 "CSS"
             ],
             "status": "active",
-            "featured": true,
+            "featured": false,
             "comingSoon": false,
             "lastUpdated": "2025-01-05"
         },

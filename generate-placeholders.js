@@ -24,7 +24,8 @@ const projects = [
     { name: 'jakeposner', label: 'JAKE POSNER', color: '#00d4aa' },
     { name: 'jacobposner', label: 'JACOB POSNER', color: '#0099cc' },
     { name: 'metakaizen', label: 'METAKAIZEN', color: '#6366f1' },
-    { name: 'cursordev', label: 'CURSOR DEV', color: '#22c55e' }
+    { name: 'cursordev', label: 'CURSOR DEV', color: '#22c55e' },
+    { name: 'investment-calculator', label: 'WEALTH ARCHITECT', color: '#2563eb' }
 ];
 
 function generateSVG(label, color, width = 800, height = 450) {

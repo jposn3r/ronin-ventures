@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wealth Architect Pro | Ronin Ventures</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="main-menu">
+        <button class="menu-btn active" id="menu-invest" onclick="switchPage('investments')">Investments</button>
+        <button class="menu-btn" id="menu-loans" onclick="switchPage('loans')">Loan Payoff</button>
+    </nav>
+
+    <div class="calculator-card">
+        <div id="investments-page" class="page active">
+            <div class="tabs">
+                <button class="tab-btn active" id="btn-basic" onclick="switchTab('basic')">Basic</button>
+                <button class="tab-btn" id="btn-adv" onclick="switchTab('advanced')">Advanced</button>
+            </div>
+
+            <div class="section stock-inputs">
+                <h3>Stock Portfolio Settings</h3>
+                <div class="input-group">
+                    <label>Initial Investment ($)</label>
+                    <input type="text" inputmode="decimal" id="initial" value="1,500,000" oninput="handleInput(this); runCalculations()">
+                </div>
+                <div class="input-group">
+                    <label>Periodic Contribution ($)</label>
+                    <div class="flex-row">
+                        <input type="text" inputmode="decimal" id="contribution" value="10,000" oninput="handleInput(this); runCalculations()">
+                        <select id="frequency" onchange="runCalculations()">
+                            <option value="12" selected>Monthly</option>
+                            <option value="4">Quarterly</option>
+                            <option value="1">Yearly</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="input-group">
+                        <label>Annual Return (%)</label>
+                        <input type="number" id="return" value="7" oninput="runCalculations()">
+                    </div>
+                    <div class="input-group">
+                        <label>Time Horizon (Years)</label>
+                        <input type="number" id="years" value="10" oninput="runCalculations()">
+                    </div>
+                </div>
+            </div>
+
+            <div id="advanced-view" class="tab-content" style="display: none;">
+                <div class="asset-header">
+                    <h3>Asset Timeline</h3>
+                    <button class="add-asset-btn" onclick="addAsset()">+ Add Asset</button>
+                </div>
+                <div id="events-list"></div>
+            </div>
+        </div>
+
+        <div id="loans-page" class="page">
+            <h3>Loan Prepayment Calculator</h3>
+            <div class="section">
+                <div class="input-group">
+                    <label>Loan Balance ($)</label>
+                    <input type="text" inputmode="decimal" id="loan-balance" value="400,000" oninput="handleInput(this); runLoanCalc()">
+                </div>
+                <div class="flex-row">
+                    <div class="input-group">
+                        <label>Interest Rate (%)</label>
+                        <input type="number" id="loan-rate" value="6.5" step="0.1" oninput="runLoanCalc()">
+                    </div>
+                    <div class="input-group">
+                        <label>Remaining Years</label>
+                        <input type="number" id="loan-years" value="30" oninput="runLoanCalc()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section highlight">
+                <div class="input-group">
+                    <label>Extra Monthly Payment ($)</label>
+                    <input type="text" inputmode="decimal" id="extra-monthly" value="500" oninput="handleInput(this); runLoanCalc()">
+                </div>
+                <div class="input-group">
+                    <label>One-Time Lump Sum ($)</label>
+                    <input type="text" inputmode="decimal" id="lump-sum" value="0" oninput="handleInput(this); runLoanCalc()">
+                </div>
+            </div>
+
+            <div class="loan-stats">
+                <div class="stat-box">
+                    <small>Interest Saved</small>
+                    <p id="interest-saved" class="green">$0</p>
+                </div>
+                <div class="stat-box">
+                    <small>Time Saved</small>
+                    <p id="time-saved" class="green">0 Mos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="output-container">
+            <div class="result-summary">
+                <small id="result-label">Total Projected Value</small>
+                <p id="total-display">$0.00</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="mainChart"></canvas>
+            </div>
+
+            <div class="table-section">
+                <h3>Yearly Breakdown</h3>
+                <div class="table-wrapper">
+                    <table id="breakdown-table">
+                        <thead><tr id="table-header"></tr></thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Hub -->
+    <script src="/components/back-to-hub.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
