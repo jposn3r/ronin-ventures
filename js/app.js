@@ -8,6 +8,8 @@ class RoninHub {
         this.projects = [];
         this.currentFilter = 'all';
         this.modal = document.getElementById('project-modal');
+        this.notifyModal = document.getElementById('notify-modal');
+        this.currentProject = null;
         this.init();
     }
 
@@ -77,12 +79,15 @@ class RoninHub {
     createFeaturedCard(project) {
         const statusClass = project.status === 'beta' ? 'beta' : 
                            project.status === 'archived' ? 'archived' : '';
+        const badge = project.comingSoon 
+            ? '<span class="coming-soon-badge">Coming Soon</span>'
+            : '<span class="featured-badge">Featured</span>';
         
         return `
             <article class="featured-card" data-project-id="${project.id}">
                 <div class="featured-card-image">
                     <img src="${project.thumbnail}" alt="${project.title}" loading="lazy">
-                    <span class="featured-badge">Featured</span>
+                    ${badge}
                 </div>
                 <div class="featured-card-content">
                     <span class="featured-card-category">${project.categoryLabel}</span>
@@ -142,19 +147,30 @@ class RoninHub {
             screenshotsContainer.style.display = 'none';
         }
 
-        // Launch button - use externalUrl if set, otherwise use path
+        // Launch button - handle coming soon vs available
         const launchBtn = document.getElementById('modal-launch');
-        const launchUrl = project.externalUrl || project.path;
-        launchBtn.href = launchUrl;
-        // Open in new tab for all experiences
-        launchBtn.target = '_blank';
-        launchBtn.rel = 'noopener noreferrer';
+        this.currentProject = project;
         
-        // Update button text based on type
-        const isExternal = !!project.externalUrl;
-        launchBtn.innerHTML = isExternal 
-            ? '<span class="btn-icon">↗</span> Open Site'
-            : '<span class="btn-icon">▶</span> Launch Experience';
+        if (project.comingSoon) {
+            // Coming soon - show notify button
+            launchBtn.href = '#';
+            launchBtn.target = '';
+            launchBtn.rel = '';
+            launchBtn.className = 'btn-coming-soon';
+            launchBtn.innerHTML = '<span class="btn-icon">◇</span> Coming Soon';
+        } else {
+            // Available - show launch button
+            const launchUrl = project.externalUrl || project.path;
+            launchBtn.href = launchUrl;
+            launchBtn.target = '_blank';
+            launchBtn.rel = 'noopener noreferrer';
+            launchBtn.className = 'btn-launch';
+            
+            const isExternal = !!project.externalUrl;
+            launchBtn.innerHTML = isExternal 
+                ? '<span class="btn-icon">↗</span> Open Site'
+                : '<span class="btn-icon">▶</span> Launch Experience';
+        }
 
         // Stats - use project stats or generate placeholder data
         const stats = project.stats || this.generatePlaceholderStats();
@@ -179,6 +195,44 @@ class RoninHub {
     closeModal() {
         this.modal.classList.remove('active');
         document.body.style.overflow = '';
+    }
+
+    openNotifyModal() {
+        this.notifyModal.classList.add('active');
+        // Reset form state
+        document.getElementById('notify-email').value = '';
+        const form = document.querySelector('.notify-form');
+        const success = document.querySelector('.notify-success');
+        if (success) {
+            success.remove();
+        }
+        form.style.display = 'flex';
+    }
+
+    closeNotifyModal() {
+        this.notifyModal.classList.remove('active');
+    }
+
+    handleNotifySubmit() {
+        const email = document.getElementById('notify-email').value;
+        if (!email || !email.includes('@')) {
+            document.getElementById('notify-email').style.borderColor = '#f43f5e';
+            return;
+        }
+        
+        // Show success message (this is just a stub)
+        const form = document.querySelector('.notify-form');
+        form.style.display = 'none';
+        
+        const successDiv = document.createElement('div');
+        successDiv.className = 'notify-success';
+        successDiv.innerHTML = `<p>Thanks! You'd be notified when <strong>${this.currentProject?.title || 'this project'}</strong> launches.</p>`;
+        form.parentNode.insertBefore(successDiv, form);
+        
+        // Close after delay
+        setTimeout(() => {
+            this.closeNotifyModal();
+        }, 2500);
     }
 
     setFilter(filter) {
@@ -251,6 +305,41 @@ class RoninHub {
             if (e.key === 'Escape' && this.modal.classList.contains('active')) {
                 this.closeModal();
             }
+            if (e.key === 'Escape' && this.notifyModal.classList.contains('active')) {
+                this.closeNotifyModal();
+            }
+        });
+
+        // Coming Soon button (opens notify modal)
+        document.addEventListener('click', (e) => {
+            const launchBtn = e.target.closest('#modal-launch');
+            if (launchBtn && launchBtn.classList.contains('btn-coming-soon')) {
+                e.preventDefault();
+                this.openNotifyModal();
+            }
+        });
+
+        // Notify modal events
+        document.getElementById('notify-close').addEventListener('click', () => {
+            this.closeNotifyModal();
+        });
+
+        this.notifyModal.addEventListener('click', (e) => {
+            if (e.target === this.notifyModal) {
+                this.closeNotifyModal();
+            }
+        });
+
+        document.getElementById('notify-submit').addEventListener('click', () => {
+            this.handleNotifySubmit();
+        });
+
+        document.getElementById('notify-email').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                this.handleNotifySubmit();
+            }
+            // Reset border color on typing
+            e.target.style.borderColor = '';
         });
     }
 }

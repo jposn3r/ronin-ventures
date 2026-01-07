@@ -1,6 +1,6 @@
 {
     "meta": {
-        "version": "1.1.0",
+        "version": "1.2.0",
         "lastUpdated": "2025-01-05",
         "author": "Jake Posner"
     },
@@ -19,11 +19,11 @@
             ],
             "path": "/projects/aoe-ai-agents/index.html",
             "externalUrl": "",
-            "externalUrl": "",
             "sourceUrl": "",
             "tech": ["Three.js", "WebGL", "AI/ML"],
             "status": "active",
             "featured": true,
+            "comingSoon": true,
             "lastUpdated": "2025-01-05"
         },
         {
@@ -37,11 +37,11 @@
             "screenshots": [],
             "path": "/projects/word-search/index.html",
             "externalUrl": "",
-            "externalUrl": "",
             "sourceUrl": "",
             "tech": ["JavaScript", "CSS Grid", "Canvas"],
             "status": "active",
             "featured": true,
+            "comingSoon": false,
             "lastUpdated": "2025-01-05"
         },
         {
@@ -59,7 +59,8 @@
             "tech": ["JavaScript", "Canvas", "CSS"],
             "status": "active",
             "featured": true,
-            "lastUpdated": "2024-01-10"
+            "comingSoon": false,
+            "lastUpdated": "2025-01-05"
         },
         {
             "id": "journal-app",
@@ -79,7 +80,8 @@
             "tech": ["React", "IndexedDB", "CSS"],
             "status": "beta",
             "featured": true,
-            "lastUpdated": "2024-01-12"
+            "comingSoon": true,
+            "lastUpdated": "2025-01-05"
         },
         {
             "id": "meta-avatar",
@@ -96,7 +98,8 @@
             "tech": ["Three.js", "TWEEN.js", "WebGL"],
             "status": "active",
             "featured": false,
-            "lastUpdated": "2023-12-20"
+            "comingSoon": true,
+            "lastUpdated": "2025-01-05"
         },
         {
             "id": "shader-gallery",
@@ -113,7 +116,8 @@
             "tech": ["GLSL", "Three.js", "WebGL"],
             "status": "active",
             "featured": false,
-            "lastUpdated": "2024-01-05"
+            "comingSoon": true,
+            "lastUpdated": "2025-01-05"
         },
         {
             "id": "pomodoro",
@@ -130,7 +134,8 @@
             "tech": ["JavaScript", "Web Audio", "CSS"],
             "status": "active",
             "featured": false,
-            "lastUpdated": "2024-01-08"
+            "comingSoon": true,
+            "lastUpdated": "2025-01-05"
         },
         {
             "id": "snake-game",
@@ -147,7 +152,8 @@
             "tech": ["JavaScript", "Canvas", "CSS"],
             "status": "active",
             "featured": false,
-            "lastUpdated": "2024-01-02"
+            "comingSoon": true,
+            "lastUpdated": "2025-01-05"
         },
         {
             "id": "markdown-editor",
@@ -164,7 +170,8 @@
             "tech": ["JavaScript", "Marked.js", "CSS"],
             "status": "beta",
             "featured": false,
-            "lastUpdated": "2024-01-14"
+            "comingSoon": true,
+            "lastUpdated": "2025-01-05"
         },
         {
             "id": "particle-system",
@@ -181,7 +188,8 @@
             "tech": ["Three.js", "GPGPU", "WebGL"],
             "status": "active",
             "featured": false,
-            "lastUpdated": "2024-01-11"
+            "comingSoon": true,
+            "lastUpdated": "2025-01-05"
         },
         {
             "id": "tetris",
@@ -198,7 +206,8 @@
             "tech": ["JavaScript", "Canvas", "CSS"],
             "status": "active",
             "featured": false,
-            "lastUpdated": "2024-01-03"
+            "comingSoon": true,
+            "lastUpdated": "2025-01-05"
         }
     ]
 }
