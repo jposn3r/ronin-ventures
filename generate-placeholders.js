@@ -19,17 +19,12 @@ const screenshotsDir = path.join(__dirname, 'assets', 'screenshots');
 
 // Project configurations
 const projects = [
-    { name: 'aoe-agents', label: 'AI AGENTS', color: '#00d4aa' },
+    { name: 'wordsearch', label: 'WORD SEARCH', color: '#f472b6' },
     { name: 'brickbreaker', label: 'BRICKBREAKER', color: '#f0a030' },
-    { name: 'journal', label: 'REFLEKT', color: '#6366f1' },
-    { name: 'oasis', label: 'THE OASIS', color: '#0099cc' },
-    { name: 'shaders', label: 'SHADERS', color: '#ec4899' },
-    { name: 'pomodoro', label: 'FOCUS', color: '#00d4aa' },
-    { name: 'snake', label: 'SNAKE', color: '#22c55e' },
-    { name: 'markdown', label: 'INKWELL', color: '#8b5cf6' },
-    { name: 'particles', label: 'PARTICLES', color: '#f43f5e' },
-    { name: 'tetris', label: 'BLOCK DROP', color: '#0ea5e9' },
-    { name: 'wordsearch', label: 'WORD SEARCH', color: '#f472b6' }
+    { name: 'jakeposner', label: 'JAKE POSNER', color: '#00d4aa' },
+    { name: 'jacobposner', label: 'JACOB POSNER', color: '#0099cc' },
+    { name: 'metakaizen', label: 'METAKAIZEN', color: '#6366f1' },
+    { name: 'cursordev', label: 'CURSOR DEV', color: '#22c55e' }
 ];
 
 function generateSVG(label, color, width = 800, height = 450) {
@@ -92,16 +87,6 @@ projects.forEach(project => {
     console.log(`Created: ${filepath}`);
 });
 
-// Also create sample screenshots for featured projects
-['aoe-agents', 'journal'].forEach(name => {
-    const project = projects.find(p => p.name === name);
-    for (let i = 1; i <= 2; i++) {
-        const svg = generateSVG(`SCREENSHOT ${i}`, project.color, 1200, 675);
-        const filepath = path.join(screenshotsDir, `${name}-${i}.svg`);
-        fs.writeFileSync(filepath, svg);
-        console.log(`Created: ${filepath}`);
-    }
-});
-
+// No screenshots needed for current projects
 console.log('\n✓ Placeholder generation complete!');
 console.log('Replace these with actual screenshots when ready.');
