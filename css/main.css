@@ -664,6 +664,12 @@ body {
     color: var(--accent-primary);
 }
 
+.stat-value.blurred {
+    filter: blur(8px);
+    user-select: none;
+    cursor: default;
+}
+
 .stat-label {
     font-family: var(--font-mono);
     font-size: 0.65rem;
