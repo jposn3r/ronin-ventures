@@ -57,7 +57,7 @@
             "categoryLabel": "Game",
             "thumbnail": "/assets/thumbnails/wordsearch.svg",
             "screenshots": [],
-            "path": "/projects/word-search/index.html",
+            "path": "/projects/word-search/",
             "externalUrl": "",
             "sourceUrl": "",
             "tech": [
@@ -79,7 +79,7 @@
             "categoryLabel": "Game",
             "thumbnail": "/assets/thumbnails/brickbreaker.svg",
             "screenshots": [],
-            "path": "/projects/brickbreaker/index.html",
+            "path": "/projects/brickbreaker/",
             "externalUrl": "",
             "sourceUrl": "",
             "tech": [
