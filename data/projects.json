@@ -49,6 +49,28 @@
             "lastUpdated": "Jan 7, 2026"
         },
         {
+            "id": "hostr",
+            "title": "Hostr",
+            "shortDescription": "Host parties at your favorite restaurants.",
+            "description": "Hostr is a platform that allows users to host parties at their favorite restaurants.",
+            "category": "tool",
+            "categoryLabel": "Tool",
+            "thumbnail": "/assets/thumbnails/hostr.svg",
+            "screenshots": [],
+            "path": "/projects/hostr/",
+            "externalUrl": "",
+            "sourceUrl": "",
+            "tech": [
+                "JavaScript",
+                "HTML",
+                "CSS"
+            ],
+            "status": "active",
+            "featured": true,
+            "comingSoon": false,
+            "lastUpdated": "Jan 16, 2026"
+        },
+        {
             "id": "word-search",
             "title": "Word Search",
             "shortDescription": "Classic word search puzzle with procedurally generated grids.",
