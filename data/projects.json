@@ -57,7 +57,7 @@
             "categoryLabel": "Tool",
             "thumbnail": "/assets/thumbnails/hostr.svg",
             "screenshots": [],
-            "path": "/projects/hostr/",
+            "path": "https://www.hostr.social",
             "externalUrl": "",
             "sourceUrl": "",
             "tech": [
@@ -69,6 +69,28 @@
             "featured": true,
             "comingSoon": false,
             "lastUpdated": "Jan 16, 2026"
+        },
+        {
+            "id": "therapy-crm",
+            "title": "Therapy CRM",
+            "shortDescription": "Modern and easy to use therapy CRM.",
+            "description": "A therapy CRM for Beyond ABA Therapy to manage clients, appointments and billing..",
+            "category": "utility",
+            "categoryLabel": "Utility",
+            "thumbnail": "/assets/thumbnails/therapy-crm.svg",
+            "screenshots": [],
+            "path": "/projects/therapy-crm/",
+            "externalUrl": "",
+            "sourceUrl": "",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
+            "status": "active",
+            "featured": false,
+            "comingSoon": false,
+            "lastUpdated": "Jan 31, 2026"
         },
         {
             "id": "word-search",
