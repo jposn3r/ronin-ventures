@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-icon">&#9889;</span>
+        <span class="logo-text">TASKFORGE</span>
+      </div>
+      <button id="new-project-btn" class="new-project-btn">
+        <span class="new-project-icon">+</span>
+        <span>New Project</span>
+      </button>
+      <div class="sidebar-section">
+        <span class="sidebar-section-title">PROJECTS</span>
+      </div>
+      <div id="project-list" class="project-list"></div>
+    </aside>
+
+    <!-- Sidebar overlay for mobile -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Main content -->
+    <main id="main" class="main">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <button id="menu-btn" class="menu-btn" aria-label="Open menu">
+            <span></span><span></span><span></span>
+          </button>
+          <h1 id="project-title" class="project-title">TaskForge</h1>
+        </div>
+        <div class="header-center">
+          <div class="view-toggle">
+            <button id="view-board" class="view-toggle-btn active" data-view="board">Board</button>
+            <button id="view-list" class="view-toggle-btn" data-view="list">List</button>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="search-wrapper">
+            <span class="search-icon">&#128269;</span>
+            <input id="search-input" type="text" class="search-input" placeholder="Search tasks...">
+          </div>
+          <button id="add-task-btn" class="btn-primary">+ Task</button>
+        </div>
+      </header>
+
+      <!-- Board View -->
+      <div id="board-view" class="board-view">
+        <div id="columns-container" class="columns-container"></div>
+      </div>
+
+      <!-- List View -->
+      <div id="list-view" class="list-view hidden">
+        <div id="list-container" class="list-container"></div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-state-icon">&#9889;</div>
+        <h2>No project selected</h2>
+        <p>Create or select a project to get started</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Task Detail Panel -->
+  <div id="detail-overlay" class="detail-overlay hidden"></div>
+  <div id="detail-panel" class="detail-panel hidden">
+    <div class="detail-header">
+      <div class="detail-header-left">
+        <button id="detail-close" class="detail-close" aria-label="Close">&times;</button>
+        <span id="detail-parent-link" class="detail-parent-link hidden"></span>
+      </div>
+      <div class="detail-header-right">
+        <button id="detail-share" class="detail-icon-btn" title="Share">&#x1F517;</button>
+        <button id="detail-delete" class="detail-icon-btn detail-delete-btn" title="Delete">&#128465;</button>
+      </div>
+    </div>
+    <div class="detail-body">
+      <input id="detail-title" class="detail-title" type="text" placeholder="Task title">
+
+      <div class="detail-fields">
+        <div class="detail-field">
+          <label class="detail-label">STATUS</label>
+          <select id="detail-status" class="detail-select"></select>
+        </div>
+        <div class="detail-field">
+          <label class="detail-label">PRIORITY</label>
+          <select id="detail-priority" class="detail-select">
+            <option value="none">None</option>
+            <option value="low">&#x1F7E2; Low</option>
+            <option value="medium">&#x1F535; Medium</option>
+            <option value="high">&#x1F7E0; High</option>
+            <option value="urgent">&#x1F534; Urgent</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="detail-fields">
+        <div class="detail-field">
+          <label class="detail-label">DUE DATE</label>
+          <input id="detail-due-date" type="date" class="detail-input">
+        </div>
+        <div class="detail-field">
+          <label class="detail-label">DUE TIME</label>
+          <input id="detail-due-time" type="time" class="detail-input">
+        </div>
+      </div>
+
+      <div class="detail-field">
+        <label class="detail-label">ASSIGNEES</label>
+        <div id="detail-assignees" class="detail-assignees"></div>
+        <div id="detail-assignee-input-wrapper" class="detail-add-row">
+          <input id="detail-assignee-input" type="text" class="detail-input detail-add-input" placeholder="Add assignee..." maxlength="30">
+        </div>
+      </div>
+
+      <div class="detail-field">
+        <label class="detail-label">TAGS</label>
+        <div id="detail-tags" class="detail-tags"></div>
+        <div class="detail-add-row">
+          <input id="detail-tag-input" type="text" class="detail-input detail-add-input" placeholder="Add tag..." maxlength="20">
+        </div>
+      </div>
+
+      <div class="detail-field">
+        <label class="detail-label">DESCRIPTION</label>
+        <textarea id="detail-description" class="detail-textarea" placeholder="Add a description..." rows="4"></textarea>
+      </div>
+
+      <div class="detail-field">
+        <label class="detail-label">SUBTASKS</label>
+        <div id="detail-subtasks" class="detail-subtasks"></div>
+        <div id="detail-subtask-add" class="detail-add-row">
+          <input id="detail-subtask-input" type="text" class="detail-input detail-add-input" placeholder="Add subtask..." maxlength="100">
+        </div>
+        <div id="detail-max-depth" class="detail-max-depth hidden">Maximum nesting depth reached</div>
+      </div>
+
+      <div class="detail-field">
+        <label class="detail-label">COMMENTS</label>
+        <div id="detail-comments" class="detail-comments"></div>
+        <div class="detail-comment-input-row">
+          <input id="detail-comment-input" type="text" class="detail-input" placeholder="Add a comment...">
+          <button id="detail-comment-send" class="btn-primary btn-sm">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Modal -->
+  <div id="project-modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h2 class="modal-title">New Project</h2>
+      <div class="modal-field">
+        <label class="detail-label">PROJECT NAME</label>
+        <input id="project-name-input" type="text" class="detail-input" placeholder="Enter project name..." maxlength="40">
+      </div>
+      <div class="modal-field">
+        <label class="detail-label">COLOR</label>
+        <div id="color-picker" class="color-picker"></div>
+      </div>
+      <div class="modal-actions">
+        <button id="project-cancel" class="btn-secondary">Cancel</button>
+        <button id="project-create" class="btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project context menu -->
+  <div id="project-menu" class="context-menu hidden">
+    <button class="context-menu-item" data-action="rename">Rename</button>
+    <button class="context-menu-item context-menu-danger" data-action="delete">Delete Project</button>
+  </div>
+
+  <!-- Column context menu -->
+  <div id="column-menu" class="context-menu hidden">
+    <button class="context-menu-item" data-action="rename">Rename</button>
+    <button class="context-menu-item" data-action="add-task">Add Task</button>
+    <button class="context-menu-item context-menu-danger" data-action="delete">Delete Column</button>
+  </div>
+
+  <!-- Task context menu -->
+  <div id="task-menu" class="context-menu hidden">
+    <button class="context-menu-item" data-action="toggle-complete">
+      <span class="context-menu-icon">&#10003;</span>
+      <span id="task-menu-complete-label">Mark Complete</span>
+    </button>
+    <div class="context-menu-separator"></div>
+    <div class="context-menu-item has-submenu" data-action="priority">
+      <span>Priority</span>
+      <span class="context-menu-arrow">&#9656;</span>
+      <div id="task-menu-priority-sub" class="context-menu-submenu"></div>
+    </div>
+    <div class="context-menu-item has-submenu" data-action="move-to">
+      <span>Move to</span>
+      <span class="context-menu-arrow">&#9656;</span>
+      <div id="task-menu-moveto-sub" class="context-menu-submenu"></div>
+    </div>
+    <div class="context-menu-separator"></div>
+    <button class="context-menu-item" data-action="copy-link">
+      <span class="context-menu-icon">&#128279;</span>
+      <span>Copy Link</span>
+    </button>
+    <button class="context-menu-item context-menu-danger" data-action="delete">
+      <span class="context-menu-icon">&#128465;</span>
+      <span>Delete</span>
+    </button>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Mobile FAB -->
+  <button id="fab" class="fab">+</button>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -93,6 +93,28 @@
             "lastUpdated": "Jan 31, 2026"
         },
         {
+            "id": "task-forge",
+            "title": "TaskForge",
+            "shortDescription": "Modern and easy to use Asana clone.",
+            "description": "A project management tool that gives you kanban and list workflows to stay on top of your progress",
+            "category": "tool",
+            "categoryLabel": "Tool",
+            "thumbnail": "/assets/thumbnails/task-forge.svg",
+            "screenshots": [],
+            "path": "/projects/task-forge/",
+            "externalUrl": "",
+            "sourceUrl": "",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
+            "status": "active",
+            "featured": false,
+            "comingSoon": false,
+            "lastUpdated": "Feb 7, 2026"
+        },
+        {
             "id": "word-search",
             "title": "Word Search",
             "shortDescription": "Classic word search puzzle with procedurally generated grids.",
@@ -110,7 +132,7 @@
                 "Canvas"
             ],
             "status": "active",
-            "featured": true,
+            "featured": false,
             "comingSoon": false,
             "lastUpdated": "Jan 5, 2026"
         },
