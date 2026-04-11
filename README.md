@@ -1,225 +1,141 @@
 # Ronin Ventures Dev
 
-Software & experiments hub for Ronin Ventures, built by Jake Posner.
+Software & experiments hub by Jake Posner. Apple-inspired dark portfolio built with vanilla HTML/CSS/JS.
 
 ## Quick Start
 
 ```bash
-# Using any local server (e.g., VS Code Live Server, Python, etc.)
-python -m http.server 8000
-# or
 npx serve
+# or
+python -m http.server 8000
 ```
 
-Then open `http://localhost:8000` in your browser.
-
----
+Open `http://localhost:3000` (or `:8000`).
 
 ## Project Structure
 
 ```
 ronin-ventures/
-├── index.html              # Main hub page
-├── css/
-│   └── main.css            # All styles (single file, no build step)
-├── js/
-│   └── app.js              # Hub functionality
-├── data/
-│   └── projects.json       # ⭐ ADMIN: Edit this to manage projects
-├── components/
-│   └── back-to-hub.js      # Reusable navigation component
-├── assets/
-│   ├── thumbnails/         # Project thumbnail images (800x450 recommended)
-│   └── screenshots/        # Detail view screenshots (1200x675 recommended)
-├── projects/               # Each project in its own folder
+├── index.html                # Main hub — hero, featured, all projects
+├── css/main.css              # Design system (tokens, glass nav, cards, modal)
+├── js/app.js                 # Hub controller (filtering, SVG inlining, scroll reveal)
+├── data/projects.json        # Project metadata — edit this to manage projects
+├── components/back-to-hub.js # Reusable nav button for project pages
+├── assets/thumbnails/        # Animated SVG placeholders (800x450)
+├── projects/                 # Individual project folders
 │   ├── brickbreaker/
-│   │   └── index.html
-│   ├── aoe-ai-agents/
-│   │   └── index.html
-│   └── ...
-└── generate-placeholders.js # Dev tool for placeholder images
+│   ├── investment-calculator/
+│   ├── task-forge/
+│   ├── therapy-crm/
+│   ├── word-search/
+│   └── hostr/
+├── generate-placeholders.js  # Generates animated SVG thumbnails
+├── update-dates.js           # Auto-updates lastUpdated from file timestamps
+├── robots.txt                # SEO crawl rules
+└── sitemap.xml               # SEO sitemap
 ```
 
----
+## Design System
 
-## Managing Projects (Admin)
+Built with Apple-inspired design principles on a dark theme:
+
+- **Typography:** Inter (400–800) for display/body, JetBrains Mono for labels
+- **Colors:** Pure black backgrounds, `#00e6b8` teal accent, `#f5f5f7` text
+- **Glass nav:** Fixed translucent navigation with `backdrop-filter: blur(20px)`
+- **Pill buttons:** `border-radius: 980px` CTAs
+- **Cards:** 18px radius, soft shadows, subtle borders, `aspect-ratio: 16/9`
+- **Scroll reveal:** Elements fade up on scroll via `IntersectionObserver`-style detection
+- **Responsive:** Fluid `clamp()` typography, touch-specific CSS, mobile-first
+
+### CSS Tokens
+
+```css
+:root {
+    --bg-primary: #000000;
+    --bg-elevated: #1a1a1c;
+    --accent: #00e6b8;
+    --font-display: 'Inter', system-ui, sans-serif;
+    --radius-pill: 980px;
+    --shadow-card: 0 3px 30px rgba(0,0,0,0.22);
+}
+```
+
+## Managing Projects
 
 ### Adding a New Project
 
-1. **Create the project folder:**
-   ```
-   projects/your-project-name/
-   └── index.html (plus any other files)
-   ```
+1. Create project folder in `projects/your-project/`
+2. Generate or add a thumbnail in `assets/thumbnails/your-project.svg`
+3. Add entry to `data/projects.json`:
 
-2. **Add a thumbnail image:**
-   ```
-   assets/thumbnails/your-project-name.jpg (or .png, .webp, .svg)
-   ```
-
-3. **Edit `data/projects.json`:**
-   ```json
-   {
-       "id": "your-project-name",
-       "title": "Display Title",
-       "shortDescription": "One-line description for cards",
-       "description": "Full description for the detail modal",
-       "category": "game",           // Options: "3d", "game", "tool"
-       "categoryLabel": "Game",      // Display label
-       "thumbnail": "/assets/thumbnails/your-project-name.jpg",
-       "screenshots": [],            // Optional array of screenshot paths
-       "path": "/projects/your-project-name/index.html",
-       "sourceUrl": "",              // Optional GitHub link
-       "tech": ["JavaScript", "Canvas"],
-       "status": "active",           // Options: "active", "beta", "archived"
-       "featured": false,            // Set true to show in Featured section
-       "lastUpdated": "2024-01-15"
-   }
-   ```
-
-### Featuring Projects
-
-Set `"featured": true` for up to 5 projects. They'll appear in the larger Featured section at the top.
-
-### Project Categories
-
-| Category | Filter Button | Use For |
-|----------|--------------|---------|
-| `3d` | 3D | Three.js, WebGL, 3D experiences |
-| `game` | Games | Playable games |
-| `tool` | Tools | Utilities, apps, productivity tools |
-
----
-
-## Adding Back Navigation to Projects
-
-Include this single line in any project's HTML to add consistent navigation back to the hub:
-
-```html
-<script src="/components/back-to-hub.js"></script>
+```json
+{
+    "id": "your-project",
+    "title": "Display Title",
+    "shortDescription": "One-line for cards",
+    "description": "Full description for modal",
+    "category": "tool",
+    "categoryLabel": "Tool",
+    "thumbnail": "/assets/thumbnails/your-project.svg",
+    "screenshots": [],
+    "path": "/projects/your-project/",
+    "externalUrl": "",
+    "sourceUrl": "",
+    "tech": ["JavaScript", "CSS"],
+    "status": "active",
+    "featured": false,
+    "comingSoon": false,
+    "preview": { "type": "svg", "src": "/assets/thumbnails/your-project.svg" },
+    "lastUpdated": "Apr 11, 2026"
+}
 ```
 
-That's it. The button appears automatically in the top-left corner.
+### Video Previews (Future)
 
----
+When you have screen recordings, add them as video previews:
 
-## Image Guidelines
+```json
+"preview": {
+    "type": "video",
+    "src": "/assets/videos/your-project.mp4",
+    "poster": "/assets/thumbnails/your-project.jpg"
+}
+```
 
-### Thumbnails
-- **Size:** 800×450px (16:9 ratio)
-- **Format:** JPG, PNG, WebP, or SVG
-- **Location:** `/assets/thumbnails/`
-- **Naming:** Match the project `id` (e.g., `brickbreaker.jpg`)
+Videos auto-play on hover (desktop) or on scroll-into-view (mobile).
 
-### Screenshots
-- **Size:** 1200×675px (16:9 ratio)
-- **Format:** JPG, PNG, or WebP
-- **Location:** `/assets/screenshots/`
-- **Naming:** `{project-id}-{number}.jpg` (e.g., `journal-1.jpg`)
+### Categories
 
-### Generating Placeholders (Development)
+| Category | Filter | Use For |
+|----------|--------|---------|
+| `3d` | 3D | Three.js, WebGL experiences |
+| `game` | Games | Playable games |
+| `tool` | Tools | Apps, utilities, websites |
+
+### Generating Animated SVG Placeholders
 
 ```bash
 node generate-placeholders.js
 ```
 
-Creates stylized SVG placeholders matching the hub's aesthetic.
+Creates animated SVGs with 5 patterns: bars, circles, waves, grid-pulse, code-scroll.
 
----
+## Back Navigation
 
-## Customization
+Add to any project page for a floating back button:
 
-### Colors
-
-Edit CSS variables in `css/main.css`:
-
-```css
-:root {
-    --accent-primary: #00d4aa;    /* Main accent (teal) */
-    --accent-secondary: #0099cc;  /* Secondary accent (blue) */
-    --bg-primary: #07080c;        /* Darkest background */
-    --bg-card: #0a0c10;           /* Card backgrounds */
-}
+```html
+<script src="/components/back-to-hub.js"></script>
 ```
-
-### Branding
-
-Update in `index.html`:
-- Logo symbol (currently 浪 - "wave" kanji)
-- Title text
-- Tagline
-- Footer content
-
-### Typography
-
-The hub uses:
-- **JetBrains Mono** - Monospace for labels, code, UI elements
-- **Space Grotesk** - Sans-serif for headings, body text
-
-Loaded via Google Fonts. Change in `index.html` `<head>`.
-
----
 
 ## Deployment
 
-The hub is static HTML/CSS/JS - deploy anywhere:
+Static HTML/CSS/JS — no build step. Deploy to Vercel, Netlify, GitHub Pages, or any static host. All paths are absolute (`/`).
 
-### Vercel / Netlify
-```bash
-# Just push to Git, or drag the folder
-```
+## SEO
 
-### Traditional Hosting
-Upload the entire folder. No build step required.
-
-### Important Notes
-- All paths are absolute (starting with `/`)
-- Ensure your hosting serves `index.html` for the root path
-- The hub works entirely client-side (no backend needed)
+Includes: meta description, Open Graph tags, Twitter Cards, canonical URL, JSON-LD structured data, `robots.txt`, and `sitemap.xml`.
 
 ---
 
-## Example: Adding Your AOE Agents Project
-
-1. Create the folder:
-   ```
-   projects/aoe-ai-agents/
-   ├── index.html
-   ├── game.js
-   └── styles.css
-   ```
-
-2. Include the back button in your `index.html`:
-   ```html
-   <script src="/components/back-to-hub.js"></script>
-   ```
-
-3. Take a screenshot and save as:
-   ```
-   assets/thumbnails/aoe-agents.jpg
-   ```
-
-4. It's already in `projects.json` and marked as featured ✓
-
----
-
-## Troubleshooting
-
-**Projects not showing?**
-- Check browser console for JSON parse errors
-- Verify `data/projects.json` is valid JSON
-- Ensure thumbnail paths match exactly
-
-**Styles look broken?**
-- Make sure you're using a local server, not `file://`
-- Check that `css/main.css` path is correct
-
-**Back button not appearing?**
-- Verify the script path is correct: `/components/back-to-hub.js`
-- Check browser console for 404 errors
-
----
-
-## License
-
-© 2025 Ronin Ventures. All rights reserved.
+© 2026 Jake Posner. All rights reserved.

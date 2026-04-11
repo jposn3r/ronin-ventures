@@ -1,49 +1,61 @@
-<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0d0f14"/>
-      <stop offset="100%" style="stop-color:#07080c"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#111111"/>
     </linearGradient>
-    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f97316"/>
-      <stop offset="100%" style="stop-color:#f9731688"/>
-    </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f9731615" stroke-width="1"/>
-    </pattern>
   </defs>
-  
-  <!-- Background -->
-  <rect width="100%" height="100%" fill="url(#bg)"/>
-  
-  <!-- Grid overlay -->
-  <rect width="100%" height="100%" fill="url(#grid)"/>
-  
-  <!-- Decorative elements -->
-  <circle cx="640" cy="135" r="120" fill="#f9731608"/>
-  <circle cx="160" cy="315" r="80" fill="#f9731605"/>
-  
-  <!-- Center accent -->
-  <rect x="340" y="185" width="120" height="80" rx="4" fill="none" stroke="#f9731640" stroke-width="1"/>
-  
-  <!-- Label -->
-  <text x="400" y="233" 
-        font-family="monospace" 
-        font-size="18" 
-        font-weight="500"
-        fill="#f97316" 
-        text-anchor="middle"
-        filter="url(#glow)"
-        letter-spacing="4">HOSTR</text>
-  
-  <!-- Corner accents -->
-  <path d="M 20 20 L 60 20 M 20 20 L 20 60" stroke="#f9731660" stroke-width="2" fill="none"/>
-  <path d="M 780 430 L 740 430 M 780 430 L 780 390" stroke="#f9731660" stroke-width="2" fill="none"/>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <g>
+    
+    <rect x="160" y="233" width="24" rx="4" height="87" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="87;161;87" dur="1.42s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="233;159;233" dur="1.42s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="200" y="215" width="24" rx="4" height="105" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="105;160;105" dur="1.73s" begin="0.15s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="215;160;215" dur="1.73s" begin="0.15s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="240" y="221" width="24" rx="4" height="99" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="99;195;99" dur="1.29s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="221;125;221" dur="1.29s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="280" y="283" width="24" rx="4" height="37" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="37;112;37" dur="1.95s" begin="0.45s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="283;208;283" dur="1.95s" begin="0.45s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="320" y="250" width="24" rx="4" height="70" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="70;111;70" dur="1.67s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="250;209;250" dur="1.67s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="360" y="264" width="24" rx="4" height="56" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="56;106;56" dur="1.32s" begin="0.75s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="264;214;264" dur="1.32s" begin="0.75s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="400" y="277" width="24" rx="4" height="43" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="43;125;43" dur="1.61s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="277;195;277" dur="1.61s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="440" y="239" width="24" rx="4" height="81" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="81;138;81" dur="1.90s" begin="1.05s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="239;182;239" dur="1.90s" begin="1.05s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="480" y="214" width="24" rx="4" height="106" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="106;177;106" dur="1.81s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="214;143;214" dur="1.81s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="520" y="211" width="24" rx="4" height="109" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="109;157;109" dur="1.75s" begin="1.35s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="211;163;211" dur="1.75s" begin="1.35s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="560" y="239" width="24" rx="4" height="81" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="81;125;81" dur="1.81s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="239;195;239" dur="1.81s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+    <rect x="600" y="212" width="24" rx="4" height="108" fill="#f97316" opacity="0.6">
+      <animate attributeName="height" values="108;200;108" dur="1.93s" begin="1.65s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="212;120;212" dur="1.93s" begin="1.65s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    </rect>
+  </g>
+  <text x="400" y="420" fill="#f97316" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">HOSTR</text>
 </svg>
