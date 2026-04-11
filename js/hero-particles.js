@@ -132,7 +132,7 @@ class HeroParticles {
                     gl_PointSize = size * (1.0 / -mvPosition.z);
 
                     // Alpha based on depth and randomness
-                    vAlpha = 0.15 + aRandom * 0.5;
+                    vAlpha = 0.22 + aRandom * 0.55;
                     vAlpha *= smoothstep(50.0, 10.0, -mvPosition.z);
 
                     // Brighten near mouse
@@ -221,7 +221,7 @@ class HeroParticles {
         const elapsed = this.clock.getElapsedTime();
 
         // Smooth lerp mouse
-        this.mouse.lerp(this.targetMouse, 0.06);
+        this.mouse.lerp(this.targetMouse, 0.045);
 
         // Update uniforms
         this.particles.material.uniforms.uTime.value = elapsed;
