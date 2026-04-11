@@ -315,6 +315,22 @@ body {
     will-change: transform;
 }
 
+/* Dark overlay so text reads clearly over the fluid */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(
+        ellipse 70% 60% at 50% 45%,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.45) 50%,
+        rgba(0, 0, 0, 0.1) 80%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
 .hero-inner {
     text-align: center;
     max-width: 800px;
