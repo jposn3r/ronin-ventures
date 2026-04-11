@@ -1,22 +1,27 @@
 /**
- * Ronin Ventures - Interactive Particle Hero
- * Three.js particle system with mouse/touch interaction
+ * Ronin Ventures - Ethereal Veil
+ * A thin membrane of particles that parts like a curtain on interaction,
+ * revealing a dark void beneath.
  */
 
 import * as THREE from 'three';
 
-class HeroParticles {
+class HeroVeil {
     constructor() {
         this.canvas = document.getElementById('hero-canvas');
         this.hero = document.getElementById('hero');
         if (!this.canvas || !this.hero) return;
 
-        this.mouse = new THREE.Vector2(0, 0);
-        this.targetMouse = new THREE.Vector2(0, 0);
+        this.mouse = new THREE.Vector2(9999, 9999);
+        this.targetMouse = new THREE.Vector2(9999, 9999);
         this.isVisible = true;
         this.isMobile = window.innerWidth < 768;
-        this.particleCount = this.isMobile ? 800 : 1500;
         this.clock = new THREE.Clock();
+
+        // Grid density - more particles = denser veil
+        this.cols = this.isMobile ? 90 : 160;
+        this.rows = this.isMobile ? 50 : 90;
+        this.particleCount = this.cols * this.rows;
 
         this.init();
         this.bindEvents();
@@ -24,75 +29,80 @@ class HeroParticles {
     }
 
     init() {
-        // Renderer
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             alpha: true,
-            antialias: true,
+            antialias: false,
         });
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.renderer.setSize(this.hero.offsetWidth, this.hero.offsetHeight);
 
-        // Scene
         this.scene = new THREE.Scene();
 
-        // Camera
-        this.camera = new THREE.PerspectiveCamera(
-            75,
-            this.hero.offsetWidth / this.hero.offsetHeight,
-            0.1,
-            100
+        // Orthographic camera so the veil maps flat to the screen
+        const aspect = this.hero.offsetWidth / this.hero.offsetHeight;
+        this.frustumSize = 10;
+        this.camera = new THREE.OrthographicCamera(
+            -this.frustumSize * aspect / 2,
+            this.frustumSize * aspect / 2,
+            this.frustumSize / 2,
+            -this.frustumSize / 2,
+            0.1, 100
         );
-        this.camera.position.z = 30;
+        this.camera.position.z = 10;
 
-        // Particles
-        this.createParticles();
+        this.createVeil();
 
-        // Visibility observer - pause when not visible
         this.observer = new IntersectionObserver(
-            (entries) => {
-                this.isVisible = entries[0].isIntersecting;
-            },
+            (entries) => { this.isVisible = entries[0].isIntersecting; },
             { threshold: 0.1 }
         );
         this.observer.observe(this.hero);
     }
 
-    createParticles() {
+    createVeil() {
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(this.particleCount * 3);
         const randoms = new Float32Array(this.particleCount);
-        const sizes = new Float32Array(this.particleCount);
+        const uvs = new Float32Array(this.particleCount * 2);
 
-        for (let i = 0; i < this.particleCount; i++) {
-            const i3 = i * 3;
+        const aspect = this.hero.offsetWidth / this.hero.offsetHeight;
+        const spanX = this.frustumSize * aspect;
+        const spanY = this.frustumSize;
 
-            // Distribute in a flattened sphere (disc-like)
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(2 * Math.random() - 1);
-            const r = 18 + Math.random() * 8;
+        // Lay particles in a grid with slight organic jitter
+        for (let row = 0; row < this.rows; row++) {
+            for (let col = 0; col < this.cols; col++) {
+                const i = row * this.cols + col;
+                const i3 = i * 3;
+                const i2 = i * 2;
 
-            positions[i3] = r * Math.sin(phi) * Math.cos(theta);
-            positions[i3 + 1] = (r * Math.sin(phi) * Math.sin(theta)) * 0.5; // flatten Y
-            positions[i3 + 2] = (r * Math.cos(phi)) * 0.6;
+                // Normalized UV
+                const u = col / (this.cols - 1);
+                const v = row / (this.rows - 1);
 
-            randoms[i] = Math.random();
-            sizes[i] = 0.5 + Math.random() * 1.5;
+                // Position mapped to camera frustum, with jitter
+                const jitter = 0.03;
+                positions[i3]     = (u - 0.5) * spanX + (Math.random() - 0.5) * jitter * spanX;
+                positions[i3 + 1] = (v - 0.5) * spanY + (Math.random() - 0.5) * jitter * spanY;
+                positions[i3 + 2] = 0;
+
+                uvs[i2] = u;
+                uvs[i2 + 1] = v;
+
+                randoms[i] = Math.random();
+            }
         }
 
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
-        geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+        geometry.setAttribute('aUv', new THREE.BufferAttribute(uvs, 2));
 
-        // Shader material
         const material = new THREE.ShaderMaterial({
             uniforms: {
                 uTime: { value: 0 },
-                uMouse: { value: new THREE.Vector2(0, 0) },
-                uResolution: { value: new THREE.Vector2(this.hero.offsetWidth, this.hero.offsetHeight) },
+                uMouse: { value: new THREE.Vector2(9999, 9999) },
                 uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-                uColorA: { value: new THREE.Color('#00e6b8') },
-                uColorB: { value: new THREE.Color('#0099cc') },
             },
             vertexShader: `
                 uniform float uTime;
@@ -100,70 +110,91 @@ class HeroParticles {
                 uniform float uPixelRatio;
 
                 attribute float aRandom;
-                attribute float aSize;
+                attribute vec2 aUv;
 
                 varying float vAlpha;
-                varying float vRandom;
+                varying float vDisplacement;
+                varying vec2 vUv;
 
                 void main() {
                     vec3 pos = position;
+                    vUv = aUv;
 
-                    // Ambient drift
-                    float drift = uTime * 0.15;
-                    pos.x += sin(drift + aRandom * 6.28) * 0.4;
-                    pos.y += cos(drift * 0.7 + aRandom * 4.0) * 0.3;
-                    pos.z += sin(drift * 0.5 + aRandom * 5.0) * 0.2;
+                    // Slow organic ripple - the veil breathes
+                    float wave1 = sin(pos.x * 1.8 + uTime * 0.3 + aRandom * 3.0) * 0.04;
+                    float wave2 = cos(pos.y * 2.2 + uTime * 0.25 + aRandom * 2.0) * 0.03;
+                    float wave3 = sin((pos.x + pos.y) * 0.8 + uTime * 0.15) * 0.02;
+                    pos.z += wave1 + wave2 + wave3;
+
+                    // Mouse interaction - push the veil away like parting a curtain
+                    vec2 toMouse = pos.xy - uMouse;
+                    float dist = length(toMouse);
+
+                    // Two-layer displacement: inner circle pushes hard, outer ring ripples
+                    float innerPush = smoothstep(2.5, 0.0, dist);
+                    float outerRipple = smoothstep(4.5, 2.0, dist) * (1.0 - innerPush);
+
+                    // Push particles outward from cursor (curtain parting)
+                    vec2 dir = normalize(toMouse + 0.0001);
+                    pos.xy += dir * innerPush * 1.2;
+                    pos.xy += dir * outerRipple * 0.3;
+
+                    // Push deeper into Z (receding into the void)
+                    pos.z -= innerPush * 3.0;
+                    pos.z -= outerRipple * 0.8;
+
+                    // Slight upward drift near mouse (ethereal lift)
+                    pos.y += innerPush * 0.15;
+
+                    vDisplacement = innerPush + outerRipple * 0.4;
 
                     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-
-                    // Mouse displacement in view space
-                    vec2 mouseView = uMouse * 12.0;
-                    vec2 particleScreen = mvPosition.xy;
-                    float dist = distance(particleScreen, mouseView);
-                    float displacement = smoothstep(8.0, 0.0, dist) * 3.5;
-
-                    vec2 dir = normalize(particleScreen - mouseView + 0.001);
-                    mvPosition.xy += dir * displacement;
-
                     gl_Position = projectionMatrix * mvPosition;
 
-                    // Size attenuation
-                    float size = aSize * 28.0 * uPixelRatio;
-                    gl_PointSize = size * (1.0 / -mvPosition.z);
+                    // Size: small enough to form a mesh, not individual dots
+                    float baseSize = ${this.isMobile ? '2.2' : '2.0'};
+                    gl_PointSize = baseSize * uPixelRatio;
 
-                    // Alpha based on depth and randomness
-                    vAlpha = 0.22 + aRandom * 0.55;
-                    vAlpha *= smoothstep(50.0, 10.0, -mvPosition.z);
+                    // Alpha: base veil opacity with edge fade
+                    float edgeFadeX = smoothstep(0.0, 0.08, aUv.x) * smoothstep(1.0, 0.92, aUv.x);
+                    float edgeFadeY = smoothstep(0.0, 0.08, aUv.y) * smoothstep(1.0, 0.92, aUv.y);
+                    float edgeFade = edgeFadeX * edgeFadeY;
 
-                    // Brighten near mouse
-                    vAlpha += displacement * 0.15;
+                    // Veil base opacity - thin, translucent
+                    vAlpha = (0.12 + aRandom * 0.08) * edgeFade;
 
-                    vRandom = aRandom;
+                    // Particles near cursor become more transparent (parting reveals void)
+                    vAlpha *= (1.0 - innerPush * 0.9);
+
+                    // Particles at the ripple edge glow slightly brighter
+                    vAlpha += outerRipple * 0.06;
                 }
             `,
             fragmentShader: `
-                uniform vec3 uColorA;
-                uniform vec3 uColorB;
-
                 varying float vAlpha;
-                varying float vRandom;
+                varying float vDisplacement;
+                varying vec2 vUv;
 
                 void main() {
                     // Soft circular point
                     float d = length(gl_PointCoord - 0.5);
                     if (d > 0.5) discard;
+                    float softness = smoothstep(0.5, 0.2, d);
 
-                    float alpha = smoothstep(0.5, 0.15, d) * vAlpha;
+                    // Color: muted, ghostly palette
+                    // Base is a cold dark gray-blue, shifts slightly warmer at displacement edges
+                    vec3 veilColor = vec3(0.45, 0.50, 0.55);
+                    vec3 edgeGlow = vec3(0.3, 0.6, 0.55);
+                    vec3 color = mix(veilColor, edgeGlow, vDisplacement * 0.6);
 
-                    // Blend between two colors based on random
-                    vec3 color = mix(uColorA, uColorB, vRandom);
+                    float alpha = softness * vAlpha;
 
                     gl_FragColor = vec4(color, alpha);
                 }
             `,
             transparent: true,
             depthWrite: false,
-            blending: THREE.AdditiveBlending,
+            blending: THREE.NormalBlending,
         });
 
         this.particles = new THREE.Points(geometry, material);
@@ -171,65 +202,66 @@ class HeroParticles {
     }
 
     bindEvents() {
-        // Resize
         window.addEventListener('resize', () => this.onResize(), { passive: true });
 
-        // Mouse (desktop)
-        this.hero.addEventListener('mousemove', (e) => {
+        // Convert screen coords to world coords for orthographic camera
+        const screenToWorld = (clientX, clientY) => {
             const rect = this.hero.getBoundingClientRect();
-            this.targetMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-            this.targetMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            const ndcX = ((clientX - rect.left) / rect.width) * 2 - 1;
+            const ndcY = -((clientY - rect.top) / rect.height) * 2 + 1;
+            const aspect = rect.width / rect.height;
+            return new THREE.Vector2(
+                ndcX * this.frustumSize * aspect / 2,
+                ndcY * this.frustumSize / 2
+            );
+        };
+
+        this.hero.addEventListener('mousemove', (e) => {
+            this.targetMouse = screenToWorld(e.clientX, e.clientY);
         }, { passive: true });
 
         this.hero.addEventListener('mouseleave', () => {
-            this.targetMouse.set(0, 0);
+            this.targetMouse = new THREE.Vector2(9999, 9999);
         }, { passive: true });
 
-        // Touch (mobile)
         this.hero.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            const rect = this.hero.getBoundingClientRect();
-            this.targetMouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-            this.targetMouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+            const t = e.touches[0];
+            this.targetMouse = screenToWorld(t.clientX, t.clientY);
         }, { passive: true });
 
         this.hero.addEventListener('touchend', () => {
-            this.targetMouse.set(0, 0);
+            this.targetMouse = new THREE.Vector2(9999, 9999);
         }, { passive: true });
 
-        // Cleanup
         window.addEventListener('beforeunload', () => this.dispose());
     }
 
     onResize() {
         const w = this.hero.offsetWidth;
         const h = this.hero.offsetHeight;
+        const aspect = w / h;
 
-        this.camera.aspect = w / h;
+        this.camera.left = -this.frustumSize * aspect / 2;
+        this.camera.right = this.frustumSize * aspect / 2;
+        this.camera.top = this.frustumSize / 2;
+        this.camera.bottom = -this.frustumSize / 2;
         this.camera.updateProjectionMatrix();
-        this.renderer.setSize(w, h);
 
-        this.particles.material.uniforms.uResolution.value.set(w, h);
+        this.renderer.setSize(w, h);
         this.particles.material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
     }
 
     animate() {
         requestAnimationFrame(() => this.animate());
-
         if (!this.isVisible) return;
 
         const elapsed = this.clock.getElapsedTime();
 
-        // Smooth lerp mouse
-        this.mouse.lerp(this.targetMouse, 0.045);
+        // Slow, deliberate mouse follow
+        this.mouse.lerp(this.targetMouse, 0.035);
 
-        // Update uniforms
         this.particles.material.uniforms.uTime.value = elapsed;
         this.particles.material.uniforms.uMouse.value.copy(this.mouse);
-
-        // Gentle rotation
-        this.particles.rotation.y = elapsed * 0.03;
-        this.particles.rotation.x = Math.sin(elapsed * 0.02) * 0.05;
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -243,5 +275,5 @@ class HeroParticles {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new HeroParticles();
+    new HeroVeil();
 });
