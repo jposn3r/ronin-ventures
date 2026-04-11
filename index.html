@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ronin Ventures Dev | Jake Posner</title>
-    <meta name="description" content="Software and experiments by Jake Posner. A collection of tools, games, and interactive experiences — designed and engineered from scratch.">
+    <meta name="description" content="Software and experiments by Jake Posner. A collection of tools, games, and interactive experiences designed and engineered from scratch.">
     <meta name="author" content="Jake Posner">
     <meta name="robots" content="index, follow">
 
@@ -44,6 +44,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/main.css">
+
+    <!-- Three.js import map (for hero particles) -->
+    <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.js" } }
+    </script>
 </head>
 <body>
 
@@ -68,10 +73,11 @@
     <main>
         <!-- Hero -->
         <section class="hero" id="hero">
+            <canvas id="hero-canvas"></canvas>
             <div class="hero-inner">
                 <span class="hero-eyebrow">Software & Experiments</span>
                 <h1 class="hero-title">Built by<br><span class="hero-name">Jake Posner</span></h1>
-                <p class="hero-subtitle">A collection of tools, games, and experiments — designed and engineered from scratch.</p>
+                <p class="hero-subtitle">A collection of tools, games, and experiments designed and engineered from scratch.</p>
                 <div class="hero-cta">
                     <a class="btn-pill" href="#projects">View Projects</a>
                     <a class="btn-pill btn-pill--outline" href="https://www.jakeposner.com" target="_blank" rel="noopener noreferrer">About Jake</a>
@@ -196,11 +202,12 @@
                     <input type="email" class="notify-input" id="notify-email" placeholder="your@email.com">
                     <button class="notify-submit" id="notify-submit">Notify Me</button>
                 </div>
-                <p class="notify-disclaimer">* This is a demo — emails are not collected or stored.</p>
+                <p class="notify-disclaimer">* This is a demo. Emails are not collected or stored.</p>
             </div>
         </div>
     </div>
 
     <script src="js/app.js" type="module"></script>
+    <script src="js/hero-particles.js" type="module"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /**
- * Ronin Ventures — Project Hub
+ * Ronin Ventures - Project Hub
  * Main application controller
  */
 
@@ -194,7 +194,7 @@ class RoninHub {
             }
         });
 
-        // Simple scroll-based reveal — check on scroll + initial call
+        // Simple scroll-based reveal -check on scroll + initial call
         const revealVisible = () => {
             const viewH = window.innerHeight;
             document.querySelectorAll('.reveal:not(.revealed)').forEach(el => {

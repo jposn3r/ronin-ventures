@@ -1,5 +1,5 @@
 /* ========================================
-   TaskForge — App Logic
+   TaskForge - App Logic
    ======================================== */
 
 // ── Constants ──────────────────────────────
@@ -938,7 +938,7 @@ function createListRow(task) {
     <button class="task-checkbox ${task.completed ? 'checked' : ''}" data-task-id="${task.id}" style="width:16px;height:16px;font-size:9px">&#10003;</button>
     <span class="list-row-title">${escapeHtml(task.title)}</span>
     <span class="list-row-due ${dueStatus}">${task.dueDate ? formatDate(task.dueDate) : ''}</span>
-    <span class="list-row-priority" data-priority="${task.priority}">${task.priority !== 'none' ? task.priority : '—'}</span>
+    <span class="list-row-priority" data-priority="${task.priority}">${task.priority !== 'none' ? task.priority : '-'}</span>
     <span class="list-row-assignees">${assigneesHtml}</span>
     <span class="list-row-tags">${tagsHtml}</span>
   `;

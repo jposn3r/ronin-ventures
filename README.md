@@ -16,10 +16,10 @@ Open `http://localhost:3000` (or `:8000`).
 
 ```
 ronin-ventures/
-├── index.html                # Main hub — hero, featured, all projects
+├── index.html                # Main hub - hero, featured, all projects
 ├── css/main.css              # Design system (tokens, glass nav, cards, modal)
 ├── js/app.js                 # Hub controller (filtering, SVG inlining, scroll reveal)
-├── data/projects.json        # Project metadata — edit this to manage projects
+├── data/projects.json        # Project metadata - edit this to manage projects
 ├── components/back-to-hub.js # Reusable nav button for project pages
 ├── assets/thumbnails/        # Animated SVG placeholders (800x450)
 ├── projects/                 # Individual project folders
@@ -39,7 +39,7 @@ ronin-ventures/
 
 Built with Apple-inspired design principles on a dark theme:
 
-- **Typography:** Inter (400–800) for display/body, JetBrains Mono for labels
+- **Typography:** Inter (400-800) for display/body, JetBrains Mono for labels
 - **Colors:** Pure black backgrounds, `#00e6b8` teal accent, `#f5f5f7` text
 - **Glass nav:** Fixed translucent navigation with `backdrop-filter: blur(20px)`
 - **Pill buttons:** `border-radius: 980px` CTAs
@@ -130,7 +130,7 @@ Add to any project page for a floating back button:
 
 ## Deployment
 
-Static HTML/CSS/JS — no build step. Deploy to Vercel, Netlify, GitHub Pages, or any static host. All paths are absolute (`/`).
+Static HTML/CSS/JS - no build step. Deploy to Vercel, Netlify, GitHub Pages, or any static host. All paths are absolute (`/`).
 
 ## SEO
 
