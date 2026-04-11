@@ -8,35 +8,35 @@
   <rect width="800" height="450" fill="url(#bg)"/>
   <g>
     
-    <circle cx="458" cy="139" r="22" fill="#f0a030" opacity="0.19">
-      <animate attributeName="cx" values="458;451;458" dur="3.61s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="139;129;139" dur="3.61s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="22;28;22" dur="3.61s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <circle cx="413" cy="194" r="46" fill="#f0a030" opacity="0.22">
+      <animate attributeName="cx" values="413;417;413" dur="2.62s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="194;185;194" dur="2.62s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="r" values="46;59;46" dur="2.62s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
     </circle>
-    <circle cx="498" cy="192" r="41" fill="#f0a030" opacity="0.24">
-      <animate attributeName="cx" values="498;500;498" dur="3.03s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="192;202;192" dur="3.03s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="41;53;41" dur="3.03s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <circle cx="479" cy="135" r="16" fill="#f0a030" opacity="0.37">
+      <animate attributeName="cx" values="479;459;479" dur="3.51s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="135;153;135" dur="3.51s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="r" values="16;21;16" dur="3.51s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
     </circle>
-    <circle cx="439" cy="326" r="41" fill="#f0a030" opacity="0.24">
-      <animate attributeName="cx" values="439;441;439" dur="4.35s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="326;335;326" dur="4.35s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="41;53;41" dur="4.35s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <circle cx="525" cy="198" r="19" fill="#f0a030" opacity="0.31">
+      <animate attributeName="cx" values="525;544;525" dur="4.16s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="198;205;198" dur="4.16s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="r" values="19;25;19" dur="4.16s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
     </circle>
-    <circle cx="327" cy="280" r="34" fill="#f0a030" opacity="0.19">
-      <animate attributeName="cx" values="327;298;327" dur="3.52s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="280;273;280" dur="3.52s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="34;44;34" dur="3.52s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <circle cx="288" cy="347" r="38" fill="#f0a030" opacity="0.23">
+      <animate attributeName="cx" values="288;298;288" dur="2.77s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="347;345;347" dur="2.77s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="r" values="38;50;38" dur="2.77s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
     </circle>
-    <circle cx="575" cy="318" r="44" fill="#f0a030" opacity="0.31">
-      <animate attributeName="cx" values="575;579;575" dur="2.99s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="318;300;318" dur="2.99s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="44;57;44" dur="2.99s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <circle cx="571" cy="342" r="21" fill="#f0a030" opacity="0.24">
+      <animate attributeName="cx" values="571;582;571" dur="4.17s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="342;354;342" dur="4.17s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="r" values="21;27;21" dur="4.17s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
     </circle>
-    <circle cx="265" cy="214" r="42" fill="#f0a030" opacity="0.24">
-      <animate attributeName="cx" values="265;270;265" dur="4.05s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="214;194;214" dur="4.05s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="42;55;42" dur="4.05s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <circle cx="422" cy="275" r="50" fill="#f0a030" opacity="0.38">
+      <animate attributeName="cx" values="422;422;422" dur="3.71s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="275;294;275" dur="3.71s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="r" values="50;65;50" dur="3.71s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
     </circle>
   </g>
   <text x="400" y="420" fill="#f0a030" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">BRICKBREAKER</text>

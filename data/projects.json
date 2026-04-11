@@ -66,7 +66,7 @@
                 "CSS"
             ],
             "status": "active",
-            "featured": true,
+            "featured": false,
             "comingSoon": false,
             "lastUpdated": "Jan 16, 2026"
         },
@@ -220,6 +220,72 @@
             ],
             "status": "active",
             "featured": true,
+            "comingSoon": false,
+            "lastUpdated": "Apr 11, 2026"
+        },
+        {
+            "id": "iron-man-hud",
+            "title": "Iron Man HUD",
+            "shortDescription": "WebXR tactical HUD with targeting system and missile fire.",
+            "description": "A J.A.R.V.I.S.-inspired tactical heads-up display built with Three.js and WebXR. Features a targeting system with lock-on and missile fire, works on desktop and Meta Quest 3 VR. Single HTML file, zero dependencies beyond Three.js.",
+            "category": "3d",
+            "categoryLabel": "WebXR",
+            "thumbnail": "/assets/thumbnails/iron-man-hud.svg",
+            "screenshots": [],
+            "path": "",
+            "externalUrl": "https://jposn3r.github.io/iron-man-hud/",
+            "sourceUrl": "https://github.com/jposn3r/iron-man-hud",
+            "tech": [
+                "Three.js",
+                "WebXR",
+                "JavaScript"
+            ],
+            "status": "active",
+            "featured": true,
+            "comingSoon": false,
+            "lastUpdated": "Apr 11, 2026"
+        },
+        {
+            "id": "av-simulation",
+            "title": "AV Path Planner",
+            "shortDescription": "Autonomous vehicle path planning with live city simulation.",
+            "description": "A browser-based autonomous vehicle simulator featuring live city simulation with NPC traffic, 4 path planning algorithms, and real-time visualization. Built with React and TypeScript for exploring self-driving vehicle decision making.",
+            "category": "tool",
+            "categoryLabel": "Simulation",
+            "thumbnail": "/assets/thumbnails/av-simulation.svg",
+            "screenshots": [],
+            "path": "",
+            "externalUrl": "https://jposn3r.github.io/autonomous-vehicle-simulation/",
+            "sourceUrl": "https://github.com/jposn3r/autonomous-vehicle-simulation",
+            "tech": [
+                "React",
+                "TypeScript",
+                "Canvas"
+            ],
+            "status": "active",
+            "featured": true,
+            "comingSoon": false,
+            "lastUpdated": "Apr 11, 2026"
+        },
+        {
+            "id": "mlb-showdown",
+            "title": "MLB Showdown",
+            "shortDescription": "Classic baseball card game brought back to life.",
+            "description": "A digital recreation of the classic MLB Showdown card game. Features real player rosters and stats, card-based gameplay mechanics, and a faithful recreation of the original tabletop experience in the browser.",
+            "category": "game",
+            "categoryLabel": "Game",
+            "thumbnail": "/assets/thumbnails/mlb-showdown.svg",
+            "screenshots": [],
+            "path": "",
+            "externalUrl": "https://jposn3r.github.io/mlb-showdown/",
+            "sourceUrl": "https://github.com/jposn3r/mlb-showdown",
+            "tech": [
+                "React",
+                "TypeScript",
+                "Vite"
+            ],
+            "status": "active",
+            "featured": false,
             "comingSoon": false,
             "lastUpdated": "Apr 11, 2026"
         }

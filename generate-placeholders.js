@@ -19,6 +19,9 @@ const projects = [
     { name: 'metakaizen', label: 'METAKAIZEN', color: '#818cf8', pattern: 'waves' },
     { name: 'cursordev', label: 'CURSOR DEV', color: '#22c55e', pattern: 'code-scroll' },
     { name: 'tv-ui', label: 'TV UI', color: '#e50914', pattern: 'bars' },
+    { name: 'iron-man-hud', label: 'IRON MAN HUD', color: '#ff3333', pattern: 'circles' },
+    { name: 'av-simulation', label: 'AV SIMULATION', color: '#00ccff', pattern: 'waves' },
+    { name: 'mlb-showdown', label: 'MLB SHOWDOWN', color: '#e63946', pattern: 'grid-pulse' },
 ];
 
 function generateBars(color, count = 12) {
