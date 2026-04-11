@@ -1,27 +1,23 @@
 /**
- * Ronin Ventures - Ethereal Veil
- * A thin membrane of particles that parts like a curtain on interaction,
- * revealing a dark void beneath.
+ * Ronin Ventures - Liquid Veil
+ * Full-screen fluid shader with reactive mouse/touch distortion.
+ * Inspired by flowing liquid marble with glowing edge highlights.
  */
 
 import * as THREE from 'three';
 
-class HeroVeil {
+class LiquidVeil {
     constructor() {
         this.canvas = document.getElementById('hero-canvas');
         this.hero = document.getElementById('hero');
         if (!this.canvas || !this.hero) return;
 
-        this.mouse = new THREE.Vector2(9999, 9999);
-        this.targetMouse = new THREE.Vector2(9999, 9999);
+        this.mouse = new THREE.Vector2(0.5, 0.5);
+        this.targetMouse = new THREE.Vector2(0.5, 0.5);
+        this.prevMouse = new THREE.Vector2(0.5, 0.5);
+        this.velocity = new THREE.Vector2(0, 0);
         this.isVisible = true;
-        this.isMobile = window.innerWidth < 768;
         this.clock = new THREE.Clock();
-
-        // Grid density - more particles = denser veil
-        this.cols = this.isMobile ? 90 : 160;
-        this.rows = this.isMobile ? 50 : 90;
-        this.particleCount = this.cols * this.rows;
 
         this.init();
         this.bindEvents();
@@ -31,27 +27,214 @@ class HeroVeil {
     init() {
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
-            alpha: true,
+            alpha: false,
             antialias: false,
         });
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.renderer.setSize(this.hero.offsetWidth, this.hero.offsetHeight);
 
         this.scene = new THREE.Scene();
+        this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-        // Orthographic camera so the veil maps flat to the screen
-        const aspect = this.hero.offsetWidth / this.hero.offsetHeight;
-        this.frustumSize = 10;
-        this.camera = new THREE.OrthographicCamera(
-            -this.frustumSize * aspect / 2,
-            this.frustumSize * aspect / 2,
-            this.frustumSize / 2,
-            -this.frustumSize / 2,
-            0.1, 100
-        );
-        this.camera.position.z = 10;
+        // Full-screen quad
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+                uVelocity: { value: new THREE.Vector2(0, 0) },
+                uResolution: { value: new THREE.Vector2(this.hero.offsetWidth, this.hero.offsetHeight) },
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                precision highp float;
 
-        this.createVeil();
+                uniform float uTime;
+                uniform vec2 uMouse;
+                uniform vec2 uVelocity;
+                uniform vec2 uResolution;
+
+                varying vec2 vUv;
+
+                //
+                // Simplex 3D noise (compact GLSL implementation)
+                //
+                vec4 permute(vec4 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
+                vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+
+                float snoise(vec3 v) {
+                    const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
+                    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+
+                    vec3 i = floor(v + dot(v, C.yyy));
+                    vec3 x0 = v - i + dot(i, C.xxx);
+
+                    vec3 g = step(x0.yzx, x0.xyz);
+                    vec3 l = 1.0 - g;
+                    vec3 i1 = min(g.xyz, l.zxy);
+                    vec3 i2 = max(g.xyz, l.zxy);
+
+                    vec3 x1 = x0 - i1 + C.xxx;
+                    vec3 x2 = x0 - i2 + C.yyy;
+                    vec3 x3 = x0 - D.yyy;
+
+                    i = mod(i, 289.0);
+                    vec4 p = permute(permute(permute(
+                        i.z + vec4(0.0, i1.z, i2.z, 1.0))
+                      + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+                      + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+
+                    float n_ = 1.0 / 7.0;
+                    vec3 ns = n_ * D.wyz - D.xzx;
+
+                    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+
+                    vec4 x_ = floor(j * ns.z);
+                    vec4 y_ = floor(j - 7.0 * x_);
+
+                    vec4 x = x_ * ns.x + ns.yyyy;
+                    vec4 y = y_ * ns.x + ns.yyyy;
+                    vec4 h = 1.0 - abs(x) - abs(y);
+
+                    vec4 b0 = vec4(x.xy, y.xy);
+                    vec4 b1 = vec4(x.zw, y.zw);
+
+                    vec4 s0 = floor(b0) * 2.0 + 1.0;
+                    vec4 s1 = floor(b1) * 2.0 + 1.0;
+                    vec4 sh = -step(h, vec4(0.0));
+
+                    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+                    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+
+                    vec3 p0 = vec3(a0.xy, h.x);
+                    vec3 p1 = vec3(a0.zw, h.y);
+                    vec3 p2 = vec3(a1.xy, h.z);
+                    vec3 p3 = vec3(a1.zw, h.w);
+
+                    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+                    p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+
+                    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+                    m = m * m;
+                    return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+                }
+
+                // Fractal brownian motion for rich detail
+                float fbm(vec3 p) {
+                    float value = 0.0;
+                    float amplitude = 0.5;
+                    float frequency = 1.0;
+                    for (int i = 0; i < 5; i++) {
+                        value += amplitude * snoise(p * frequency);
+                        frequency *= 2.0;
+                        amplitude *= 0.5;
+                    }
+                    return value;
+                }
+
+                void main() {
+                    vec2 uv = vUv;
+                    float aspect = uResolution.x / uResolution.y;
+                    vec2 p = (uv - 0.5) * vec2(aspect, 1.0);
+
+                    float t = uTime * 0.12;
+
+                    // Mouse influence - warp the UV space near cursor
+                    vec2 mousePos = (uMouse - 0.5) * vec2(aspect, 1.0);
+                    vec2 toMouse = p - mousePos;
+                    float mouseDist = length(toMouse);
+                    float mouseInfluence = smoothstep(0.6, 0.0, mouseDist);
+
+                    // Velocity-based swirl (faster mouse = more distortion)
+                    float speed = length(uVelocity) * 8.0;
+                    float swirl = mouseInfluence * speed;
+
+                    // Warp coordinates based on mouse position and velocity
+                    vec2 warpedP = p;
+                    warpedP += normalize(toMouse + 0.001) * mouseInfluence * 0.15;
+                    float angle = swirl * 2.0;
+                    float ca = cos(angle), sa = sin(angle);
+                    vec2 rotated = toMouse * mat2(ca, -sa, sa, ca);
+                    warpedP = mix(warpedP, mousePos + rotated, mouseInfluence * 0.3);
+
+                    // Layer 1: Large flowing structures
+                    float n1 = fbm(vec3(warpedP * 1.8 + t * 0.3, t * 0.5));
+
+                    // Layer 2: Medium detail, different direction
+                    float n2 = fbm(vec3(
+                        warpedP.x * 2.5 - t * 0.2 + n1 * 0.5,
+                        warpedP.y * 2.5 + t * 0.15,
+                        t * 0.3 + n1 * 0.3
+                    ));
+
+                    // Layer 3: Fine tendrils using domain warping
+                    vec3 q = vec3(
+                        fbm(vec3(warpedP * 3.0 + t * 0.1, 0.0)),
+                        fbm(vec3(warpedP * 3.0 + t * 0.15, 1.0)),
+                        0.0
+                    );
+                    float n3 = fbm(vec3(warpedP * 2.0 + q.xy * 1.5, t * 0.2));
+
+                    // Combine layers
+                    float combined = n1 * 0.4 + n2 * 0.35 + n3 * 0.25;
+
+                    // Create sharp flowing edges (the glowing ridges)
+                    float ridges = abs(combined);
+                    ridges = pow(ridges, 0.6);
+                    float edges = 1.0 - smoothstep(0.0, 0.08, abs(combined - 0.1));
+                    edges += 1.0 - smoothstep(0.0, 0.12, abs(combined + 0.15));
+                    edges = clamp(edges, 0.0, 1.0);
+
+                    // Color palette - black base with thin glowing accent edges
+                    vec3 darkBase = vec3(0.0, 0.0, 0.0);          // pure black
+                    vec3 deepColor = vec3(0.01, 0.005, 0.03);     // barely-there indigo
+                    vec3 midColor = vec3(0.005, 0.015, 0.035);    // hint of teal
+                    vec3 glowColor = vec3(0.0, 0.90, 0.72);       // bright teal (#00e6b8)
+                    vec3 accentGlow = vec3(0.0, 0.45, 0.75);      // blue accent
+
+                    // Base fluid color - very dark
+                    float colorMix = combined * 0.5 + 0.5;
+                    vec3 fluidColor = mix(darkBase, deepColor, smoothstep(0.3, 0.6, colorMix));
+                    fluidColor = mix(fluidColor, midColor, smoothstep(0.55, 0.85, colorMix));
+
+                    // Add ridges as barely visible structure
+                    fluidColor += ridges * vec3(0.005, 0.004, 0.012);
+
+                    // Glowing edges - thin accent lines on black
+                    float edgeGlow = edges * 0.3;
+                    vec3 edgeMix = mix(glowColor, accentGlow, sin(combined * 4.0 + t) * 0.5 + 0.5);
+                    fluidColor += edgeMix * edgeGlow;
+
+                    // Secondary glow on steep gradients - hair-thin lines
+                    float dx = fbm(vec3((warpedP + vec2(0.01, 0.0)) * 2.0, t * 0.2)) - n3;
+                    float dy = fbm(vec3((warpedP + vec2(0.0, 0.01)) * 2.0, t * 0.2)) - n3;
+                    float gradient = length(vec2(dx, dy)) * 40.0;
+                    fluidColor += edgeMix * gradient * 0.025;
+
+                    // Mouse proximity glow - faint bloom near cursor
+                    float mouseGlow = smoothstep(0.45, 0.0, mouseDist) * 0.04;
+                    fluidColor += glowColor * mouseGlow;
+
+                    // Vignette - heavy fade to pure black at edges
+                    float vignette = 1.0 - smoothstep(0.25, 0.9, length(p * 0.9));
+                    fluidColor *= vignette;
+
+                    // Overall brightness - dark, the black should dominate
+                    fluidColor *= 0.4;
+
+                    gl_FragColor = vec4(fluidColor, 1.0);
+                }
+            `,
+        });
+
+        this.quad = new THREE.Mesh(geometry, material);
+        this.scene.add(this.quad);
 
         this.observer = new IntersectionObserver(
             (entries) => { this.isVisible = entries[0].isIntersecting; },
@@ -60,177 +243,32 @@ class HeroVeil {
         this.observer.observe(this.hero);
     }
 
-    createVeil() {
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(this.particleCount * 3);
-        const randoms = new Float32Array(this.particleCount);
-        const uvs = new Float32Array(this.particleCount * 2);
-
-        const aspect = this.hero.offsetWidth / this.hero.offsetHeight;
-        const spanX = this.frustumSize * aspect;
-        const spanY = this.frustumSize;
-
-        // Lay particles in a grid with slight organic jitter
-        for (let row = 0; row < this.rows; row++) {
-            for (let col = 0; col < this.cols; col++) {
-                const i = row * this.cols + col;
-                const i3 = i * 3;
-                const i2 = i * 2;
-
-                // Normalized UV
-                const u = col / (this.cols - 1);
-                const v = row / (this.rows - 1);
-
-                // Position mapped to camera frustum, with jitter
-                const jitter = 0.03;
-                positions[i3]     = (u - 0.5) * spanX + (Math.random() - 0.5) * jitter * spanX;
-                positions[i3 + 1] = (v - 0.5) * spanY + (Math.random() - 0.5) * jitter * spanY;
-                positions[i3 + 2] = 0;
-
-                uvs[i2] = u;
-                uvs[i2 + 1] = v;
-
-                randoms[i] = Math.random();
-            }
-        }
-
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
-        geometry.setAttribute('aUv', new THREE.BufferAttribute(uvs, 2));
-
-        const material = new THREE.ShaderMaterial({
-            uniforms: {
-                uTime: { value: 0 },
-                uMouse: { value: new THREE.Vector2(9999, 9999) },
-                uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-            },
-            vertexShader: `
-                uniform float uTime;
-                uniform vec2 uMouse;
-                uniform float uPixelRatio;
-
-                attribute float aRandom;
-                attribute vec2 aUv;
-
-                varying float vAlpha;
-                varying float vDisplacement;
-                varying vec2 vUv;
-
-                void main() {
-                    vec3 pos = position;
-                    vUv = aUv;
-
-                    // Slow organic ripple - the veil breathes
-                    float wave1 = sin(pos.x * 1.8 + uTime * 0.3 + aRandom * 3.0) * 0.04;
-                    float wave2 = cos(pos.y * 2.2 + uTime * 0.25 + aRandom * 2.0) * 0.03;
-                    float wave3 = sin((pos.x + pos.y) * 0.8 + uTime * 0.15) * 0.02;
-                    pos.z += wave1 + wave2 + wave3;
-
-                    // Mouse interaction - push the veil away like parting a curtain
-                    vec2 toMouse = pos.xy - uMouse;
-                    float dist = length(toMouse);
-
-                    // Two-layer displacement: inner circle pushes hard, outer ring ripples
-                    float innerPush = smoothstep(2.5, 0.0, dist);
-                    float outerRipple = smoothstep(4.5, 2.0, dist) * (1.0 - innerPush);
-
-                    // Push particles outward from cursor (curtain parting)
-                    vec2 dir = normalize(toMouse + 0.0001);
-                    pos.xy += dir * innerPush * 1.2;
-                    pos.xy += dir * outerRipple * 0.3;
-
-                    // Push deeper into Z (receding into the void)
-                    pos.z -= innerPush * 3.0;
-                    pos.z -= outerRipple * 0.8;
-
-                    // Slight upward drift near mouse (ethereal lift)
-                    pos.y += innerPush * 0.15;
-
-                    vDisplacement = innerPush + outerRipple * 0.4;
-
-                    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-                    gl_Position = projectionMatrix * mvPosition;
-
-                    // Size: small enough to form a mesh, not individual dots
-                    float baseSize = ${this.isMobile ? '2.2' : '2.0'};
-                    gl_PointSize = baseSize * uPixelRatio;
-
-                    // Alpha: base veil opacity with edge fade
-                    float edgeFadeX = smoothstep(0.0, 0.08, aUv.x) * smoothstep(1.0, 0.92, aUv.x);
-                    float edgeFadeY = smoothstep(0.0, 0.08, aUv.y) * smoothstep(1.0, 0.92, aUv.y);
-                    float edgeFade = edgeFadeX * edgeFadeY;
-
-                    // Veil base opacity - thin, translucent
-                    vAlpha = (0.12 + aRandom * 0.08) * edgeFade;
-
-                    // Particles near cursor become more transparent (parting reveals void)
-                    vAlpha *= (1.0 - innerPush * 0.9);
-
-                    // Particles at the ripple edge glow slightly brighter
-                    vAlpha += outerRipple * 0.06;
-                }
-            `,
-            fragmentShader: `
-                varying float vAlpha;
-                varying float vDisplacement;
-                varying vec2 vUv;
-
-                void main() {
-                    // Soft circular point
-                    float d = length(gl_PointCoord - 0.5);
-                    if (d > 0.5) discard;
-                    float softness = smoothstep(0.5, 0.2, d);
-
-                    // Color: muted, ghostly palette
-                    // Base is a cold dark gray-blue, shifts slightly warmer at displacement edges
-                    vec3 veilColor = vec3(0.45, 0.50, 0.55);
-                    vec3 edgeGlow = vec3(0.3, 0.6, 0.55);
-                    vec3 color = mix(veilColor, edgeGlow, vDisplacement * 0.6);
-
-                    float alpha = softness * vAlpha;
-
-                    gl_FragColor = vec4(color, alpha);
-                }
-            `,
-            transparent: true,
-            depthWrite: false,
-            blending: THREE.NormalBlending,
-        });
-
-        this.particles = new THREE.Points(geometry, material);
-        this.scene.add(this.particles);
-    }
-
     bindEvents() {
         window.addEventListener('resize', () => this.onResize(), { passive: true });
 
-        // Convert screen coords to world coords for orthographic camera
-        const screenToWorld = (clientX, clientY) => {
+        const normalizeCoords = (clientX, clientY) => {
             const rect = this.hero.getBoundingClientRect();
-            const ndcX = ((clientX - rect.left) / rect.width) * 2 - 1;
-            const ndcY = -((clientY - rect.top) / rect.height) * 2 + 1;
-            const aspect = rect.width / rect.height;
             return new THREE.Vector2(
-                ndcX * this.frustumSize * aspect / 2,
-                ndcY * this.frustumSize / 2
+                (clientX - rect.left) / rect.width,
+                1.0 - (clientY - rect.top) / rect.height
             );
         };
 
         this.hero.addEventListener('mousemove', (e) => {
-            this.targetMouse = screenToWorld(e.clientX, e.clientY);
+            this.targetMouse = normalizeCoords(e.clientX, e.clientY);
         }, { passive: true });
 
         this.hero.addEventListener('mouseleave', () => {
-            this.targetMouse = new THREE.Vector2(9999, 9999);
+            this.targetMouse.set(0.5, 0.5);
         }, { passive: true });
 
         this.hero.addEventListener('touchmove', (e) => {
             const t = e.touches[0];
-            this.targetMouse = screenToWorld(t.clientX, t.clientY);
+            this.targetMouse = normalizeCoords(t.clientX, t.clientY);
         }, { passive: true });
 
         this.hero.addEventListener('touchend', () => {
-            this.targetMouse = new THREE.Vector2(9999, 9999);
+            this.targetMouse.set(0.5, 0.5);
         }, { passive: true });
 
         window.addEventListener('beforeunload', () => this.dispose());
@@ -239,16 +277,8 @@ class HeroVeil {
     onResize() {
         const w = this.hero.offsetWidth;
         const h = this.hero.offsetHeight;
-        const aspect = w / h;
-
-        this.camera.left = -this.frustumSize * aspect / 2;
-        this.camera.right = this.frustumSize * aspect / 2;
-        this.camera.top = this.frustumSize / 2;
-        this.camera.bottom = -this.frustumSize / 2;
-        this.camera.updateProjectionMatrix();
-
         this.renderer.setSize(w, h);
-        this.particles.material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
+        this.quad.material.uniforms.uResolution.value.set(w, h);
     }
 
     animate() {
@@ -257,23 +287,29 @@ class HeroVeil {
 
         const elapsed = this.clock.getElapsedTime();
 
-        // Slow, deliberate mouse follow
-        this.mouse.lerp(this.targetMouse, 0.035);
+        // Track velocity from mouse delta
+        this.prevMouse.copy(this.mouse);
+        this.mouse.lerp(this.targetMouse, 0.04);
+        this.velocity.set(
+            this.mouse.x - this.prevMouse.x,
+            this.mouse.y - this.prevMouse.y
+        );
 
-        this.particles.material.uniforms.uTime.value = elapsed;
-        this.particles.material.uniforms.uMouse.value.copy(this.mouse);
+        this.quad.material.uniforms.uTime.value = elapsed;
+        this.quad.material.uniforms.uMouse.value.copy(this.mouse);
+        this.quad.material.uniforms.uVelocity.value.copy(this.velocity);
 
         this.renderer.render(this.scene, this.camera);
     }
 
     dispose() {
         this.observer?.disconnect();
-        this.particles?.geometry.dispose();
-        this.particles?.material.dispose();
+        this.quad?.geometry.dispose();
+        this.quad?.material.dispose();
         this.renderer?.dispose();
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new HeroVeil();
+    new LiquidVeil();
 });
