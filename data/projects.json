@@ -200,6 +200,28 @@
             "featured": false,
             "comingSoon": false,
             "lastUpdated": "2025-01-05"
+        },
+        {
+            "id": "tv-ui",
+            "title": "TV UI",
+            "shortDescription": "Netflix-style streaming interface with spatial navigation.",
+            "description": "A full streaming service UI clone built with React, Redux Toolkit, and TypeScript. Features spatial keyboard/remote navigation, hero banners with trailers, content rows with smooth scrolling, search, and a My List feature. Designed for TV and 10-foot experiences.",
+            "category": "tool",
+            "categoryLabel": "App",
+            "thumbnail": "/assets/thumbnails/tv-ui.svg",
+            "screenshots": [],
+            "path": "",
+            "externalUrl": "https://jposn3r.github.io/tv-ui/",
+            "sourceUrl": "https://github.com/jposn3r/tv-ui",
+            "tech": [
+                "React",
+                "TypeScript",
+                "Redux"
+            ],
+            "status": "active",
+            "featured": true,
+            "comingSoon": false,
+            "lastUpdated": "Apr 11, 2026"
         }
     ]
 }

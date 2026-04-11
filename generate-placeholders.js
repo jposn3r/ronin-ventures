@@ -18,6 +18,7 @@ const projects = [
     { name: 'brickbreaker', label: 'BRICKBREAKER', color: '#f0a030', pattern: 'circles' },
     { name: 'metakaizen', label: 'METAKAIZEN', color: '#818cf8', pattern: 'waves' },
     { name: 'cursordev', label: 'CURSOR DEV', color: '#22c55e', pattern: 'code-scroll' },
+    { name: 'tv-ui', label: 'TV UI', color: '#e50914', pattern: 'bars' },
 ];
 
 function generateBars(color, count = 12) {
