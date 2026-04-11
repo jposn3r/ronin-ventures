@@ -285,7 +285,7 @@
                 "Vite"
             ],
             "status": "active",
-            "featured": false,
+            "featured": true,
             "comingSoon": false,
             "lastUpdated": "Apr 11, 2026"
         }
