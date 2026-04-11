@@ -8,53 +8,53 @@
   <rect width="800" height="450" fill="url(#bg)"/>
   <g>
     
-    <rect x="160" y="283" width="24" rx="4" height="37" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="37;112;37" dur="1.42s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="283;208;283" dur="1.42s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="160" y="255" width="24" rx="4" height="65" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="65;125;65" dur="1.75s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="255;195;255" dur="1.75s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="200" y="216" width="24" rx="4" height="104" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="104;187;104" dur="1.51s" begin="0.15s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="216;133;216" dur="1.51s" begin="0.15s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="200" y="233" width="24" rx="4" height="87" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="87;143;87" dur="1.81s" begin="0.15s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="233;177;233" dur="1.81s" begin="0.15s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="240" y="241" width="24" rx="4" height="79" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="79;154;79" dur="1.53s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="241;166;241" dur="1.53s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="240" y="273" width="24" rx="4" height="47" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="47;133;47" dur="1.28s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="273;187;273" dur="1.28s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="280" y="288" width="24" rx="4" height="32" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="32;73;32" dur="1.98s" begin="0.45s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="288;247;288" dur="1.98s" begin="0.45s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="280" y="212" width="24" rx="4" height="108" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="108;178;108" dur="1.57s" begin="0.45s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="212;142;212" dur="1.57s" begin="0.45s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="320" y="261" width="24" rx="4" height="59" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="59;135;59" dur="1.33s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="261;185;261" dur="1.33s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="320" y="217" width="24" rx="4" height="103" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="103;199;103" dur="1.66s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="217;121;217" dur="1.66s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="360" y="242" width="24" rx="4" height="78" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="78;121;78" dur="1.21s" begin="0.75s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="242;199;242" dur="1.21s" begin="0.75s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="360" y="270" width="24" rx="4" height="50" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="50;115;50" dur="1.33s" begin="0.75s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="270;205;270" dur="1.33s" begin="0.75s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="400" y="244" width="24" rx="4" height="76" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="76;168;76" dur="1.83s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="244;152;244" dur="1.83s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="400" y="284" width="24" rx="4" height="36" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="36;94;36" dur="1.50s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="284;226;284" dur="1.50s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="440" y="287" width="24" rx="4" height="33" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="33;112;33" dur="1.78s" begin="1.05s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="287;208;287" dur="1.78s" begin="1.05s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="440" y="218" width="24" rx="4" height="102" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="102;188;102" dur="1.65s" begin="1.05s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="218;132;218" dur="1.65s" begin="1.05s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="480" y="264" width="24" rx="4" height="56" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="56;152;56" dur="1.85s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="264;168;264" dur="1.85s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="480" y="258" width="24" rx="4" height="62" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="62;151;62" dur="1.34s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="258;169;258" dur="1.34s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="520" y="225" width="24" rx="4" height="95" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="95;189;95" dur="1.99s" begin="1.35s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="225;131;225" dur="1.99s" begin="1.35s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="520" y="288" width="24" rx="4" height="32" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="32;97;32" dur="1.32s" begin="1.35s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="288;223;288" dur="1.32s" begin="1.35s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="560" y="224" width="24" rx="4" height="96" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="96;165;96" dur="1.91s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="224;155;224" dur="1.91s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="560" y="245" width="24" rx="4" height="75" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="75;138;75" dur="1.24s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="245;182;245" dur="1.24s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
-    <rect x="600" y="232" width="24" rx="4" height="88" fill="#00e6b8" opacity="0.6">
-      <animate attributeName="height" values="88;148;88" dur="1.61s" begin="1.65s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="232;172;232" dur="1.61s" begin="1.65s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="600" y="259" width="24" rx="4" height="61" fill="#00e6b8" opacity="0.6">
+      <animate attributeName="height" values="61;154;61" dur="1.92s" begin="1.65s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+      <animate attributeName="y" values="259;166;259" dur="1.92s" begin="1.65s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
     </rect>
   </g>
   <text x="400" y="420" fill="#00e6b8" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">WEALTH ARCHITECT</text>

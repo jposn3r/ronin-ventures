@@ -12,3 +12,14 @@ node_modules/
 
 # Logs
 *.log
+
+# Claude Code
+.claude/
+
+# Environment
+.env
+.env.*
+
+# OS
+Thumbs.db
+Desktop.ini
