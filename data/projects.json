@@ -288,6 +288,28 @@
             "featured": true,
             "comingSoon": false,
             "lastUpdated": "Apr 11, 2026"
+        },
+        {
+            "id": "system-design-simulator",
+            "title": "System Design Simulator",
+            "shortDescription": "Interactive canvas for distributed systems design practice.",
+            "description": "A mission-control-inspired design tool for practicing distributed systems architecture. Place hardware components on an isometric board, wire up data connections, load product scenarios (Twitter feed, URL shortener, and more), run simulated traffic, inject failures, and get scored against production standards across the full stack.",
+            "category": "tool",
+            "categoryLabel": "Simulation",
+            "thumbnail": "/assets/thumbnails/system-design-simulator.svg",
+            "screenshots": [],
+            "path": "",
+            "externalUrl": "https://jposn3r.github.io/system-design-simulator/",
+            "sourceUrl": "https://github.com/jposn3r/system-design-simulator",
+            "tech": [
+                "React",
+                "TypeScript",
+                "SVG"
+            ],
+            "status": "active",
+            "featured": true,
+            "comingSoon": false,
+            "lastUpdated": "Apr 16, 2026"
         }
     ]
 }

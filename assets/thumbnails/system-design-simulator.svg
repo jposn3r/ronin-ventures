@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="sdsBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#111111"/>
+    </linearGradient>
+    <linearGradient id="sdsFaceTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="sdsFaceLeft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="sdsFaceRight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.12"/>
+    </linearGradient>
+    <symbol id="sdsNode" overflow="visible">
+      <!-- Top face (diamond) -->
+      <polygon points="-22,0 0,-11 22,0 0,11" fill="url(#sdsFaceTop)" stroke="#00e5ff" stroke-opacity="0.85" stroke-width="1"/>
+      <!-- Left face -->
+      <polygon points="-22,0 0,11 0,27 -22,16" fill="url(#sdsFaceLeft)" stroke="#00e5ff" stroke-opacity="0.55" stroke-width="1"/>
+      <!-- Right face -->
+      <polygon points="22,0 0,11 0,27 22,16" fill="url(#sdsFaceRight)" stroke="#00e5ff" stroke-opacity="0.55" stroke-width="1"/>
+    </symbol>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#sdsBg)"/>
+
+  <!-- Isometric grid backdrop -->
+  <g stroke="#00e5ff" stroke-opacity="0.05" stroke-width="1">
+    <!-- Lines going up-right (30 deg) -->
+    <line x1="40" y1="380" x2="760" y2="20"/>
+    <line x1="40" y1="340" x2="760" y2="-20"/>
+    <line x1="40" y1="420" x2="760" y2="60"/>
+    <line x1="80" y1="420" x2="800" y2="60"/>
+    <line x1="0" y1="380" x2="720" y2="20"/>
+    <!-- Lines going down-right (-30 deg) -->
+    <line x1="40" y1="60" x2="760" y2="420"/>
+    <line x1="40" y1="20" x2="760" y2="380"/>
+    <line x1="40" y1="100" x2="760" y2="460"/>
+    <line x1="80" y1="20" x2="800" y2="380"/>
+    <line x1="0" y1="60" x2="720" y2="420"/>
+  </g>
+
+  <!-- Corner telemetry brackets -->
+  <g stroke="#00e5ff" stroke-opacity="0.35" stroke-width="1.2" fill="none">
+    <polyline points="30,30 30,18 42,18"/>
+    <polyline points="770,30 770,18 758,18"/>
+    <polyline points="30,400 30,412 42,412"/>
+    <polyline points="770,400 770,412 758,412"/>
+  </g>
+
+  <!-- Connection lines (data paths) -->
+  <g stroke="#00e5ff" stroke-opacity="0.55" stroke-width="1.5" fill="none">
+    <path id="sdsPath1" d="M 180,210 L 340,140"/>
+    <path id="sdsPath2" d="M 180,210 L 340,270"/>
+    <path id="sdsPath3" d="M 340,140 L 500,140"/>
+    <path id="sdsPath4" d="M 340,270 L 500,270"/>
+    <path id="sdsPath5" d="M 500,140 L 500,270"/>
+    <path id="sdsPath6" d="M 500,270 L 640,210"/>
+    <path id="sdsPath7" d="M 500,140 L 640,210"/>
+  </g>
+
+  <!-- Animated data packets flowing along connections -->
+  <g fill="#00e5ff">
+    <circle r="2.5">
+      <animateMotion dur="2.4s" repeatCount="indefinite">
+        <mpath href="#sdsPath1"/>
+      </animateMotion>
+    </circle>
+    <circle r="2.5">
+      <animateMotion dur="2.8s" begin="0.4s" repeatCount="indefinite">
+        <mpath href="#sdsPath2"/>
+      </animateMotion>
+    </circle>
+    <circle r="2.5">
+      <animateMotion dur="2.2s" begin="0.8s" repeatCount="indefinite">
+        <mpath href="#sdsPath3"/>
+      </animateMotion>
+    </circle>
+    <circle r="2.5">
+      <animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite">
+        <mpath href="#sdsPath4"/>
+      </animateMotion>
+    </circle>
+    <circle r="2.5">
+      <animateMotion dur="2.0s" begin="0.6s" repeatCount="indefinite">
+        <mpath href="#sdsPath5"/>
+      </animateMotion>
+    </circle>
+    <circle r="2.5">
+      <animateMotion dur="2.4s" begin="1.0s" repeatCount="indefinite">
+        <mpath href="#sdsPath6"/>
+      </animateMotion>
+    </circle>
+    <circle r="2.5" fill="#ffab00">
+      <animateMotion dur="3.0s" begin="1.5s" repeatCount="indefinite">
+        <mpath href="#sdsPath7"/>
+      </animateMotion>
+    </circle>
+  </g>
+
+  <!-- Isometric component nodes -->
+  <use href="#sdsNode" x="180" y="210"/>
+  <use href="#sdsNode" x="340" y="140"/>
+  <use href="#sdsNode" x="340" y="270"/>
+  <use href="#sdsNode" x="500" y="140"/>
+  <use href="#sdsNode" x="500" y="270"/>
+  <use href="#sdsNode" x="640" y="210"/>
+
+  <!-- Status telemetry dots (cyan healthy, amber warning) -->
+  <g>
+    <circle cx="180" cy="210" r="3" fill="#00e5ff">
+      <animate attributeName="opacity" values="1;0.35;1" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="340" cy="140" r="3" fill="#00e5ff">
+      <animate attributeName="opacity" values="1;0.35;1" dur="1.6s" begin="0.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="340" cy="270" r="3" fill="#00e5ff">
+      <animate attributeName="opacity" values="1;0.35;1" dur="1.9s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="500" cy="140" r="3" fill="#ffab00">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="500" cy="270" r="3" fill="#00e5ff">
+      <animate attributeName="opacity" values="1;0.35;1" dur="1.7s" begin="0.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="640" cy="210" r="3" fill="#00e5ff">
+      <animate attributeName="opacity" values="1;0.35;1" dur="2.0s" begin="0.7s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Telemetry readout (top-left) -->
+  <g font-family="monospace" font-size="9" fill="#00e5ff" fill-opacity="0.55" letter-spacing="1.5">
+    <text x="52" y="24">SIM // ACTIVE</text>
+    <text x="52" y="38" fill-opacity="0.35">NODES 06 / LINKS 07</text>
+  </g>
+  <g font-family="monospace" font-size="9" fill="#00e5ff" fill-opacity="0.55" letter-spacing="1.5" text-anchor="end">
+    <text x="748" y="24">P99  42ms</text>
+    <text x="748" y="38" fill-opacity="0.35">QPS  18.4K</text>
+  </g>
+
+  <!-- Label -->
+  <text x="400" y="420" fill="#00e5ff" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="4" opacity="0.55">SYSTEM DESIGN SIMULATOR</text>
+</svg>

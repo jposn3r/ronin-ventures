@@ -22,6 +22,7 @@ const projects = [
     { name: 'iron-man-hud', label: 'IRON MAN HUD', color: '#ff3333', pattern: 'circles' },
     { name: 'av-simulation', label: 'AV SIMULATION', color: '#00ccff', pattern: 'waves' },
     { name: 'mlb-showdown', label: 'MLB SHOWDOWN', color: '#e63946', pattern: 'grid-pulse' },
+    // system-design-simulator.svg is hand-authored (isometric nodes + data flow); skip auto-regen.
 ];
 
 function generateBars(color, count = 12) {
