@@ -269,7 +269,7 @@ class RoninHub {
             const isExternal = !!project.externalUrl;
             launchBtn.innerHTML = isExternal
                 ? '<span class="btn-icon">&#8599;</span> Open Site'
-                : '<span class="btn-icon">&#9654;</span> Launch Experience';
+                : '<span class="btn-icon">&#9654;</span> Launch';
         }
 
         // Stats
