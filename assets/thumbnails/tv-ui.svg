@@ -1,61 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1a1a1a"/>
-      <stop offset="100%" stop-color="#111111"/>
+    <linearGradient id="tvBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0606"/>
+      <stop offset="100%" stop-color="#050202"/>
+    </linearGradient>
+    <linearGradient id="tvHero" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e50914" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#e50914" stop-opacity="0.05"/>
     </linearGradient>
   </defs>
-  <rect width="800" height="450" fill="url(#bg)"/>
-  <g>
-    
-    <rect x="160" y="253" width="24" rx="4" height="67" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="67;121;67" dur="1.84s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="253;199;253" dur="1.84s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+  <rect width="800" height="450" fill="url(#tvBg)"/>
+
+  <!-- Hero banner -->
+  <g transform="translate(60 50)">
+    <rect x="0" y="0" width="680" height="150" rx="8" fill="url(#tvHero)" stroke="#e50914" stroke-opacity="0.35"/>
+    <text x="30" y="50" fill="#e50914" font-family="monospace" font-size="24" font-weight="700" letter-spacing="3">FEATURED</text>
+    <rect x="30" y="70" width="280" height="8" rx="3" fill="#ffffff" opacity="0.7"/>
+    <rect x="30" y="86" width="200" height="6" rx="3" fill="#ffffff" opacity="0.4"/>
+    <rect x="30" y="110" width="90" height="26" rx="4" fill="#e50914"/>
+    <text x="75" y="128" fill="#ffffff" font-family="monospace" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1">▶ PLAY</text>
+    <rect x="130" y="110" width="100" height="26" rx="4" fill="#ffffff" opacity="0.15" stroke="#ffffff" stroke-opacity="0.4"/>
+    <text x="180" y="128" fill="#ffffff" font-family="monospace" font-size="11" font-weight="600" text-anchor="middle" letter-spacing="1" opacity="0.9">+ MY LIST</text>
+  </g>
+
+  <!-- Content row -->
+  <g transform="translate(60 220)">
+    <text x="0" y="14" fill="#ffffff" font-family="monospace" font-size="12" font-weight="600" opacity="0.85" letter-spacing="2">TRENDING NOW</text>
+
+    <!-- Tiles -->
+    <g>
+      <rect x="0"   y="30" width="120" height="130" rx="6" fill="#e50914" opacity="0.3"/>
+      <rect x="0"   y="30" width="120" height="130" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.15"/>
+
+      <rect x="135" y="30" width="120" height="130" rx="6" fill="#e50914" opacity="0.25"/>
+      <rect x="135" y="30" width="120" height="130" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.15"/>
+
+      <rect x="270" y="30" width="120" height="130" rx="6" fill="#e50914" opacity="0.35"/>
+      <rect x="270" y="30" width="120" height="130" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.15"/>
+
+      <rect x="405" y="30" width="120" height="130" rx="6" fill="#e50914" opacity="0.22"/>
+      <rect x="405" y="30" width="120" height="130" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.15"/>
+
+      <rect x="540" y="30" width="120" height="130" rx="6" fill="#e50914" opacity="0.3"/>
+      <rect x="540" y="30" width="120" height="130" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.15"/>
+    </g>
+
+    <!-- Tile inner dressing: fake thumbnail bars -->
+    <g fill="#ffffff" opacity="0.5">
+      <rect x="10"  y="132" width="80" height="4" rx="2"/>
+      <rect x="145" y="132" width="70" height="4" rx="2"/>
+      <rect x="280" y="132" width="90" height="4" rx="2"/>
+      <rect x="415" y="132" width="60" height="4" rx="2"/>
+      <rect x="550" y="132" width="85" height="4" rx="2"/>
+    </g>
+
+    <!-- Focus ring: hops across tiles -->
+    <rect x="0" y="30" width="120" height="130" rx="6" fill="none" stroke="#ffffff" stroke-width="3">
+      <animate attributeName="x" values="0;135;270;405;540;0" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.6 0 0.4 1;0.6 0 0.4 1;0.6 0 0.4 1;0.6 0 0.4 1;0.6 0 0.4 1"/>
     </rect>
-    <rect x="200" y="215" width="24" rx="4" height="105" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="105;185;105" dur="1.67s" begin="0.15s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="215;135;215" dur="1.67s" begin="0.15s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="240" y="227" width="24" rx="4" height="93" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="93;175;93" dur="1.93s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="227;145;227" dur="1.93s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="280" y="247" width="24" rx="4" height="73" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="73;120;73" dur="1.63s" begin="0.45s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="247;200;247" dur="1.63s" begin="0.45s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="320" y="218" width="24" rx="4" height="102" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="102;193;102" dur="1.21s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="218;127;218" dur="1.21s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="360" y="227" width="24" rx="4" height="93" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="93;189;93" dur="1.71s" begin="0.75s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="227;131;227" dur="1.71s" begin="0.75s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="400" y="226" width="24" rx="4" height="94" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="94;190;94" dur="1.34s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="226;130;226" dur="1.34s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="440" y="252" width="24" rx="4" height="68" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="68;151;68" dur="1.30s" begin="1.05s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="252;169;252" dur="1.30s" begin="1.05s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="480" y="229" width="24" rx="4" height="91" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="91;179;91" dur="1.95s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="229;141;229" dur="1.95s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="520" y="240" width="24" rx="4" height="80" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="80;162;80" dur="1.24s" begin="1.35s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="240;158;240" dur="1.24s" begin="1.35s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="560" y="237" width="24" rx="4" height="83" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="83;170;83" dur="1.87s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="237;150;237" dur="1.87s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-    </rect>
-    <rect x="600" y="227" width="24" rx="4" height="93" fill="#e50914" opacity="0.6">
-      <animate attributeName="height" values="93;137;93" dur="1.91s" begin="1.65s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
-      <animate attributeName="y" values="227;183;227" dur="1.91s" begin="1.65s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1"/>
+    <rect x="0" y="30" width="120" height="130" rx="6" fill="#ffffff" opacity="0.08">
+      <animate attributeName="x" values="0;135;270;405;540;0" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.6 0 0.4 1;0.6 0 0.4 1;0.6 0 0.4 1;0.6 0 0.4 1;0.6 0 0.4 1"/>
     </rect>
   </g>
-  <text x="400" y="420" fill="#e50914" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">TV UI</text>
+
+  <text x="400" y="420" fill="#e50914" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.5">TV UI</text>
 </svg>

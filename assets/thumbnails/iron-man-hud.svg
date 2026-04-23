@@ -1,43 +1,80 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1a1a1a"/>
-      <stop offset="100%" stop-color="#111111"/>
+    <radialGradient id="imGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#ff3333" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ff3333" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="imBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#180808"/>
+      <stop offset="100%" stop-color="#0a0303"/>
     </linearGradient>
   </defs>
-  <rect width="800" height="450" fill="url(#bg)"/>
-  <g>
-    
-    <circle cx="451" cy="108" r="32" fill="#ff3333" opacity="0.20">
-      <animate attributeName="cx" values="451;462;451" dur="4.38s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="108;109;108" dur="4.38s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="32;42;32" dur="4.38s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+  <rect width="800" height="450" fill="url(#imBg)"/>
+
+  <!-- Ambient glow -->
+  <circle cx="400" cy="225" r="220" fill="url(#imGlow)"/>
+
+  <!-- Concentric HUD rings -->
+  <g transform="translate(400 225)" fill="none" stroke="#ff3333">
+    <circle r="160" stroke-opacity="0.25" stroke-width="1"/>
+    <circle r="130" stroke-opacity="0.4" stroke-width="1"/>
+    <circle r="90" stroke-opacity="0.6" stroke-width="1.5"/>
+
+    <!-- Rotating outer dashed ring -->
+    <circle r="140" stroke-opacity="0.8" stroke-width="1.5" stroke-dasharray="6 14">
+      <animateTransform attributeName="transform" type="rotate" values="0;360" dur="14s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="457" cy="341" r="16" fill="#ff3333" opacity="0.28">
-      <animate attributeName="cx" values="457;432;457" dur="4.34s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="341;334;341" dur="4.34s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="16;21;16" dur="4.34s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+
+    <!-- Counter-rotating inner dashed ring (gold) -->
+    <circle r="110" stroke="#d4a84a" stroke-opacity="0.6" stroke-width="1" stroke-dasharray="3 8">
+      <animateTransform attributeName="transform" type="rotate" values="360;0" dur="9s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="381" cy="168" r="54" fill="#ff3333" opacity="0.18">
-      <animate attributeName="cx" values="381;398;381" dur="3.50s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="168;187;168" dur="3.50s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="54;70;54" dur="3.50s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="373" cy="177" r="26" fill="#ff3333" opacity="0.39">
-      <animate attributeName="cx" values="373;365;373" dur="4.33s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="177;195;177" dur="4.33s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="26;34;26" dur="4.33s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="249" cy="191" r="33" fill="#ff3333" opacity="0.33">
-      <animate attributeName="cx" values="249;241;249" dur="3.02s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="191;195;191" dur="3.02s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="33;43;33" dur="3.02s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="585" cy="272" r="40" fill="#ff3333" opacity="0.19">
-      <animate attributeName="cx" values="585;604;585" dur="2.72s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="272;262;272" dur="2.72s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="40;51;40" dur="2.72s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
+
+    <!-- Tick marks (cardinal) -->
+    <g stroke-width="2" stroke-opacity="0.9">
+      <line x1="0" y1="-160" x2="0" y2="-145"/>
+      <line x1="160" y1="0" x2="145" y2="0"/>
+      <line x1="0" y1="160" x2="0" y2="145"/>
+      <line x1="-160" y1="0" x2="-145" y2="0"/>
+    </g>
+
+    <!-- Crosshair -->
+    <line x1="-60" y1="0" x2="-14" y2="0" stroke-width="1.5" stroke-opacity="0.8"/>
+    <line x1="14" y1="0" x2="60" y2="0" stroke-width="1.5" stroke-opacity="0.8"/>
+    <line x1="0" y1="-60" x2="0" y2="-14" stroke-width="1.5" stroke-opacity="0.8"/>
+    <line x1="0" y1="14" x2="0" y2="60" stroke-width="1.5" stroke-opacity="0.8"/>
+    <circle r="6" stroke="#d4a84a" stroke-width="1.5" stroke-opacity="1" fill="#d4a84a" fill-opacity="0.35"/>
+    <circle r="2" fill="#ffd36b" stroke="none"/>
+
+    <!-- Target brackets -->
+    <g stroke-width="2" stroke-opacity="0.9">
+      <polyline points="-40,-30 -40,-40 -30,-40"/>
+      <polyline points="40,-30 40,-40 30,-40"/>
+      <polyline points="-40,30 -40,40 -30,40"/>
+      <polyline points="40,30 40,40 30,40"/>
+      <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="1.4s" repeatCount="indefinite"/>
+    </g>
   </g>
+
+  <!-- LOCK text -->
+  <g transform="translate(400 225)" font-family="monospace" fill="#ff3333">
+    <g opacity="0">
+      <rect x="-30" y="-106" width="60" height="16" rx="2" fill="#ff3333" opacity="0.18"/>
+      <text x="0" y="-94" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="2">LOCK</text>
+      <animate attributeName="opacity" values="0;1;0;1;1" keyTimes="0;0.1;0.2;0.3;1" dur="3.5s" repeatCount="indefinite"/>
+    </g>
+    <text x="0" y="188" font-size="9" font-weight="600" text-anchor="middle" letter-spacing="3" opacity="0.8">TRACKING · J.A.R.V.I.S</text>
+  </g>
+
+  <!-- Data readouts -->
+  <g font-family="monospace" font-size="10" fill="#ff3333" opacity="0.75">
+    <text x="60" y="100">ALT <tspan opacity="0.5">1840M</tspan></text>
+    <text x="60" y="120">VEL <tspan opacity="0.5">+230</tspan></text>
+    <text x="60" y="140">PWR <tspan opacity="0.5">98%</tspan></text>
+    <text x="740" y="100" text-anchor="end">RNG <tspan opacity="0.5">412M</tspan></text>
+    <text x="740" y="120" text-anchor="end">AZM <tspan opacity="0.5">+14°</tspan></text>
+    <text x="740" y="140" text-anchor="end">ELV <tspan opacity="0.5">−6°</tspan></text>
+  </g>
+
   <text x="400" y="420" fill="#ff3333" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">IRON MAN HUD</text>
 </svg>

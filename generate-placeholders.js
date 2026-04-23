@@ -8,21 +8,11 @@ const path = require('path');
 
 const outputDir = path.join(__dirname, 'assets', 'thumbnails');
 
+// All project thumbnails are now hand-authored with personalized animations.
+// This generator is kept as scaffolding for quickly bootstrapping a placeholder
+// for a new project before a custom SVG is designed — add an entry below to use.
 const projects = [
-    { name: 'jakeposner', label: 'JAKE POSNER', color: '#00e6b8', pattern: 'circles' },
-    { name: 'investment-calculator', label: 'WEALTH ARCHITECT', color: '#00e6b8', pattern: 'bars' },
-    { name: 'hostr', label: 'HOSTR', color: '#f97316', pattern: 'bars' },
-    { name: 'therapy-crm', label: 'THERAPY CRM', color: '#a78bfa', pattern: 'grid-pulse' },
-    { name: 'task-forge', label: 'TASK FORGE', color: '#38bdf8', pattern: 'grid-pulse' },
-    { name: 'wordsearch', label: 'WORD SEARCH', color: '#34d399', pattern: 'grid-pulse' },
-    { name: 'brickbreaker', label: 'BRICKBREAKER', color: '#f0a030', pattern: 'circles' },
-    { name: 'metakaizen', label: 'METAKAIZEN', color: '#818cf8', pattern: 'waves' },
-    { name: 'cursordev', label: 'CURSOR DEV', color: '#22c55e', pattern: 'code-scroll' },
-    { name: 'tv-ui', label: 'TV UI', color: '#e50914', pattern: 'bars' },
-    { name: 'iron-man-hud', label: 'IRON MAN HUD', color: '#ff3333', pattern: 'circles' },
-    { name: 'av-simulation', label: 'AV SIMULATION', color: '#00ccff', pattern: 'waves' },
-    { name: 'mlb-showdown', label: 'MLB SHOWDOWN', color: '#e63946', pattern: 'grid-pulse' },
-    // system-design-simulator.svg is hand-authored (isometric nodes + data flow); skip auto-regen.
+    // Example: { name: 'new-project', label: 'NEW PROJECT', color: '#00d4aa', pattern: 'circles' },
 ];
 
 function generateBars(color, count = 12) {

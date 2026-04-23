@@ -285,7 +285,7 @@
                 "JavaScript"
             ],
             "status": "active",
-            "featured": true,
+            "featured": false,
             "comingSoon": false,
             "lastUpdated": "Apr 22, 2026"
         },
@@ -329,7 +329,7 @@
                 "SVG"
             ],
             "status": "active",
-            "featured": true,
+            "featured": false,
             "comingSoon": false,
             "lastUpdated": "Apr 16, 2026"
         }

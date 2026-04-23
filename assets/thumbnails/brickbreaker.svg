@@ -1,43 +1,132 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1a1a1a"/>
-      <stop offset="100%" stop-color="#111111"/>
+    <linearGradient id="bbBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a0f08"/>
+      <stop offset="100%" stop-color="#0c0704"/>
     </linearGradient>
+    <filter id="bbGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <rect width="800" height="450" fill="url(#bg)"/>
-  <g>
-    
-    <circle cx="413" cy="194" r="46" fill="#f0a030" opacity="0.22">
-      <animate attributeName="cx" values="413;417;413" dur="2.62s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="194;185;194" dur="2.62s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="46;59;46" dur="2.62s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="479" cy="135" r="16" fill="#f0a030" opacity="0.37">
-      <animate attributeName="cx" values="479;459;479" dur="3.51s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="135;153;135" dur="3.51s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="16;21;16" dur="3.51s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="525" cy="198" r="19" fill="#f0a030" opacity="0.31">
-      <animate attributeName="cx" values="525;544;525" dur="4.16s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="198;205;198" dur="4.16s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="19;25;19" dur="4.16s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="288" cy="347" r="38" fill="#f0a030" opacity="0.23">
-      <animate attributeName="cx" values="288;298;288" dur="2.77s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="347;345;347" dur="2.77s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="38;50;38" dur="2.77s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="571" cy="342" r="21" fill="#f0a030" opacity="0.24">
-      <animate attributeName="cx" values="571;582;571" dur="4.17s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="342;354;342" dur="4.17s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="21;27;21" dur="4.17s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="422" cy="275" r="50" fill="#f0a030" opacity="0.38">
-      <animate attributeName="cx" values="422;422;422" dur="3.71s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="275;294;275" dur="3.71s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="50;65;50" dur="3.71s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
+  <rect width="800" height="450" fill="url(#bbBg)"/>
+
+  <!-- Brick wall -->
+  <g filter="url(#bbGlow)">
+    <!-- Row 0: orange -->
+    <g fill="#f0a030">
+      <rect x="120" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="180" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="240" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="300" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="360" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="420" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="480" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="540" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="600" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="660" y="70" width="52" height="20" rx="3" opacity="0.9"/>
+    </g>
+    <!-- Row 1: pink -->
+    <g fill="#ff2e88">
+      <rect x="120" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="180" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="240" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="300" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="360" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="420" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="480" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="540" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="600" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="660" y="96" width="52" height="20" rx="3" opacity="0.9"/>
+    </g>
+    <!-- Row 2: cyan (with two targeted bricks that get broken each loop) -->
+    <g fill="#00e5ff">
+      <rect x="120" y="122" width="52" height="20" rx="3" opacity="0.9"/>
+      <!-- Target brick 1: breaks at t=0.25, restores at t=1 -->
+      <rect x="180" y="122" width="52" height="20" rx="3" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;0.9;0;0;0.9" keyTimes="0;0.249;0.25;0.999;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="240" y="122" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="300" y="122" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="360" y="122" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="420" y="122" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="480" y="122" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="540" y="122" width="52" height="20" rx="3" opacity="0.9"/>
+      <rect x="600" y="122" width="52" height="20" rx="3" opacity="0.9"/>
+      <!-- Target brick 2: breaks at t=0.75, restores at t=1 -->
+      <rect x="660" y="122" width="52" height="20" rx="3" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;0.9;0;0;0.9" keyTimes="0;0.749;0.75;0.999;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+    </g>
   </g>
-  <text x="400" y="420" fill="#f0a030" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">BRICKBREAKER</text>
+
+  <!-- Paddle -->
+  <rect x="340" y="340" width="120" height="14" rx="7" fill="#f0a030" filter="url(#bbGlow)">
+    <!-- Recoil bump on ball contact (at t=0, 0.5, 1) -->
+    <animate attributeName="y" values="340;340;342;340;340;342;340;340" keyTimes="0;0.48;0.5;0.52;0.98;1;1;1" dur="5s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Ball trail (ghost) -->
+  <circle r="5" fill="#f0a030" opacity="0.25" filter="url(#bbGlow)">
+    <animate attributeName="cx" values="400;206;400;686;400" keyTimes="0;0.245;0.5;0.745;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="333;149;333;149;333" keyTimes="0;0.245;0.5;0.745;1" dur="5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Ball -->
+  <circle r="7" fill="#ffffff" filter="url(#bbGlow)">
+    <animate attributeName="cx" values="400;206;400;686;400" keyTimes="0;0.25;0.5;0.75;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="333;149;333;149;333" keyTimes="0;0.25;0.5;0.75;1" dur="5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Brick 1 shatter burst -->
+  <g fill="#00e5ff">
+    <circle cx="206" cy="132" r="0" opacity="0">
+      <animate attributeName="r" values="0;0;18;0" keyTimes="0;0.249;0.3;0.4" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;0.5;0" keyTimes="0;0.249;0.3;0.4" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-width" values="0;0;3;0" keyTimes="0;0.249;0.3;0.4" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;0" keyTimes="0;0.249;0.28;0.42" dur="5s" repeatCount="indefinite"/>
+      <rect x="198" y="124" width="4" height="4" rx="1">
+        <animateTransform attributeName="transform" type="translate" values="0,0;-14,-10" keyTimes="0;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="210" y="122" width="4" height="4" rx="1">
+        <animateTransform attributeName="transform" type="translate" values="0,0;12,-12" keyTimes="0;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="204" y="138" width="3" height="3" rx="1">
+        <animateTransform attributeName="transform" type="translate" values="0,0;-8,14" keyTimes="0;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="214" y="140" width="3" height="3" rx="1">
+        <animateTransform attributeName="transform" type="translate" values="0,0;10,12" keyTimes="0;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </g>
+
+  <!-- Brick 2 shatter burst -->
+  <g fill="#00e5ff">
+    <circle cx="686" cy="132" r="0" opacity="0">
+      <animate attributeName="r" values="0;0;18;0" keyTimes="0;0.749;0.8;0.9" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;0.5;0" keyTimes="0;0.749;0.8;0.9" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;0" keyTimes="0;0.749;0.78;0.92" dur="5s" repeatCount="indefinite"/>
+      <rect x="678" y="124" width="4" height="4" rx="1">
+        <animateTransform attributeName="transform" type="translate" values="0,0;-14,-10" keyTimes="0;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="690" y="122" width="4" height="4" rx="1">
+        <animateTransform attributeName="transform" type="translate" values="0,0;12,-12" keyTimes="0;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="684" y="138" width="3" height="3" rx="1">
+        <animateTransform attributeName="transform" type="translate" values="0,0;-8,14" keyTimes="0;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="694" y="140" width="3" height="3" rx="1">
+        <animateTransform attributeName="transform" type="translate" values="0,0;10,12" keyTimes="0;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </g>
+
+  <text x="400" y="420" fill="#f0a030" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.5">BRICKBREAKER</text>
 </svg>

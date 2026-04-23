@@ -1,43 +1,52 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="jpBg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#1a1a1a"/>
-      <stop offset="100%" stop-color="#111111"/>
+      <stop offset="100%" stop-color="#0c0c0c"/>
     </linearGradient>
   </defs>
-  <rect width="800" height="450" fill="url(#bg)"/>
-  <g>
-    
-    <circle cx="500" cy="224" r="21" fill="#00e6b8" opacity="0.16">
-      <animate attributeName="cx" values="500;476;500" dur="3.80s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="224;234;224" dur="3.80s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="21;27;21" dur="3.80s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="453" cy="232" r="37" fill="#00e6b8" opacity="0.23">
-      <animate attributeName="cx" values="453;464;453" dur="3.03s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="232;250;232" dur="3.03s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="37;49;37" dur="3.03s" begin="0.30s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="507" cy="145" r="51" fill="#00e6b8" opacity="0.36">
-      <animate attributeName="cx" values="507;509;507" dur="3.67s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="145;152;145" dur="3.67s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="51;67;51" dur="3.67s" begin="0.60s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="322" cy="292" r="53" fill="#00e6b8" opacity="0.17">
-      <animate attributeName="cx" values="322;318;322" dur="2.50s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="292;308;292" dur="2.50s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="53;69;53" dur="2.50s" begin="0.90s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="480" cy="253" r="51" fill="#00e6b8" opacity="0.37">
-      <animate attributeName="cx" values="480;456;480" dur="3.51s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="253;273;253" dur="3.51s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="51;66;51" dur="3.51s" begin="1.20s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
-    <circle cx="214" cy="203" r="48" fill="#00e6b8" opacity="0.39">
-      <animate attributeName="cx" values="214;213;214" dur="3.54s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="cy" values="203;193;203" dur="3.54s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-      <animate attributeName="r" values="48;63;48" dur="3.54s" begin="1.50s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-    </circle>
+  <rect width="800" height="450" fill="url(#jpBg)"/>
+
+  <g transform="translate(150 70)">
+    <rect x="0" y="0" width="500" height="310" rx="8" fill="#141414" stroke="#00e6b8" stroke-width="1.5" stroke-opacity="0.6"/>
+
+    <circle cx="22" cy="22" r="5" fill="#ff5f56"/>
+    <circle cx="42" cy="22" r="5" fill="#ffbd2e"/>
+    <circle cx="62" cy="22" r="5" fill="#27c93f"/>
+
+    <rect x="100" y="13" width="340" height="18" rx="9" fill="#0a0a0a" stroke="#00e6b8" stroke-opacity="0.2"/>
+    <text x="114" y="26" fill="#00e6b8" font-family="monospace" font-size="11" opacity="0.7">jakeposner.com</text>
+
+    <line x1="0" y1="44" x2="500" y2="44" stroke="#00e6b8" stroke-opacity="0.25"/>
+
+    <rect x="30" y="68" width="200" height="18" rx="3" fill="#00e6b8" opacity="0">
+      <animate attributeName="opacity" values="0;0.8;0.8;0" dur="5s" keyTimes="0;0.15;0.95;1" repeatCount="indefinite"/>
+    </rect>
+    <rect x="30" y="94" width="140" height="10" rx="3" fill="#00e6b8" opacity="0">
+      <animate attributeName="opacity" values="0;0.5;0.5;0" dur="5s" keyTimes="0;0.25;0.95;1" repeatCount="indefinite"/>
+    </rect>
+
+    <rect x="30" y="130" width="130" height="90" rx="6" fill="#00e6b8" opacity="0">
+      <animate attributeName="opacity" values="0;0.25;0.25;0" dur="5s" keyTimes="0;0.4;0.95;1" repeatCount="indefinite"/>
+    </rect>
+    <rect x="175" y="130" width="130" height="90" rx="6" fill="#00e6b8" opacity="0">
+      <animate attributeName="opacity" values="0;0.25;0.25;0" dur="5s" keyTimes="0;0.5;0.95;1" repeatCount="indefinite"/>
+    </rect>
+    <rect x="320" y="130" width="130" height="90" rx="6" fill="#00e6b8" opacity="0">
+      <animate attributeName="opacity" values="0;0.25;0.25;0" dur="5s" keyTimes="0;0.6;0.95;1" repeatCount="indefinite"/>
+    </rect>
+
+    <rect x="30" y="240" width="420" height="8" rx="3" fill="#00e6b8" opacity="0">
+      <animate attributeName="opacity" values="0;0.15;0.15;0" dur="5s" keyTimes="0;0.75;0.95;1" repeatCount="indefinite"/>
+    </rect>
+    <rect x="30" y="258" width="300" height="8" rx="3" fill="#00e6b8" opacity="0">
+      <animate attributeName="opacity" values="0;0.15;0.15;0" dur="5s" keyTimes="0;0.82;0.95;1" repeatCount="indefinite"/>
+    </rect>
+
+    <polygon points="0,0 0,14 4,11 7,17 9,16 6,11 11,10" fill="#00e6b8" stroke="#000" stroke-width="0.5" transform="translate(180 100)">
+      <animateMotion dur="6s" repeatCount="indefinite" path="M0,0 L100,60 L180,100 L-40,80 Z" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" keyTimes="0;0.3;0.6;0.85;1"/>
+    </polygon>
   </g>
-  <text x="400" y="420" fill="#00e6b8" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">JAKE POSNER</text>
+
+  <text x="400" y="420" fill="#00e6b8" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">JAKEPOSNER.COM</text>
 </svg>
