@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Sphere | Ronin Ventures</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #07080c;
+            --text-primary: #e8eaed;
+            --text-secondary: #8b919a;
+            --text-muted: #4a5060;
+            --accent-primary: #00d4aa;
+            --accent-glow: rgba(0, 212, 170, 0.2);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        #canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            cursor: grab;
+        }
+
+        #canvas.grabbing { cursor: grabbing; }
+
+        .hud {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .title-bar {
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: rgba(7, 8, 12, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .title-bar .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            box-shadow: 0 0 8px var(--accent-primary);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .controls {
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            pointer-events: auto;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(7, 8, 12, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            background: rgba(7, 8, 12, 0.95);
+        }
+
+        .btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .hint {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .hint.visible { opacity: 1; }
+
+        .hint .arrow {
+            display: block;
+            font-size: 20px;
+            margin-top: 8px;
+            color: var(--accent-primary);
+        }
+
+        .readout {
+            bottom: 16px;
+            right: 16px;
+            padding: 8px 12px;
+            background: rgba(7, 8, 12, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            line-height: 1.6;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .readout span { color: var(--accent-primary); }
+
+        .dropzone {
+            position: fixed;
+            inset: 0;
+            border: 2px dashed var(--accent-primary);
+            background: rgba(0, 212, 170, 0.06);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            z-index: 20;
+        }
+
+        .dropzone.active { opacity: 1; }
+
+        .dropzone-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--accent-primary);
+            font-size: 14px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+
+        #file-input { display: none; }
+
+        @media (max-width: 600px) {
+            .title-bar { font-size: 10px; padding: 6px 12px; }
+            .btn { padding: 8px 12px; font-size: 11px; }
+            .readout { font-size: 9px; padding: 6px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="hud title-bar">
+        <span class="dot"></span>
+        <span>Photo Sphere</span>
+    </div>
+
+    <div class="hud hint" id="hint">
+        Drag to look around · scroll to zoom
+        <span class="arrow">↓ drop a 360° photo below ↓</span>
+    </div>
+
+    <div class="hud controls">
+        <button class="btn" id="load-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 3v14m-6-6l6 6 6-6M4 21h16"/></svg>
+            <span>Load Photo</span>
+        </button>
+        <button class="btn" id="reset-btn">
+            <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>
+            <span>Reset View</span>
+        </button>
+    </div>
+
+    <div class="hud readout">
+        <div>LON <span id="r-lon">0.0°</span></div>
+        <div>LAT <span id="r-lat">0.0°</span></div>
+        <div>FOV <span id="r-fov">75°</span></div>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+        <div class="dropzone-label">Drop panorama to load</div>
+    </div>
+
+    <input type="file" id="file-input" accept="image/*">
+
+    <script src="/components/back-to-hub.js"></script>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        const canvas = document.getElementById('canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1100);
+        camera.position.set(0, 0, 0.01);
+
+        function resize() {
+            const w = window.innerWidth || document.documentElement.clientWidth || 1;
+            const h = window.innerHeight || document.documentElement.clientHeight || 1;
+            renderer.setSize(w, h, false);
+            canvas.style.width = w + 'px';
+            canvas.style.height = h + 'px';
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+        }
+
+        resize();
+        requestAnimationFrame(resize);
+
+        // Sphere with inward-facing faces (negative x scale flips normals so texture shows inside).
+        const geometry = new THREE.SphereGeometry(500, 80, 60);
+        geometry.scale(-1, 1, 1);
+        const material = new THREE.MeshBasicMaterial();
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Procedural default panorama — gradient sky, horizon grid, compass markers.
+        function makeDefaultTexture() {
+            const w = 2048, h = 1024;
+            const c = document.createElement('canvas');
+            c.width = w; c.height = h;
+            const ctx = c.getContext('2d');
+
+            // Sky gradient (top → horizon).
+            const sky = ctx.createLinearGradient(0, 0, 0, h / 2);
+            sky.addColorStop(0, '#050814');
+            sky.addColorStop(0.5, '#0a1530');
+            sky.addColorStop(0.9, '#1a3a5c');
+            sky.addColorStop(1, '#2a5a7a');
+            ctx.fillStyle = sky;
+            ctx.fillRect(0, 0, w, h / 2);
+
+            // Ground gradient (horizon → bottom).
+            const ground = ctx.createLinearGradient(0, h / 2, 0, h);
+            ground.addColorStop(0, '#0d1a22');
+            ground.addColorStop(1, '#05080c');
+            ctx.fillStyle = ground;
+            ctx.fillRect(0, h / 2, w, h / 2);
+
+            // Stars.
+            ctx.fillStyle = '#ffffff';
+            for (let i = 0; i < 400; i++) {
+                const x = Math.random() * w;
+                const y = Math.random() * (h / 2) * 0.95;
+                const r = Math.random() * 1.2;
+                ctx.globalAlpha = Math.random() * 0.8 + 0.2;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+
+            // Horizon line.
+            ctx.strokeStyle = 'rgba(0, 212, 170, 0.4)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, h / 2);
+            ctx.lineTo(w, h / 2);
+            ctx.stroke();
+
+            // Ground grid lines (vertical).
+            ctx.strokeStyle = 'rgba(0, 212, 170, 0.15)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 36; i++) {
+                const x = (i / 36) * w;
+                ctx.beginPath();
+                ctx.moveTo(x, h / 2);
+                ctx.lineTo(x, h);
+                ctx.stroke();
+            }
+
+            // Ground grid lines (latitude bands — bowed).
+            for (let lat = 1; lat <= 6; lat++) {
+                const y = h / 2 + (lat / 6) * (h / 2);
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+                ctx.stroke();
+            }
+
+            // Compass markers at N (w/2), E (w/4), S (0/w), W (3w/4).
+            // Equirectangular: longitude 0 maps to horizontal center; we'll place N at center.
+            ctx.fillStyle = 'rgba(0, 212, 170, 0.9)';
+            ctx.font = 'bold 48px monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const compass = [
+                { x: w * 0.5, label: 'N' },
+                { x: w * 0.75, label: 'E' },
+                { x: w * 0.0,  label: 'S' },
+                { x: w * 0.25, label: 'W' }
+            ];
+            compass.forEach(({ x, label }) => {
+                ctx.fillText(label, x, h / 2 - 40);
+                if (x === 0) ctx.fillText(label, w, h / 2 - 40); // wrap edge
+            });
+
+            // Brand stamp.
+            ctx.fillStyle = 'rgba(139, 145, 154, 0.5)';
+            ctx.font = '20px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('RONIN VENTURES · PHOTO SPHERE', w * 0.5, h * 0.75);
+            ctx.font = '14px monospace';
+            ctx.fillText('drop a 360° equirectangular photo to replace this scene', w * 0.5, h * 0.78);
+
+            const tex = new THREE.CanvasTexture(c);
+            tex.colorSpace = THREE.SRGBColorSpace;
+            return tex;
+        }
+
+        function loadTextureFromURL(url) {
+            const loader = new THREE.TextureLoader();
+            loader.load(url, (tex) => {
+                tex.colorSpace = THREE.SRGBColorSpace;
+                if (material.map) material.map.dispose();
+                material.map = tex;
+                material.needsUpdate = true;
+                hint.classList.remove('visible');
+            });
+        }
+
+        function loadTextureFromFile(file) {
+            const url = URL.createObjectURL(file);
+            loadTextureFromURL(url);
+        }
+
+        material.map = makeDefaultTexture();
+        material.needsUpdate = true;
+
+        // Camera control state — lon/lat spherical coords, fov for zoom.
+        const state = {
+            lon: 0,
+            lat: 0,
+            targetLon: 0,
+            targetLat: 0,
+            fov: 75,
+            targetFov: 75,
+            dragging: false,
+            lastX: 0,
+            lastY: 0
+        };
+
+        function updateCamera() {
+            state.lon += (state.targetLon - state.lon) * 0.12;
+            state.lat += (state.targetLat - state.lat) * 0.12;
+            state.fov += (state.targetFov - state.fov) * 0.12;
+
+            const phi = THREE.MathUtils.degToRad(90 - state.lat);
+            const theta = THREE.MathUtils.degToRad(state.lon);
+
+            const target = new THREE.Vector3(
+                500 * Math.sin(phi) * Math.cos(theta),
+                500 * Math.cos(phi),
+                500 * Math.sin(phi) * Math.sin(theta)
+            );
+            camera.lookAt(target);
+
+            if (Math.abs(camera.fov - state.fov) > 0.01) {
+                camera.fov = state.fov;
+                camera.updateProjectionMatrix();
+            }
+        }
+
+        // Mouse controls.
+        canvas.addEventListener('mousedown', (e) => {
+            state.dragging = true;
+            state.lastX = e.clientX;
+            state.lastY = e.clientY;
+            canvas.classList.add('grabbing');
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!state.dragging) return;
+            const dx = e.clientX - state.lastX;
+            const dy = e.clientY - state.lastY;
+            state.lastX = e.clientX;
+            state.lastY = e.clientY;
+            const sensitivity = 0.15 * (state.fov / 75);
+            state.targetLon -= dx * sensitivity;
+            state.targetLat = Math.max(-85, Math.min(85, state.targetLat + dy * sensitivity));
+        });
+
+        window.addEventListener('mouseup', () => {
+            state.dragging = false;
+            canvas.classList.remove('grabbing');
+        });
+
+        // Wheel zoom.
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            state.targetFov = Math.max(25, Math.min(100, state.targetFov + e.deltaY * 0.05));
+        }, { passive: false });
+
+        // Touch controls.
+        let pinchStart = null;
+        canvas.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                state.dragging = true;
+                state.lastX = e.touches[0].clientX;
+                state.lastY = e.touches[0].clientY;
+            } else if (e.touches.length === 2) {
+                state.dragging = false;
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                pinchStart = { dist: Math.hypot(dx, dy), fov: state.targetFov };
+            }
+        }, { passive: true });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (e.touches.length === 1 && state.dragging) {
+                const dx = e.touches[0].clientX - state.lastX;
+                const dy = e.touches[0].clientY - state.lastY;
+                state.lastX = e.touches[0].clientX;
+                state.lastY = e.touches[0].clientY;
+                const sensitivity = 0.2 * (state.fov / 75);
+                state.targetLon -= dx * sensitivity;
+                state.targetLat = Math.max(-85, Math.min(85, state.targetLat + dy * sensitivity));
+            } else if (e.touches.length === 2 && pinchStart) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const dist = Math.hypot(dx, dy);
+                const ratio = pinchStart.dist / dist;
+                state.targetFov = Math.max(25, Math.min(100, pinchStart.fov * ratio));
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', (e) => {
+            if (e.touches.length === 0) {
+                state.dragging = false;
+                pinchStart = null;
+            }
+        });
+
+        // File picker + drag-drop.
+        const fileInput = document.getElementById('file-input');
+        document.getElementById('load-btn').addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) loadTextureFromFile(file);
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            state.targetLon = 0;
+            state.targetLat = 0;
+            state.targetFov = 75;
+        });
+
+        const dropzone = document.getElementById('dropzone');
+        let dragCounter = 0;
+        window.addEventListener('dragenter', (e) => {
+            e.preventDefault();
+            dragCounter++;
+            dropzone.classList.add('active');
+        });
+        window.addEventListener('dragover', (e) => e.preventDefault());
+        window.addEventListener('dragleave', () => {
+            dragCounter--;
+            if (dragCounter <= 0) {
+                dragCounter = 0;
+                dropzone.classList.remove('active');
+            }
+        });
+        window.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragCounter = 0;
+            dropzone.classList.remove('active');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) loadTextureFromFile(file);
+        });
+
+        window.addEventListener('resize', resize);
+        new ResizeObserver(resize).observe(document.documentElement);
+
+        // Show hint briefly on load.
+        const hint = document.getElementById('hint');
+        setTimeout(() => hint.classList.add('visible'), 400);
+        setTimeout(() => hint.classList.remove('visible'), 5000);
+
+        // Readouts.
+        const rLon = document.getElementById('r-lon');
+        const rLat = document.getElementById('r-lat');
+        const rFov = document.getElementById('r-fov');
+
+        function animate() {
+            requestAnimationFrame(animate);
+            updateCamera();
+            rLon.textContent = `${((state.lon % 360 + 360) % 360).toFixed(1)}°`;
+            rLat.textContent = `${state.lat.toFixed(1)}°`;
+            rFov.textContent = `${Math.round(state.fov)}°`;
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <radialGradient id="sphere" cx="0.5" cy="0.5" r="0.55">
+      <stop offset="0%" stop-color="#0a1530"/>
+      <stop offset="55%" stop-color="#0a1530"/>
+      <stop offset="85%" stop-color="#00d4aa" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#07080c"/>
+      <stop offset="100%" stop-color="#0d0f14"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <g transform="translate(400 225)">
+    <circle r="160" fill="url(#sphere)"/>
+
+    <g fill="none" stroke="#00d4aa" stroke-width="1" opacity="0.55">
+      <ellipse cx="0" cy="0" rx="160" ry="40"/>
+      <ellipse cx="0" cy="0" rx="160" ry="80"/>
+      <ellipse cx="0" cy="0" rx="160" ry="120"/>
+      <ellipse cx="0" cy="0" rx="160" ry="160"/>
+    </g>
+
+    <g fill="none" stroke="#00d4aa" stroke-width="1" opacity="0.35">
+      <ellipse cx="0" cy="0" rx="40" ry="160"/>
+      <ellipse cx="0" cy="0" rx="80" ry="160"/>
+      <ellipse cx="0" cy="0" rx="120" ry="160"/>
+    </g>
+
+    <circle r="160" fill="none" stroke="#00d4aa" stroke-width="1.5"/>
+
+    <g fill="#00d4aa" opacity="0.9">
+      <circle cx="0" cy="-160" r="3"/>
+      <circle cx="0" cy="160" r="3"/>
+      <circle cx="-160" cy="0" r="3"/>
+      <circle cx="160" cy="0" r="3"/>
+    </g>
+
+    <g>
+      <circle r="40" fill="#00d4aa" opacity="0.15">
+        <animate attributeName="r" values="40;55;40" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.15;0.05;0.15" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="6" fill="#00d4aa"/>
+    </g>
+  </g>
+
+  <text x="400" y="420" fill="#00d4aa" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity="0.4">PHOTO SPHERE</text>
+</svg>

@@ -1,7 +1,7 @@
 {
     "meta": {
-        "version": "3.0.0",
-        "lastUpdated": "Apr 11, 2026",
+        "version": "3.1.0",
+        "lastUpdated": "Apr 22, 2026",
         "author": "Jake Posner"
     },
     "projects": [
@@ -266,6 +266,28 @@
             "featured": true,
             "comingSoon": false,
             "lastUpdated": "Apr 11, 2026"
+        },
+        {
+            "id": "photo-viewer",
+            "title": "Photo Sphere",
+            "shortDescription": "Immersive 360° equirectangular photo viewer.",
+            "description": "A Three.js-powered panorama viewer that wraps equirectangular photos around an inside-out sphere for full 360° exploration. Drag to look around, scroll to zoom, and drop in any panorama to load your own scene. Works on desktop and mobile with touch and pinch controls.",
+            "category": "3d",
+            "categoryLabel": "3D Experience",
+            "thumbnail": "/assets/thumbnails/photo-viewer.svg",
+            "screenshots": [],
+            "path": "/projects/photo-viewer/",
+            "externalUrl": "",
+            "sourceUrl": "",
+            "tech": [
+                "Three.js",
+                "WebGL",
+                "JavaScript"
+            ],
+            "status": "active",
+            "featured": true,
+            "comingSoon": false,
+            "lastUpdated": "Apr 22, 2026"
         },
         {
             "id": "mlb-showdown",
