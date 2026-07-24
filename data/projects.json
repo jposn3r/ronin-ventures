@@ -1,7 +1,7 @@
 {
     "meta": {
-        "version": "3.1.0",
-        "lastUpdated": "Apr 22, 2026",
+        "version": "3.2.0",
+        "lastUpdated": "Jul 24, 2026",
         "author": "Jake Posner"
     },
     "projects": [
@@ -332,6 +332,28 @@
             "featured": false,
             "comingSoon": false,
             "lastUpdated": "Apr 16, 2026"
+        },
+        {
+            "id": "hexapod-sim",
+            "title": "Hexapod Simulator",
+            "shortDescription": "3D robot simulator with from-scratch inverse kinematics.",
+            "description": "A browser-based 3D robotics simulator featuring from-scratch inverse kinematics and gait algorithms for a six-legged hexapod robot. Watch tripod gaits in motion, explore joint angles and leg trajectories, and experiment with locomotion in real time. Built with React Three Fiber and TypeScript.",
+            "category": "3d",
+            "categoryLabel": "Simulation",
+            "thumbnail": "/assets/thumbnails/hexapod-sim.svg",
+            "screenshots": [],
+            "path": "",
+            "externalUrl": "https://jposn3r.github.io/robotics/",
+            "sourceUrl": "https://github.com/jposn3r/robotics",
+            "tech": [
+                "React Three Fiber",
+                "TypeScript",
+                "Three.js"
+            ],
+            "status": "active",
+            "featured": false,
+            "comingSoon": false,
+            "lastUpdated": "Jul 24, 2026"
         }
     ]
 }
