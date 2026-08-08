@@ -27,10 +27,21 @@
         the button must not cancel the recording.
    ======================================== */
 
-/* Chrome ends recognition on its own silence detection; we restart to keep a
-   held/latched take alive. This bounds that so a silent room can't leave the
-   button stuck in "listening" indefinitely. */
-const MAX_RESTARTS = 10;
+/* Every browser on iOS is WebKit — Apple requires it — so "Chrome for iPhone"
+   behaves like Safari, not like desktop Chrome. Two things follow, and both
+   bite this app:
+     1. The audio session is effectively exclusive (see Meter, below).
+     2. Recognition generally may only be started from a user gesture, so the
+        silence-restart below is silently refused and leaves the button stuck
+        in "listening" with no way to recover. */
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+/* Blink ends recognition on its own silence detection; we restart to keep a
+   held/latched take alive. Bounded so a silent room can't leave the button
+   stuck in "listening" — and disabled entirely on iOS, where a restart with
+   no gesture behind it will not be honoured. */
+const MAX_RESTARTS = IS_IOS ? 0 : 10;
 
 /* Virtual audio devices frequently steal the system default and then record
    perfect silence — the single most confusing way for voice input to fail. */
@@ -46,7 +57,13 @@ class SpeechCapture {
       secureContext: window.isSecureContext,
       hasMediaDevices: Boolean(navigator.mediaDevices?.getUserMedia),
       protocol: location.protocol,
+      iOS: IS_IOS,
+      autoRestart: MAX_RESTARTS > 0,
     });
+    if (IS_IOS) {
+      Log.warn('iOS detected — every browser here is WebKit, including Chrome. '
+        + 'Silence-restart disabled (needs a user gesture) and hold-to-talk is the reliable mode.');
+    }
     if (!window.isSecureContext) {
       Log.error('Not a secure context — speech recognition will be blocked. Use http://localhost or https.');
     }

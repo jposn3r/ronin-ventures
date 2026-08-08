@@ -119,6 +119,15 @@ Three things the speech layer has to survive, all of which broke a naive impleme
 | Chrome auto-ends on its own silence detection mid-take | Restart while the worker is still holding or latched (bounded at 10 restarts) |
 | Thumb drifts a few pixels off the button | `setPointerCapture`, and no `pointerleave` cancel |
 
+### iOS is a different engine
+
+**Every browser on iOS is WebKit** — Apple requires it — so "Chrome for iPhone" is Safari's engine with Chrome's UI. Desktop Chrome behaviour tells you nothing about it. Two consequences, both handled via `IS_IOS`:
+
+- **The audio session is effectively exclusive.** A second `getUserMedia` stream starves the recogniser. This is why the level meter is off by default.
+- **Recognition generally must start from a user gesture.** The silence-restart that keeps a held take alive on Blink is silently refused on iOS, leaving the button stuck in "listening". So `MAX_RESTARTS` is `0` there, and **tap-to-latch is disabled** — offering it would end the take at the first pause while the button still read "tap to finish". Hold-to-talk is the only mode on iOS.
+
+Whether `SpeechRecognition` exists at all in iOS WebKit varies by version. When it's missing the app says so and opens the keypad automatically.
+
 Releasing the button waits 220ms before stopping, because letting go is faster than finishing a word.
 
 ## Diagnostics

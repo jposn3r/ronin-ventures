@@ -31,6 +31,9 @@ function init() {
   wireSpeech();
   wirePTT($('setup-ptt'), 'setup');
   wirePTT($('capture-ptt'), 'capture');
+  if (IS_IOS) {
+    setFeedback('Hold the button while you speak, then release. "Scratch that" undoes.', '');
+  }
   wireButtons();
   loadSettingsIntoForm();
   updateMicPill();
@@ -186,7 +189,10 @@ function wirePTT(btn, which) {
     s.pressedAt = 0;
     Log.info(`${e.type} on ${which} PTT`, { heldMs: held, mode: held < TAP_MS ? 'tap → latch' : 'hold → stop' });
 
-    if (held < TAP_MS) {
+    // Latching depends on restarting the engine through silence, which iOS
+    // won't do without a gesture. Offering it there would end the take at the
+    // first pause while the button still said "tap to finish".
+    if (held < TAP_MS && !IS_IOS) {
       s.latched = true;
       label.textContent = 'Listening — tap to finish';
       return;
