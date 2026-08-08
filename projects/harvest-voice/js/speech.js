@@ -251,21 +251,42 @@ class SpeechCapture {
    without anyone having to run a separate test.
    ======================================== */
 const Meter = {
+  // OFF by default, and that is deliberate.
+  //
+  // This opens its own getUserMedia stream alongside SpeechRecognition. Two
+  // concurrent captures are fine on desktop Chrome, but phones treat audio
+  // input as effectively exclusive — the meter steals the mic and the
+  // recogniser gets silence. A diagnostic must never break the thing it is
+  // diagnosing, so live metering is opt-in from the diagnostics panel.
+  //
+  // "Test mic" still measures level, because it runs on its own with no
+  // recognition in flight.
+  enabled: false,
+
   stream: null,
   ctx: null,
   raf: 0,
   peak: 0,
+  starting: false,
   onLevel: () => {},
 
   async start() {
-    if (this.stream) return;
+    if (!this.enabled || this.stream || this.starting) return;
+    this.starting = true;
     this.peak = 0;
+    let stream;
     try {
-      this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     } catch (err) {
+      this.starting = false;
       Log.warn('level meter unavailable', String(err.name));
       return;
     }
+    // The take can finish before getUserMedia resolves — a short "842" often
+    // does. Don't leave an orphaned live stream holding the mic open.
+    if (!this.starting) { stream.getTracks().forEach((t) => t.stop()); return; }
+    this.starting = false;
+    this.stream = stream;
     const Ctx = window.AudioContext || window.webkitAudioContext;
     this.ctx = new Ctx();
     const analyser = this.ctx.createAnalyser();
@@ -285,8 +306,14 @@ const Meter = {
     tick();
   },
 
-  /** Returns peak level for this take as a 0-100 integer. */
+  /**
+   * Peak level for this take as 0-100, or null if the meter wasn't measuring —
+   * a distinction that matters, because "0%" and "not measured" are different
+   * diagnoses and reporting the wrong one sends you hunting the wrong bug.
+   */
   stop() {
+    const wasRunning = Boolean(this.stream);
+    this.starting = false;              // cancels a getUserMedia still in flight
     cancelAnimationFrame(this.raf);
     this.raf = 0;
     this.stream?.getTracks().forEach((t) => t.stop());
@@ -294,7 +321,7 @@ const Meter = {
     this.ctx?.close().catch(() => {});
     this.ctx = null;
     this.onLevel(0);
-    return Math.round(this.peak * 100);
+    return wasRunning ? Math.round(this.peak * 100) : null;
   },
 };
 

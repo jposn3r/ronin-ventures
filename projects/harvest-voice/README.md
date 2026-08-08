@@ -134,7 +134,13 @@ Every console line is prefixed `[HV]` so it's findable amid browser-extension no
 
 Step 4 is the one that matters. A granted permission with a flat signal — wrong input device, hardware mute, OS-level block — is indistinguishable from a broken app until you measure it. If peak level reads under 2%, the mic is open and hearing nothing, and no amount of app debugging will help.
 
-**Every take logs its own peak input level**, so a dead microphone is self-evident without running a separate test. The mic button also shows a live level bar while listening — a bar that never moves is the fastest possible read on "open but hearing nothing."
+**The live level meter is OFF by default** — toggle it from the diagnostics panel (`Meter: off`).
+
+It opens its own `getUserMedia` stream alongside `SpeechRecognition` to drive the bar on the mic button. Two concurrent captures are fine on desktop Chrome, but **phones treat audio input as effectively exclusive**: the meter seizes the mic and the recogniser gets silence, producing empty takes reported as `0%`. A diagnostic must never break the thing it is diagnosing.
+
+`Test mic` still measures input level, because it runs on its own with no recognition in flight — so the "is my mic actually producing audio" question is still answerable in one tap.
+
+When the meter isn't running, `Meter.stop()` returns `null` rather than `0`, and the empty-take message says *"Nothing heard"* instead of citing a fabricated `0%`. Not measured and measured-as-zero are different diagnoses, and conflating them sends you hunting the wrong bug.
 
 Common causes of a silent recording, in order:
 

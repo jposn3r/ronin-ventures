@@ -63,7 +63,7 @@ function populateSelect(el, values, placeholder, ids) {
    callbacks can restore each button's label when recording actually ends. */
 const PTT = {};
 const TAP_MS = 400;   // shorter than this is a tap, not a hold
-let lastPeak = 0;     // peak input level of the most recent take, 0-100
+let lastPeak = null;  // peak input level of the most recent take, or null if unmeasured
 
 function wireSpeech() {
   speech.onStateChange = (listening) => {
@@ -78,11 +78,11 @@ function wireSpeech() {
       s.latched = false;
       s.label.textContent = s.original;
       const peak = Meter.stop();
-      Log.info('input peak during take', peak + '%');
-      if (peak > 0 && peak < 2) {
-        Log.error('Mic produced almost no signal — wrong input device, or it is muted.');
-      }
       lastPeak = peak;
+      if (peak !== null) {
+        Log.info('input peak during take', peak + '%');
+        if (peak < 2) Log.error('Mic produced almost no signal — wrong input device, or it is muted.');
+      }
     }
   };
 
@@ -95,9 +95,12 @@ function wireSpeech() {
   };
 
   speech.onEmpty = () => {
-    const hint = lastPeak < 2
-      ? `Nothing heard — input level was ${lastPeak}%. Check your microphone (tap 🎤 → Test mic).`
-      : 'Didn\'t catch that. Try again, a little closer to the mic.';
+    // Only cite an input level when one was actually measured.
+    const hint = lastPeak === null
+      ? 'Nothing heard. Try again — or tap 🎤 → Test mic if it keeps happening.'
+      : lastPeak < 2
+        ? `Nothing heard — input level was ${lastPeak}%. Check your microphone (tap 🎤 → Test mic).`
+        : 'Didn\'t catch that. Try again, a little closer to the mic.';
     Log.warn('empty take surfaced to user', { lastPeak });
     if (activePTT === 'capture') setFeedback(hint, 'bad');
     else toast(hint, 'bad');
@@ -842,6 +845,12 @@ function wireButtons() {
     catch (err) { toast('Copy failed — select the text manually.', 'bad'); }
   });
   $('debug-mictest').addEventListener('click', runMicTest);
+  $('debug-meter').addEventListener('click', (e) => {
+    Meter.enabled = !Meter.enabled;
+    e.currentTarget.textContent = `Meter: ${Meter.enabled ? 'on' : 'off'}`;
+    Log.warn(`live level meter ${Meter.enabled ? 'ENABLED' : 'disabled'}`,
+      Meter.enabled ? 'it opens a second mic stream — on phones this can starve the speech engine' : '');
+  });
 
   [$('settings-overlay'), $('close-overlay'), $('batch-overlay'), $('row-overlay')].forEach((overlay) => {
     overlay.addEventListener('click', (e) => {
