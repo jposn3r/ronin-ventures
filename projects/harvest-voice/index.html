@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <title>HarvestVoice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+      <div class="brand">
+        <span class="brand-mark">&#127811;</span>
+        <div class="brand-text">
+          <div class="brand-name">HARVESTVOICE</div>
+          <div class="brand-sub" id="facility-name">—</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <button id="mic-pill" class="pill pill-idle" title="Microphone status — tap for diagnostics">&#127908;</button>
+        <span id="sync-pill" class="pill pill-idle" title="Google Sheets status">&#8645;</span>
+        <button id="settings-btn" class="icon-btn" aria-label="Settings">&#9881;</button>
+      </div>
+    </header>
+
+    <!-- ============ BATCH SETUP ============ -->
+    <main id="setup-view" class="view">
+      <div class="scroll-area">
+        <h1 class="view-title">Open a harvest batch</h1>
+        <p class="view-hint">
+          Hold the button and say it in one breath — strain, room, drying room, unit.
+        </p>
+        <p class="example">"Starting Gelato 41 out of Flower Room 3, hanging in Dry Room B, grams."</p>
+
+        <div id="setup-transcript" class="transcript hidden"></div>
+
+        <div id="setup-card" class="card hidden">
+          <div class="card-head">
+            <span>Confirm the batch</span>
+            <span id="setup-source" class="tag"></span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="f-strain">Strain</label>
+            <select id="f-strain" class="select"></select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="f-room">Grow room</label>
+            <select id="f-room" class="select"></select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="f-dest">Drying room</label>
+            <select id="f-dest" class="select"></select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="f-unit">Unit</label>
+            <select id="f-unit" class="select"></select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="f-notes">Notes</label>
+            <input id="f-notes" type="text" class="input" placeholder="Optional">
+          </div>
+          <div id="setup-missing" class="warn hidden"></div>
+          <button id="setup-cancel" class="btn-ghost btn-block">Start over</button>
+        </div>
+
+        <!-- Closed batches stay inspectable. A record you can't read back
+             isn't a record. -->
+        <section id="history" class="history hidden">
+          <div class="history-head">
+            <span>Recent batches</span>
+            <span id="history-count" class="tag"></span>
+          </div>
+          <div id="history-list"></div>
+        </section>
+      </div>
+
+      <!-- Thumb zone: primary action pinned to the bottom -->
+      <div class="action-bar">
+        <div id="setup-keypad" class="keypad-row hidden">
+          <input id="setup-text" type="text" class="input" placeholder="Type the batch instead…" autocomplete="off">
+          <button id="setup-text-go" class="btn-secondary btn-compact">Parse</button>
+        </div>
+        <div class="action-row">
+          <button id="setup-ptt" class="ptt">
+            <span class="ptt-level"></span>
+            <span class="ptt-icon">&#127908;</span>
+            <span class="ptt-label">Hold to speak</span>
+          </button>
+          <button id="setup-keypad-toggle" class="icon-btn icon-btn-lg" aria-label="Type instead">&#9000;</button>
+        </div>
+        <!-- Primary action stays pinned in the thumb zone rather than sitting
+             at the bottom of a card the worker has to scroll to find. -->
+        <button id="setup-open" class="btn-primary btn-block hidden">Open batch</button>
+      </div>
+    </main>
+
+    <!-- ============ CAPTURE LOOP ============ -->
+    <main id="capture-view" class="view hidden">
+      <!-- Frequency of use drives placement: batch context is glanceable, not
+           interactive; "close batch" happens once, so it stays out of the
+           thumb zone. -->
+      <div class="context-strip">
+        <div class="context-main">
+          <div class="context-line">
+            <span id="c-strain">—</span>
+            <span class="unit-badge" id="c-unit">—</span>
+          </div>
+          <div class="context-sub">
+            <span id="c-room">—</span> &#8594; <span id="c-dest">—</span>
+            <span class="dot">·</span> <span id="c-employee">—</span>
+          </div>
+        </div>
+        <button id="btn-close" class="btn-secondary btn-compact">Close</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value" id="stat-count">0</span>
+          <span class="stat-label">plants</span>
+        </div>
+        <div class="stat stat-right">
+          <span class="stat-value" id="stat-total">0</span>
+          <span class="stat-label" id="stat-unit">g total</span>
+        </div>
+      </div>
+
+      <div class="scroll-area scroll-area-flush">
+        <div class="list-head">
+          <span id="c-batch">—</span>
+          <button id="btn-flush" class="link-btn">Sync now</button>
+        </div>
+        <table class="data-table">
+          <tbody id="plants-body"></tbody>
+        </table>
+        <div id="plants-empty" class="empty">
+          Nothing logged yet.<br><span class="empty-sub">Hold the mic and say the weight.</span>
+        </div>
+      </div>
+
+      <!-- Thumb zone -->
+      <div class="action-bar">
+        <div id="capture-feedback" class="feedback">Hold to talk, or tap once for hands-free. "Scratch that" undoes.</div>
+        <div id="capture-keypad" class="keypad-row hidden">
+          <input id="capture-text" type="text" class="input" placeholder="842" autocomplete="off" inputmode="decimal" enterkeyhint="done">
+          <button id="capture-text-go" class="btn-secondary btn-compact">Log</button>
+        </div>
+        <div class="action-row">
+          <button id="btn-undo" class="icon-btn icon-btn-lg" aria-label="Undo last entry">&#8630;</button>
+          <button id="capture-ptt" class="ptt">
+            <span class="ptt-level"></span>
+            <span class="ptt-icon">&#127908;</span>
+            <span class="ptt-label">Hold &amp; say the weight</span>
+          </button>
+          <button id="capture-keypad-toggle" class="icon-btn icon-btn-lg" aria-label="Type instead">&#9000;</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============ SETTINGS ============ -->
+  <div id="settings-overlay" class="sheet-overlay hidden">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 class="sheet-title">Settings</h2>
+        <button id="s-close" class="icon-btn" aria-label="Close">&times;</button>
+      </div>
+      <div class="sheet-body">
+        <div class="field">
+          <label class="field-label" for="s-employee">Worker</label>
+          <select id="s-employee" class="select"></select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="s-apikey">Anthropic API key <span class="muted">optional</span></label>
+          <input id="s-apikey" type="password" class="input" placeholder="sk-ant-…" autocomplete="off">
+          <p class="hint">Stored in this browser only. Without it, batch setup falls back to local matching.</p>
+        </div>
+        <div class="field">
+          <label class="field-label" for="s-clientid">Google OAuth client ID <span class="muted">optional</span></label>
+          <input id="s-clientid" type="text" class="input" placeholder="…apps.googleusercontent.com" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="field-label" for="s-sheetid">Spreadsheet ID</label>
+          <input id="s-sheetid" type="text" class="input" placeholder="1AbC… (from the sheet URL)" autocomplete="off">
+          <p class="hint">Sheets is a sink — everything is saved locally first and pushed here after.</p>
+        </div>
+      </div>
+      <div class="sheet-actions">
+        <button id="s-connect" class="btn-secondary btn-block">Connect Google</button>
+        <button id="s-save" class="btn-primary btn-block">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CLOSE BATCH ============ -->
+  <div id="close-overlay" class="sheet-overlay hidden">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 class="sheet-title">Close this batch?</h2>
+      </div>
+      <div class="sheet-body">
+        <div id="close-readback" class="readback"></div>
+      </div>
+      <div class="sheet-actions">
+        <button id="close-cancel" class="btn-secondary btn-block">Keep going</button>
+        <button id="close-confirm" class="btn-primary btn-block">Confirm &amp; close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BATCH DETAIL ============ -->
+  <div id="batch-overlay" class="sheet-overlay hidden">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 class="sheet-title" id="batch-title">Batch</h2>
+        <button id="batch-close" class="icon-btn" aria-label="Close">&times;</button>
+      </div>
+      <div class="sheet-body">
+        <div id="batch-summary" class="readback"></div>
+
+        <div class="field" style="margin-top:18px">
+          <label class="field-label" for="b-strain">Strain</label>
+          <select id="b-strain" class="select"></select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="b-room">Grow room</label>
+          <select id="b-room" class="select"></select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="b-dest">Drying room</label>
+          <select id="b-dest" class="select"></select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="b-notes">Notes</label>
+          <input id="b-notes" type="text" class="input" placeholder="Optional">
+        </div>
+
+        <div class="list-head">
+          <span>Plants &middot; tap to edit</span>
+          <span id="batch-sync-state"></span>
+        </div>
+        <table class="data-table"><tbody id="batch-plants"></tbody></table>
+        <div id="batch-no-rows" class="empty hidden">No plant rows in this batch.</div>
+        <button id="batch-delete" class="btn-ghost btn-block btn-danger">Delete this batch</button>
+      </div>
+      <div class="sheet-actions">
+        <button id="batch-sync" class="btn-secondary btn-block">Sync to Sheets</button>
+        <button id="batch-reopen" class="btn-primary btn-block">Reopen &amp; add plants</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ROW EDIT ============ -->
+  <div id="row-overlay" class="sheet-overlay hidden">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 class="sheet-title">Edit plant</h2>
+        <button id="row-close" class="icon-btn" aria-label="Close">&times;</button>
+      </div>
+      <div class="sheet-body">
+        <div class="field">
+          <label class="field-label" for="r-weight">Weight (<span id="r-unit">g</span>)</label>
+          <input id="r-weight" type="text" class="input" inputmode="decimal" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="field-label" for="r-tag">Plant tag</label>
+          <input id="r-tag" type="text" class="input" placeholder="Optional" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="field-label" for="r-notes">Notes</label>
+          <input id="r-notes" type="text" class="input" placeholder="Optional" autocomplete="off">
+        </div>
+        <div id="r-warn" class="warn hidden"></div>
+        <div id="r-meta" class="hint"></div>
+      </div>
+      <div class="sheet-actions">
+        <button id="row-delete" class="btn-ghost btn-block btn-danger">Delete this plant</button>
+        <button id="row-save" class="btn-primary btn-block">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DIAGNOSTICS ============
+       On-screen because the target device is a phone with no devtools. -->
+  <div id="debug-panel" class="debug-panel hidden">
+    <div class="debug-head">
+      <span class="debug-title">Diagnostics</span>
+      <div class="debug-actions">
+        <button id="debug-mictest" class="link-btn">Test mic</button>
+        <button id="debug-copy" class="link-btn">Copy</button>
+        <button id="debug-clear" class="link-btn">Clear</button>
+        <button id="debug-close" class="icon-btn" aria-label="Close diagnostics">&times;</button>
+      </div>
+    </div>
+    <div id="debug-body" class="debug-body"></div>
+  </div>
+
+  <div id="toasts" class="toasts"></div>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="js/config.js"></script>
+  <script src="js/log.js"></script>
+  <script src="js/parser.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/claude.js"></script>
+  <script src="js/sheets.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
