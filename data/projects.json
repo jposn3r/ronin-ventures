@@ -1,10 +1,33 @@
 {
     "meta": {
         "version": "3.2.0",
-        "lastUpdated": "Jul 24, 2026",
+        "lastUpdated": "Aug 8, 2026",
         "author": "Jake Posner"
     },
     "projects": [
+        {
+            "id": "harvest-voice",
+            "title": "HarvestVoice",
+            "shortDescription": "Log cannabis harvest weights by voice, hands free.",
+            "description": "A voice-driven data capture tool for cannabis cultivation. Speak the batch once, then rapid-fire plant weights while your hands stay on the scale. A deterministic local grammar parses the numbers instantly, so there is no API round trip in the capture loop. Unit conflicts and ambiguous numbers are refused rather than guessed, out-of-range weights are flagged, and closed batches stay editable with a full revision trail before syncing to Google Sheets.",
+            "category": "tool",
+            "categoryLabel": "App",
+            "thumbnail": "/assets/thumbnails/harvest-voice.svg",
+            "screenshots": [],
+            "path": "/projects/harvest-voice/",
+            "externalUrl": "",
+            "sourceUrl": "https://github.com/jposn3r/ronin-ventures/tree/main/projects/harvest-voice",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "Web Speech API"
+            ],
+            "status": "active",
+            "featured": false,
+            "comingSoon": false,
+            "lastUpdated": "Aug 8, 2026"
+        },
         {
             "id": "jakeposner",
             "title": "JakePosner.com",

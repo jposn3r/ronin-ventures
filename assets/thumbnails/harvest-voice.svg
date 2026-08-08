@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="hvBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a0f"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#hvBg)"/>
+
+  <!-- Batch context strip -->
+  <g font-family="monospace" letter-spacing="2">
+    <text x="60" y="72" fill="#f0f0fa" font-size="15" font-weight="700">GELATO 41</text>
+    <text x="60" y="92" fill="#f0f0fa" font-size="10" opacity="0.45">FLOWER ROOM 3 &#8594; DRY ROOM B</text>
+    <rect x="176" y="58" width="26" height="18" rx="9" fill="#f0f0fa" opacity="0.1" stroke="#f0f0fa" stroke-opacity="0.35"/>
+    <text x="189" y="71" fill="#f0f0fa" font-size="9" opacity="0.7" text-anchor="middle">G</text>
+  </g>
+  <line x1="60" y1="112" x2="740" y2="112" stroke="#f0f0fa" stroke-opacity="0.12"/>
+
+  <!-- Running totals, counting up as rows land -->
+  <g font-family="monospace" text-anchor="start">
+    <text x="60" y="164" fill="#f0f0fa" font-size="40" font-weight="700">
+      <tspan>3</tspan>
+      <animate attributeName="opacity" values="1;1;1" dur="6s" repeatCount="indefinite"/>
+    </text>
+    <text x="96" y="164" fill="#f0f0fa" font-size="10" opacity="0.45" letter-spacing="2">PLANTS</text>
+    <text x="740" y="164" fill="#f0f0fa" font-size="40" font-weight="700" text-anchor="end">3032</text>
+    <text x="740" y="184" fill="#f0f0fa" font-size="10" opacity="0.45" letter-spacing="2" text-anchor="end">G TOTAL</text>
+  </g>
+
+  <!-- Logged rows -->
+  <g font-family="monospace" font-size="15" letter-spacing="1">
+    <line x1="60" y1="212" x2="740" y2="212" stroke="#f0f0fa" stroke-opacity="0.08"/>
+    <text x="60"  y="240" fill="#f0f0fa" font-size="11" opacity="0.3">3</text>
+    <text x="96"  y="240" fill="#f0f0fa" font-size="11" opacity="0.3">11:46</text>
+    <text x="740" y="240" fill="#f0f0fa" font-weight="700" text-anchor="end">1240 G</text>
+    <line x1="60" y1="256" x2="740" y2="256" stroke="#f0f0fa" stroke-opacity="0.08"/>
+
+    <text x="60"  y="284" fill="#f0f0fa" font-size="11" opacity="0.3">2</text>
+    <text x="96"  y="284" fill="#f0f0fa" font-size="11" opacity="0.3">11:46</text>
+    <text x="176" y="284" fill="#f0f0fa" font-size="11" opacity="0.45">8842</text>
+    <text x="740" y="284" fill="#f0f0fa" font-weight="700" text-anchor="end">950 G</text>
+    <line x1="60" y1="300" x2="740" y2="300" stroke="#f0f0fa" stroke-opacity="0.08"/>
+
+    <!-- Newest row flashes in on each cycle, as it does in the app -->
+    <g>
+      <rect x="60" y="304" width="680" height="40" fill="#f0f0fa">
+        <animate attributeName="opacity" values="0;0.14;0" keyTimes="0;0.55;0.75" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <g>
+        <animate attributeName="opacity" values="0;0;1;1;1" keyTimes="0;0.5;0.58;0.95;1" dur="6s" repeatCount="indefinite"/>
+        <text x="60"  y="328" fill="#f0f0fa" font-size="11" opacity="0.3">1</text>
+        <text x="96"  y="328" fill="#f0f0fa" font-size="11" opacity="0.3">11:46</text>
+        <text x="740" y="328" fill="#f0f0fa" font-weight="700" text-anchor="end">842 G</text>
+      </g>
+    </g>
+    <line x1="60" y1="344" x2="740" y2="344" stroke="#f0f0fa" stroke-opacity="0.08"/>
+  </g>
+
+  <!-- Push-to-talk pill with live input level -->
+  <g>
+    <rect x="240" y="372" width="320" height="52" rx="26" fill="#f0f0fa" stroke="#f0f0fa" stroke-width="1.5">
+      <animate attributeName="fill-opacity" values="0.1;0.26;0.1" keyTimes="0;0.45;0.6" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.35;1;0.35" keyTimes="0;0.45;0.6" dur="6s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- Waveform: rises while "speaking", flat once the row lands -->
+    <g fill="#f0f0fa">
+      <rect x="286" y="392" width="4" height="12" rx="2">
+        <animate attributeName="height" values="4;18;6;20;4;4" keyTimes="0;0.12;0.24;0.36;0.5;1" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="396;389;395;388;396;396" keyTimes="0;0.12;0.24;0.36;0.5;1" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="298" y="386" width="4" height="24" rx="2">
+        <animate attributeName="height" values="4;28;10;24;4;4" keyTimes="0;0.16;0.28;0.4;0.5;1" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="396;384;393;386;396;396" keyTimes="0;0.16;0.28;0.4;0.5;1" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="310" y="390" width="4" height="16" rx="2">
+        <animate attributeName="height" values="4;20;30;14;4;4" keyTimes="0;0.1;0.26;0.42;0.5;1" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="396;388;383;391;396;396" keyTimes="0;0.1;0.26;0.42;0.5;1" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="322" y="388" width="4" height="20" rx="2">
+        <animate attributeName="height" values="4;24;8;26;4;4" keyTimes="0;0.14;0.3;0.44;0.5;1" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="396;386;394;385;396;396" keyTimes="0;0.14;0.3;0.44;0.5;1" dur="6s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
+    <text x="348" y="404" fill="#f0f0fa" font-family="monospace" font-size="13" font-weight="700" letter-spacing="2">
+      <tspan>
+        <animate attributeName="opacity" values="1;0;0;1;1" keyTimes="0;0.08;0.5;0.58;1" dur="6s" repeatCount="indefinite"/>
+      </tspan>
+      HOLD &amp; SAY THE WEIGHT
+    </text>
+
+    <!-- Input level bar along the base of the pill -->
+    <rect x="242" y="418" width="316" height="3" fill="#f0f0fa" opacity="0">
+      <animate attributeName="width" values="0;300;120;280;0;0" keyTimes="0;0.14;0.28;0.42;0.5;1" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;1;0;0" keyTimes="0;0.06;0.28;0.46;0.5;1" dur="6s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>
