@@ -1,108 +1,167 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
   <defs>
     <linearGradient id="mpBg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0e0b07"/>
+      <stop offset="0%" stop-color="#100c08"/>
       <stop offset="100%" stop-color="#000000"/>
     </linearGradient>
     <linearGradient id="mpBar" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#b45309"/>
       <stop offset="100%" stop-color="#f59e0b"/>
     </linearGradient>
+    <radialGradient id="mpPlate" cx="0.4" cy="0.32" r="0.75">
+      <stop offset="0%" stop-color="#fbf7ef"/>
+      <stop offset="100%" stop-color="#e6dccb"/>
+    </radialGradient>
   </defs>
 
   <rect width="800" height="450" fill="url(#mpBg)"/>
 
-  <!-- Week header -->
+  <!-- Header -->
   <g font-family="monospace">
-    <text x="60" y="62" fill="#f5efe4" font-size="16" font-weight="700" letter-spacing="2">AUG 31 &#8211; SEP 6</text>
-    <text x="60" y="82" fill="#f59e0b" font-size="10" letter-spacing="2" opacity="0.85">THIS WEEK</text>
-  </g>
-  <line x1="60" y1="98" x2="740" y2="98" stroke="#f5efe4" stroke-opacity="0.1"/>
-
-  <!-- Day labels -->
-  <g font-family="monospace" font-size="9" fill="#f5efe4" opacity="0.4" letter-spacing="1.5">
-    <text x="60" y="120">MON</text>
-    <text x="157" y="120">TUE</text>
-    <text x="254" y="120">WED</text>
-    <text x="351" y="120">THU</text>
-    <text x="448" y="120">FRI</text>
-    <text x="545" y="120">SAT</text>
-    <text x="642" y="120">SUN</text>
+    <text x="58" y="52" fill="#f5efe4" font-size="15" font-weight="700" letter-spacing="2.5">MEAL PLANNER</text>
+    <text x="58" y="72" fill="#f59e0b" font-size="9.5" letter-spacing="2" opacity="0.85">MONDAY &#183; TRAINING DAY</text>
   </g>
 
-  <!-- Seven day columns, four plates each. Plates land in reading order:
-       the week fills the way you actually plan it, one slot at a time. -->
+  <!-- ============ Four plates, seen from above ============
+       Empty plates, then the food lands on them in meal order. The whole
+       point of the app is a day assembled one slot at a time, so the tile
+       shows exactly that rather than an abstract grid. -->
+
+  <!-- Plate beds -->
   <g>
-    <!-- Empty plate beds -->
-    <g fill="#f5efe4" fill-opacity="0.05" stroke="#f5efe4" stroke-opacity="0.09" stroke-dasharray="3 3">
-      <rect x="60"  y="132" width="89" height="42" rx="6"/><rect x="60"  y="182" width="89" height="42" rx="6"/><rect x="60"  y="232" width="89" height="42" rx="6"/><rect x="60"  y="282" width="89" height="42" rx="6"/>
-      <rect x="157" y="132" width="89" height="42" rx="6"/><rect x="157" y="182" width="89" height="42" rx="6"/><rect x="157" y="232" width="89" height="42" rx="6"/><rect x="157" y="282" width="89" height="42" rx="6"/>
-      <rect x="254" y="132" width="89" height="42" rx="6"/><rect x="254" y="182" width="89" height="42" rx="6"/><rect x="254" y="232" width="89" height="42" rx="6"/><rect x="254" y="282" width="89" height="42" rx="6"/>
-      <rect x="351" y="132" width="89" height="42" rx="6"/><rect x="351" y="182" width="89" height="42" rx="6"/><rect x="351" y="232" width="89" height="42" rx="6"/><rect x="351" y="282" width="89" height="42" rx="6"/>
-      <rect x="448" y="132" width="89" height="42" rx="6"/><rect x="448" y="182" width="89" height="42" rx="6"/><rect x="448" y="232" width="89" height="42" rx="6"/><rect x="448" y="282" width="89" height="42" rx="6"/>
-      <rect x="545" y="132" width="89" height="42" rx="6"/><rect x="545" y="182" width="89" height="42" rx="6"/><rect x="545" y="232" width="89" height="42" rx="6"/><rect x="545" y="282" width="89" height="42" rx="6"/>
-      <rect x="642" y="132" width="89" height="42" rx="6"/><rect x="642" y="182" width="89" height="42" rx="6"/><rect x="642" y="232" width="89" height="42" rx="6"/><rect x="642" y="282" width="89" height="42" rx="6"/>
+    <circle cx="124" cy="205" r="66" fill="url(#mpPlate)" opacity="0.13"/>
+    <circle cx="124" cy="205" r="54" fill="none" stroke="#f5efe4" stroke-opacity="0.10"/>
+    <circle cx="308" cy="205" r="66" fill="url(#mpPlate)" opacity="0.13"/>
+    <circle cx="308" cy="205" r="54" fill="none" stroke="#f5efe4" stroke-opacity="0.10"/>
+    <circle cx="492" cy="205" r="66" fill="url(#mpPlate)" opacity="0.13"/>
+    <circle cx="492" cy="205" r="54" fill="none" stroke="#f5efe4" stroke-opacity="0.10"/>
+    <circle cx="676" cy="205" r="66" fill="url(#mpPlate)" opacity="0.13"/>
+    <circle cx="676" cy="205" r="54" fill="none" stroke="#f5efe4" stroke-opacity="0.10"/>
+  </g>
+
+  <!-- Plates brighten as they are filled -->
+  <g>
+    <circle cx="124" cy="205" r="66" fill="url(#mpPlate)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.06;0.13;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="308" cy="205" r="66" fill="url(#mpPlate)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.21;0.28;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="492" cy="205" r="66" fill="url(#mpPlate)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.36;0.43;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="676" cy="205" r="66" fill="url(#mpPlate)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.51;0.58;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Breakfast: two fried eggs and a slice of toast -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.09;0.16;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="translate"
+      values="0 -13;0 -13;0 0;0 0;0 0;0 0" keyTimes="0;0.09;0.17;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    <g transform="rotate(-9 113 178)">
+      <rect x="93" y="164" width="40" height="28" rx="5" fill="#c98a4b"/>
+      <rect x="99" y="170" width="28" height="16" rx="4" fill="#dda368" opacity="0.55"/>
     </g>
+    <ellipse cx="110" cy="218" rx="26" ry="21" fill="#fdf7ea"/>
+    <circle cx="110" cy="217" r="9.5" fill="#f2b13c"/>
+    <ellipse cx="145" cy="231" rx="21" ry="17" fill="#fdf7ea"/>
+    <circle cx="145" cy="230" r="8" fill="#f2b13c"/>
+  </g>
 
-    <!-- Filled plates, staggered across a 7s loop -->
-    <g fill="#f59e0b" fill-opacity="0.14" stroke="#f59e0b" stroke-opacity="0.8">
-      <rect x="60"  y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.08;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="60"  y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.08;0.16;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="60"  y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.16;0.24;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="60"  y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.24;0.32;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-
-      <rect x="157" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.30;0.38;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="157" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.34;0.42;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="157" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.38;0.46;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="157" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.42;0.50;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-
-      <rect x="254" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.46;0.53;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="254" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.49;0.56;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="254" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.52;0.59;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="254" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.55;0.62;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-
-      <rect x="351" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.58;0.64;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="351" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.60;0.66;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="351" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.62;0.68;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="351" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.64;0.70;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-
-      <rect x="448" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.66;0.72;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="448" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.68;0.73;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="448" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.70;0.75;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="448" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.72;0.77;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-
-      <rect x="545" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.74;0.78;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="545" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.76;0.80;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="545" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.77;0.81;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="545" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.79;0.82;0.86;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-
-      <rect x="642" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.80;0.83;0.87;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="642" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.81;0.84;0.88;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="642" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.82;0.85;0.89;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
-      <rect x="642" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.83;0.86;0.90;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+  <!-- Lunch: chicken, rice, broccoli -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.24;0.31;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="translate"
+      values="0 -13;0 -13;0 0;0 0;0 0;0 0" keyTimes="0;0.24;0.32;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    <g transform="rotate(-12 288 194)">
+      <rect x="262" y="178" width="52" height="32" rx="15" fill="#d69a5f"/>
+      <rect x="272" y="186" width="32" height="3.5" rx="2" fill="#9d6435" opacity="0.6"/>
+      <rect x="272" y="196" width="32" height="3.5" rx="2" fill="#9d6435" opacity="0.6"/>
+    </g>
+    <ellipse cx="334" cy="192" rx="26" ry="19" fill="#f6efdf"/>
+    <ellipse cx="334" cy="189" rx="17" ry="11" fill="#fffdf6" opacity="0.65"/>
+    <g fill="#5f9040">
+      <circle cx="294" cy="238" r="12"/>
+      <circle cx="311" cy="243" r="9.5"/>
+      <circle cx="327" cy="236" r="11"/>
+      <rect x="291" y="246" width="5" height="9" rx="2" fill="#4a7331"/>
+      <rect x="324" y="244" width="5" height="9" rx="2" fill="#4a7331"/>
     </g>
   </g>
 
-  <!-- Week total, filling toward target as the plates land -->
-  <line x1="60" y1="352" x2="740" y2="352" stroke="#f5efe4" stroke-opacity="0.1"/>
+  <!-- Afternoon: browned beef and a sweet potato -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.39;0.46;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="translate"
+      values="0 -13;0 -13;0 0;0 0;0 0;0 0" keyTimes="0;0.39;0.47;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    <g fill="#8c4c33">
+      <rect x="452" y="178" width="17" height="13" rx="5"/>
+      <rect x="472" y="172" width="15" height="12" rx="5"/>
+      <rect x="466" y="190" width="18" height="13" rx="5"/>
+      <rect x="447" y="195" width="15" height="12" rx="5"/>
+      <rect x="487" y="186" width="16" height="12" rx="5"/>
+      <rect x="461" y="206" width="15" height="11" rx="5"/>
+    </g>
+    <g fill="#a25c3c" opacity="0.55">
+      <rect x="456" y="182" width="8" height="5" rx="2"/>
+      <rect x="475" y="176" width="7" height="4" rx="2"/>
+      <rect x="470" y="194" width="8" height="5" rx="2"/>
+    </g>
+    <ellipse cx="510" cy="230" rx="31" ry="21" fill="#d97742"/>
+    <ellipse cx="510" cy="228" rx="21" ry="13" fill="#eb9a63"/>
+    <ellipse cx="510" cy="227" rx="11" ry="6" fill="#f7bb8b" opacity="0.7"/>
+  </g>
 
+  <!-- Dinner: salmon, asparagus, rice -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.54;0.61;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="translate"
+      values="0 -13;0 -13;0 0;0 0;0 0;0 0" keyTimes="0;0.54;0.62;0.86;0.93;1" dur="9s" repeatCount="indefinite"/>
+    <g transform="rotate(-10 664 192)">
+      <rect x="634" y="174" width="60" height="36" rx="11" fill="#e0805f"/>
+      <rect x="640" y="182" width="48" height="4" rx="2" fill="#f4ab8e" opacity="0.85"/>
+      <rect x="640" y="192" width="48" height="4" rx="2" fill="#f4ab8e" opacity="0.85"/>
+      <rect x="640" y="201" width="48" height="4" rx="2" fill="#f4ab8e" opacity="0.85"/>
+    </g>
+    <g fill="#5f9040">
+      <g transform="rotate(18 700 232)">
+        <rect x="686" y="214" width="7" height="38" rx="3.5"/>
+        <rect x="698" y="218" width="7" height="34" rx="3.5"/>
+        <rect x="710" y="215" width="7" height="37" rx="3.5"/>
+      </g>
+    </g>
+    <ellipse cx="653" cy="234" rx="21" ry="15" fill="#f6efdf"/>
+    <ellipse cx="653" cy="232" rx="13" ry="8" fill="#fffdf6" opacity="0.6"/>
+  </g>
+
+  <!-- Slot labels -->
+  <g font-family="monospace" font-size="9" fill="#f5efe4" opacity="0.42" letter-spacing="1.5" text-anchor="middle">
+    <text x="124" y="303">BREAKFAST</text>
+    <text x="308" y="303">LUNCH</text>
+    <text x="492" y="303">AFTERNOON</text>
+    <text x="676" y="303">DINNER</text>
+  </g>
+
+  <line x1="58" y1="330" x2="742" y2="330" stroke="#f5efe4" stroke-opacity="0.1"/>
+
+  <!-- Day total, climbing toward target as the plates fill -->
   <g font-family="monospace">
-    <text x="60" y="382" fill="#f5efe4" font-size="9" opacity="0.4" letter-spacing="1.5">WEEK</text>
-    <text x="60" y="408" fill="#f59e0b" font-size="22" font-weight="700">
-      <tspan>17,850</tspan>
-      <animate attributeName="opacity" values="0.35;1" keyTimes="0;0.86" dur="7s" repeatCount="indefinite"/>
-    </text>
-    <text x="152" y="408" fill="#f5efe4" font-size="13" opacity="0.35">/ 17,900 cal</text>
+    <text x="58" y="356" fill="#f5efe4" font-size="9" opacity="0.42" letter-spacing="1.5">DAY TOTAL</text>
+    <text x="58" y="392" fill="#f59e0b" font-size="26" font-weight="700">2,530</text>
+    <text x="148" y="392" fill="#f5efe4" font-size="13" opacity="0.38">/ 2,550 cal</text>
 
-    <text x="300" y="382" fill="#f5efe4" font-size="9" opacity="0.4" letter-spacing="1.5">PROTEIN</text>
-    <text x="300" y="408" fill="#f5efe4" font-size="22" font-weight="700" opacity="0.9">1,412</text>
-    <text x="372" y="408" fill="#f5efe4" font-size="13" opacity="0.35">/ 1,400 g</text>
+    <text x="300" y="356" fill="#f5efe4" font-size="9" opacity="0.42" letter-spacing="1.5">PROTEIN</text>
+    <text x="300" y="392" fill="#f5efe4" font-size="26" font-weight="700" opacity="0.9">207</text>
+    <text x="358" y="392" fill="#f5efe4" font-size="13" opacity="0.38">/ 200 g</text>
+
+    <text x="530" y="356" fill="#f5efe4" font-size="9" opacity="0.42" letter-spacing="1.5">ON TARGET</text>
   </g>
 
-  <!-- Target track -->
-  <rect x="530" y="392" width="210" height="6" rx="3" fill="#f5efe4" fill-opacity="0.08"/>
-  <rect x="530" y="392" width="0" height="6" rx="3" fill="url(#mpBar)">
-    <animate attributeName="width" values="0;206;206;0" keyTimes="0;0.86;0.94;1" dur="7s" repeatCount="indefinite"/>
+  <rect x="530" y="376" width="212" height="7" rx="3.5" fill="#f5efe4" fill-opacity="0.08"/>
+  <rect x="530" y="376" width="0" height="7" rx="3.5" fill="url(#mpBar)">
+    <animate attributeName="width" values="0;0;52;104;158;208;208;0"
+      keyTimes="0;0.09;0.17;0.32;0.47;0.62;0.93;1" dur="9s" repeatCount="indefinite"/>
   </rect>
-  <text x="530" y="382" font-family="monospace" fill="#f5efe4" font-size="9" opacity="0.4" letter-spacing="1.5">ON TARGET</text>
 </svg>
