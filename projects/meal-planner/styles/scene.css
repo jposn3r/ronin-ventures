@@ -36,7 +36,10 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
-    background: #0b0907;
+    /* Transparent on purpose. The kitchen is a single persistent layer on the
+       body, shared with every other view, so the scene shows THAT rather than
+       painting a second copy over it. */
+    background: transparent;
     transition: top 320ms var(--ease-scene);
 }
 
@@ -51,22 +54,19 @@
 /* ============ Stage ============ */
 
 .scene-stage {
-    position: absolute;
+    /* FIXED, and centred on the viewport rather than on .scene. Two reasons:
+       the page background behind the other views uses exactly this geometry,
+       so cutting between the scene and any other tab no longer moves the
+       kitchen; and dismissing the chrome no longer shifts the counter under
+       the dishes, because the stage no longer depends on where .scene starts. */
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* Cover: take whichever dimension needs more, then let aspect-ratio
-       supply the other. This is object-fit: cover, but for a coordinate
-       space rather than a single image. */
-    width: max(100%, calc(100vh * 1448 / 1086));
-    aspect-ratio: 1448 / 1086;
-}
-
-.scene-bg {
-    position: absolute;
-    inset: 0;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    /* Cover: take whichever dimension needs more, then let aspect-ratio supply
+       the other. object-fit: cover, but for a coordinate space. */
+    width: max(100vw, calc(100vh * var(--kitchen-w) / var(--kitchen-h)));
+    aspect-ratio: var(--kitchen-w) / var(--kitchen-h);
 }
 
 /* ============ Dishes ============ */

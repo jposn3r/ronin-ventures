@@ -19,6 +19,8 @@ html {
 }
 
 :root {
+    --ease-view: cubic-bezier(0.32, 0.72, 0.35, 1);
+
     /* ── Surfaces ───────────────────────────────────────────────────────────
        Every surface is TRANSLUCENT. The kitchen photograph sits behind the
        whole app and a scrim sits over it, so panels tint what is behind them
@@ -84,6 +86,14 @@ html {
 
     /* Grown with the type scale so the tabs still breathe. */
     --header-height: 64px;
+
+    /* ── Kitchen stage ──────────────────────────────────────────────────────
+       The photograph's native size. The page background and the scene's stage
+       MUST size themselves identically off these, or the kitchen jumps when
+       you move between the scene and any other view — two different
+       renderings of one photograph, cutting between each other. */
+    --kitchen-w: 1448;
+    --kitchen-h: 1086;
 }
 
 
@@ -121,10 +131,19 @@ html {
 body::before {
     content: '';
     position: fixed;
-    inset: 0;
+    /* Deliberately NOT inset:0 with background-size:cover. That sizes the box
+       to the viewport MINUS the scrollbar gutter and lets the browser choose
+       the crop, which landed 15px and 1.2% away from where the scene puts the
+       same photograph. Matching the scene's stage geometry exactly — same
+       width formula, same centring, same aspect — is what stops the kitchen
+       moving when you change tabs. */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max(100vw, calc(100vh * var(--kitchen-w) / var(--kitchen-h)));
+    aspect-ratio: var(--kitchen-w) / var(--kitchen-h);
     background-image: url('/projects/meal-planner/assets/scene/counter-desktop.webp');
-    background-size: cover;
-    background-position: center 42%;
+    background-size: 100% 100%;
     z-index: -2;
 }
 
@@ -139,13 +158,17 @@ body::after {
         var(--scrim-bottom) 100%
     );
     z-index: -1;
+    transition: opacity 380ms var(--ease-view);
 }
 
-/* The scene supplies its own full-bleed photograph, so the page-level one
-   would sit behind it doing nothing but costing a paint. */
-body.is-scene::before,
+/* Entering the scene lifts the scrim rather than swapping the photograph.
+   The scene used to carry its OWN copy of the kitchen and this pair was
+   display:none'd on arrival — an instant cut on one layer while the other
+   cross-faded, which is what made the transition jitter. There is one
+   photograph now, it never moves and never re-renders, and going to the
+   scene simply pulls the veil off it. */
 body.is-scene::after {
-    display: none;
+    opacity: 0.22;
 }
 
 body {
@@ -251,14 +274,74 @@ button {
     max-width: 1600px;
     margin: 0 auto;
     padding: 20px;
+    /* Anchors the outgoing view while it fades. */
+    position: relative;
 }
 
 .view {
     display: none;
 }
 
+/* Transitions here, not CSS transitions driven from JS. A transition needs the
+   browser to record a starting value in one frame and the end value in the
+   next, which means scheduling with requestAnimationFrame — and rAF does not
+   fire in a background or hidden tab, which left the app rendering at opacity
+   0 until it was focused.
+
+   Note the absence of a fill-mode. `both` would hold the from-state — opacity
+   0 — whenever the animation has not started, and browsers pause animations in
+   hidden tabs, so the blank-page failure would simply move rather than go
+   away. With no fill, an element that is not animating uses its ordinary
+   styles and is plainly visible. The fade is an enhancement; losing it costs
+   nothing but the fade. */
 .view.is-active {
     display: block;
+    animation: view-in 340ms var(--ease-view);
+}
+
+.view.is-leaving {
+    display: block;
+    /* Taken OUT OF FLOW so it can overlap the incoming view. Fading the old
+       one out and only then swapping leaves a gap where neither view is
+       visible and the bare background shows through — which is the flash.
+       Overlapping them removes the gap entirely; there is always something
+       on screen. */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    animation: view-out 220ms var(--ease-view) forwards;
+    pointer-events: none;
+}
+
+/* The scene fades without the rise. A transform on an ancestor re-anchors
+   fixed-position descendants to that ancestor, which would tear the scene's
+   fixed stage off the viewport for the length of the animation and lurch the
+   whole kitchen. Opacity has no such effect. */
+#view-meals.is-active {
+    animation-name: view-in-flat;
+}
+
+@keyframes view-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes view-in-flat {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes view-out {
+    from { opacity: 1; transform: none; }
+    to   { opacity: 0; transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .view.is-active,
+    .view.is-leaving {
+        animation-duration: 1ms;
+    }
 }
 
 /* ============ Buttons ============ */

@@ -45,4 +45,9 @@ export function mealsWithImages(meals) {
   return meals.filter((m) => Boolean(DISH_IMAGES[m.id]));
 }
 
-export const SCENE_BACKGROUND = '/projects/meal-planner/assets/scene/counter-desktop.webp';
+/* The kitchen photograph is applied in base.css, not from JS — it is a page
+   layer shared by every view rather than something the scene owns. Recorded
+   here so the one place that names the file is findable from the module that
+   owns the rest of the imagery.
+     styles/base.css  ->  body::before */
+export const SCENE_BACKGROUND_PATH = '/projects/meal-planner/assets/scene/counter-desktop.webp';

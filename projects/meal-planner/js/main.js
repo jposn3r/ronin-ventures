@@ -171,15 +171,46 @@ function renderActiveView() {
   }
 }
 
+/** Mirrors the view-out duration in base.css. */
+const FADE_OUT_MS = 220;
+
+/** Lets a second tab click cancel the previous cleanup. */
+let viewTransition = null;
+
 function setView(view) {
   if (view === activeView) return;
+
+  const outgoing = document.getElementById(`view-${activeView}`);
+  const incoming = document.getElementById(`view-${view}`);
   activeView = view;
+
   for (const tab of $('view-tabs').children) {
     tab.classList.toggle('is-active', tab.dataset.view === view);
   }
-  for (const section of document.querySelectorAll('.view')) {
-    section.classList.toggle('is-active', section.id === `view-${view}`);
+
+  // The swap happens NOW rather than after the fade. The outgoing view is
+  // taken out of flow and fades on top of the incoming one, so the two
+  // overlap and the screen is never empty. Waiting for the fade to finish
+  // before swapping is what produced the flash, and it also put the new view
+  // a fifth of a second behind the click for no benefit.
+  if (viewTransition) clearTimeout(viewTransition);
+  if (outgoing) {
+    outgoing.classList.remove('is-active');
+    outgoing.classList.add('is-leaving');
+    viewTransition = setTimeout(() => {
+      outgoing.classList.remove('is-leaving');
+      viewTransition = null;
+    }, FADE_OUT_MS);
   }
+
+  for (const section of document.querySelectorAll('.view')) {
+    if (section !== incoming && section !== outgoing) {
+      section.classList.remove('is-active', 'is-leaving');
+    }
+  }
+  incoming.classList.remove('is-leaving');
+  incoming.classList.add('is-active');
+
   // The scene is a fixed, full-height stage. Letting the page scroll behind it
   // exposes a strip of counter-coloured nothing under the photograph.
   document.body.classList.toggle('is-scene', view === 'meals');
@@ -187,13 +218,12 @@ function setView(view) {
     viewState.scene.immersive = false;
     document.body.classList.remove('is-immersive');
   }
+
   renderActiveView();
   // Open each tab at its top. Carrying the previous offset drops you into the
-  // middle of the new view, and a shorter view silently clamps the offset to
-  // zero — so scrolling down the Pantry and tabbing away loses the position
-  // anyway, just jarringly. Deliberately NOT in renderActiveView(), which the
-  // store calls on every save; scrolling to the top on each edit would be
-  // worse than the jump.
+  // middle of the new view, and a shorter view silently clamps it to zero
+  // anyway. Deliberately NOT in renderActiveView(), which the store calls on
+  // every save; scrolling to the top on each edit would be worse than the jump.
   window.scrollTo(0, 0);
 }
 

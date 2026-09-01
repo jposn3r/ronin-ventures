@@ -30,7 +30,7 @@
 
 import { h, render, clear, fmt } from './el.js';
 import { mealMacros, MACRO_KEYS } from '../core/macros.js';
-import { dishImage, mealsWithImages, SCENE_BACKGROUND } from '../data/dishImages.js';
+import { dishImage, mealsWithImages } from '../data/dishImages.js';
 
 const SHORT = { calories: 'cal', protein: 'P', carbs: 'C', fat: 'F' };
 
@@ -150,11 +150,10 @@ function build(node, meals, ctx, key) {
 
   const root = h(
     'div.scene',
-    h(
-      'div.scene-stage',
-      h('div.scene-bg', { style: { backgroundImage: `url("${SCENE_BACKGROUND}")` } }),
-      h('div.dish-rail', ...dishEls)
-    ),
+    // The stage is now purely a coordinate space: the kitchen it aligns to is
+    // the body's single persistent layer, so drawing it again here would be a
+    // second copy to keep in sync and a second layer to paint.
+    h('div.scene-stage', h('div.dish-rail', ...dishEls)),
     h(
       'div.scene-ui',
       h('div.scene-caption', name, desc, macros),
