@@ -18,7 +18,9 @@ let onCloseHook = null;
  * @param {Node|Node[]} params.body
  * @param {Node[]} [params.actions]
  * @param {() => void} [params.onClose]
- * @param {string} [params.size] 'wide' widens the dialog for list-heavy views.
+ * @param {string} [params.size] 'wide' widens the dialog for form-heavy views.
+ *   'picker' also fixes its height, so a filtered list scrolls inside a dialog
+ *   that does not change size as you type.
  */
 export function openModal({ title, body, actions = [], onClose, size }) {
   const overlay = $('modal');
@@ -30,7 +32,9 @@ export function openModal({ title, body, actions = [], onClose, size }) {
   render($('modal-actions'), actions);
   $('modal-actions').style.display = actions.length ? '' : 'none';
 
-  overlay.querySelector('.modal').classList.toggle('is-wide', size === 'wide');
+  const dialog = overlay.querySelector('.modal');
+  dialog.classList.toggle('is-wide', size === 'wide' || size === 'picker');
+  dialog.classList.toggle('is-picker', size === 'picker');
   overlay.hidden = false;
 
   // Focus the first real control so the dialog is usable from the keyboard

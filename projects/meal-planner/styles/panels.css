@@ -69,6 +69,16 @@
     max-width: 620px;
 }
 
+/* The meal picker is a filterable list, so its size is FIXED and the list
+   scrolls inside it. A dialog that resizes as you type moves the row you were
+   about to click out from under the cursor. */
+.modal.is-picker {
+    max-width: none;
+    max-height: none;
+    width: min(800px, 94vw);
+    height: min(680px, 90vh);
+}
+
 @keyframes modal-in {
     from { opacity: 0; transform: translateY(10px) scale(0.99); }
     to   { opacity: 1; transform: none; }
@@ -98,6 +108,11 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    /* Absorb the spare height in a fixed-size dialog so the action bar stays
+       pinned to the bottom instead of floating above a gap. min-height:0 is
+       what lets a flex child actually scroll rather than growing to fit. */
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .modal-text {
@@ -140,9 +155,18 @@
     flex-direction: column;
     gap: 10px;
     position: sticky;
-    top: 0;
+    /* A sticky offset resolves against the scroll container's PADDING edge, so
+       top:0 pins this 16px down and rows scroll visibly through the strip
+       above it. Pinning 16px higher puts the bar's edge at the body's border
+       box; the negative margin makes the resting position match the pinned
+       one, so nothing jumps on the first scroll; and the padding re-supplies
+       the inset the margin removed. */
+    top: -16px;
+    margin: -16px -18px 0;
+    padding: 16px 18px 12px;
     background: var(--board);
     z-index: 1;
+    border-bottom: 1px solid var(--board-edge);
 }
 
 .picker-tags {

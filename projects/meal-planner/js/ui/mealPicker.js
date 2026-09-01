@@ -145,7 +145,7 @@ export function openMealPicker({ dayIndex, slot, ctx }) {
 
   openModal({
     title: current ? `${slot.label} — ${current.name}` : `Add to ${slot.label}`,
-    size: 'wide',
+    size: 'picker',
     body: [
       current ? multiplierBar : null,
       h('div.picker-controls', search, tagBar),
