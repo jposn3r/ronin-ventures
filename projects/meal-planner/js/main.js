@@ -21,7 +21,8 @@ import { openMealPicker } from './ui/mealPicker.js';
 import { openSlotEditor, openDayCopy } from './ui/slotEditor.js';
 import { renderShoppingList, copyShoppingList } from './ui/shoppingList.js';
 import { renderPantry } from './ui/pantry.js';
-import { renderMeals, openMealBuilder } from './ui/mealBuilder.js';
+import { openMealBuilder } from './ui/mealBuilder.js';
+import { renderScene } from './ui/scene.js';
 import { openIngredientForm } from './ui/ingredientForm.js';
 import { renderSettings } from './ui/settings.js';
 import { setDayType, copyWeek, isWeekEmpty } from './core/week.js';
@@ -37,6 +38,8 @@ let activeView = 'plan';
 const viewState = {
   pantry: { query: '', showArchived: false },
   meals: { query: '', showArchived: false },
+  // Which dish is centred in the scene, and whether the chrome is dismissed.
+  scene: { index: 0, immersive: false },
 };
 
 /* ============ Context handed to every component ============ */
@@ -122,6 +125,21 @@ function buildContext() {
       renderActiveView();
     },
 
+    get sceneIndex() {
+      return viewState.scene.index;
+    },
+
+    setSceneIndex(index) {
+      viewState.scene.index = index;
+      renderActiveView();
+    },
+
+    setSceneImmersive(on) {
+      viewState.scene.immersive = Boolean(on);
+      document.body.classList.toggle('is-immersive', viewState.scene.immersive);
+      renderActiveView();
+    },
+
     toast,
   };
 
@@ -145,7 +163,7 @@ function renderActiveView() {
       renderPantry($('pantry-body'), $('pantry-sub'), ctx, viewState.pantry);
       break;
     case 'meals':
-      renderMeals($('meals-body'), $('meals-sub'), ctx, viewState.meals);
+      renderScene($('meals-body'), ctx, viewState.scene);
       break;
     case 'settings':
       renderSettings($('settings-body'), ctx);
@@ -161,6 +179,13 @@ function setView(view) {
   }
   for (const section of document.querySelectorAll('.view')) {
     section.classList.toggle('is-active', section.id === `view-${view}`);
+  }
+  // The scene is a fixed, full-height stage. Letting the page scroll behind it
+  // exposes a strip of counter-coloured nothing under the photograph.
+  document.body.classList.toggle('is-scene', view === 'meals');
+  if (view !== 'meals' && viewState.scene.immersive) {
+    viewState.scene.immersive = false;
+    document.body.classList.remove('is-immersive');
   }
   renderActiveView();
   // Open each tab at its top. Carrying the previous offset drops you into the
@@ -218,26 +243,34 @@ async function boot() {
   $('ingredient-new').addEventListener('click', () =>
     openIngredientForm({ ingredient: null, ctx: buildContext() })
   );
-  $('meal-new').addEventListener('click', () => openMealBuilder({ meal: null, ctx: buildContext() }));
 
   $('pantry-search').addEventListener('input', (e) => {
     viewState.pantry.query = e.target.value;
     renderActiveView();
   });
-  $('meals-search').addEventListener('input', (e) => {
-    viewState.meals.query = e.target.value;
-    renderActiveView();
-  });
 
-  // Left and right arrows page the week, but not while a dialog or a text
-  // field has focus — arrow keys mean something else there.
+  // Arrow keys mean different things per view: paging weeks on the plan,
+  // moving along the counter in the scene. Never while a dialog or a text
+  // field has focus, where they already mean something.
   document.addEventListener('keydown', (e) => {
-    if (activeView !== 'plan') return;
     if (!$('modal').hidden) return;
     const tag = document.activeElement && document.activeElement.tagName;
     if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
-    if (e.key === 'ArrowLeft') goToWeek(addDays(weekStart, -7));
-    if (e.key === 'ArrowRight') goToWeek(addDays(weekStart, 7));
+
+    if (activeView === 'plan') {
+      if (e.key === 'ArrowLeft') goToWeek(addDays(weekStart, -7));
+      if (e.key === 'ArrowRight') goToWeek(addDays(weekStart, 7));
+      return;
+    }
+
+    if (activeView === 'meals') {
+      const ctx = buildContext();
+      if (e.key === 'ArrowLeft') ctx.setSceneIndex(viewState.scene.index - 1);
+      if (e.key === 'ArrowRight') ctx.setSceneIndex(viewState.scene.index + 1);
+      // Escape leaves immersive mode before it does anything else, so the
+      // dismissed chrome is always one familiar key away.
+      if (e.key === 'Escape' && viewState.scene.immersive) ctx.setSceneImmersive(false);
+    }
   });
 
   try {

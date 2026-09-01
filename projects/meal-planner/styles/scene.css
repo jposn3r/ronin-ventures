@@ -1,0 +1,392 @@
+/* ========================================
+   Meal Planner — Scene
+   ----------------------------------------
+   The immersive view: a dark kitchen, a stone
+   counter, dishes sitting on it.
+
+   Two ideas carry the whole file.
+
+   1. STAGE COORDINATES. The background is a fixed
+      4:3 photograph sized to cover the viewport,
+      so on a wide window it crops top and bottom
+      and the counter's edge moves relative to the
+      window. Everything that has to sit ON the
+      counter is therefore positioned against the
+      stage, not the viewport. Resize the browser
+      and the dishes stay on the stone.
+
+   2. SHADOWS ARE DRAWN, NOT PHOTOGRAPHED. The
+      tight occlusion shadow under each rim is
+      baked into the cutout because it belongs to
+      the object. The longer cast shadow is a DOM
+      element, so it can stretch and settle as a
+      dish slides. That is what sells the weight.
+   ======================================== */
+
+.scene {
+    /* Fixed rather than full-bleed inside #app: the page has a max-width, a
+       centred container and a stable scrollbar gutter, and fighting all three
+       with negative margins overflows by exactly the gutter width. */
+    position: fixed;
+    /* Not --header-height directly: the header grows to two rows on a phone,
+       and a scene pinned to the desktop height slides its caption underneath
+       the tabs. --scene-top carries the real value per breakpoint. */
+    top: var(--scene-top, var(--header-height));
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background: #0b0907;
+    transition: top 320ms var(--ease-scene);
+}
+
+.scene.is-immersive {
+    top: 0;
+}
+
+:root {
+    --ease-scene: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ============ Stage ============ */
+
+.scene-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Cover: take whichever dimension needs more, then let aspect-ratio
+       supply the other. This is object-fit: cover, but for a coordinate
+       space rather than a single image. */
+    width: max(100%, calc(100vh * 1448 / 1086));
+    aspect-ratio: 1448 / 1086;
+}
+
+.scene-bg {
+    position: absolute;
+    inset: 0;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+/* ============ Dishes ============ */
+
+.dish-rail {
+    position: absolute;
+    inset: 0;
+}
+
+.dish {
+    position: absolute;
+    left: 50%;
+    /* Sits low on the counter — nearest the viewer is where the hero belongs.
+       Percentages are of the STAGE, which overflows the viewport vertically,
+       so this reads higher on screen than the number suggests. */
+    bottom: 24%;
+    /* 34% of the stage keeps dishes in proportion to the counter they sit on.
+       The viewport clamp stops that becoming a phone-wide plate when a
+       portrait window crops the 4:3 stage hard from the sides. */
+    width: min(34%, 74vw);
+    transform-origin: 50% 100%;
+    cursor: pointer;
+
+    /* The transform VALUE is written by scene.js, which owns the geometry.
+       CSS owns only how it moves. All motion is one composited transform, so
+       sliding a dish never touches layout. */
+    transition: transform 700ms var(--ease-scene);
+    /* Deliberately NO will-change. It would promote every dish in the rail to
+       its own compositor layer permanently, for a transition that runs for
+       700ms when an arrow is clicked. The browser promotes during the
+       transition on its own; a standing hint just costs memory for every
+       dish, including the ones parked off screen. */
+}
+
+.dish.is-active {
+    cursor: default;
+}
+
+.dish-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* Grounding shadow plus depth darkening, written by scene.js. Applied to
+       the IMAGE so both respect the cutout's alpha; an overlay div would
+       square the dish off into a shaded rectangle. */
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+    transition: filter 700ms var(--ease-scene);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* The cast shadow. Sits behind the plate, wider than it and squashed flat,
+   pushed slightly right because the key light is camera-left. */
+.dish-shadow {
+    position: absolute;
+    left: 50%;
+    bottom: -2%;
+    width: 96%;
+    aspect-ratio: 5 / 1;
+    transform: translateX(-46%);
+    background: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 0.62) 0%,
+        rgba(0, 0, 0, 0.34) 42%,
+        rgba(0, 0, 0, 0) 72%
+    );
+    filter: blur(6px);
+    transition: opacity 700ms var(--ease-scene);
+    pointer-events: none;
+}
+
+/* ============ Overlay chrome ============ */
+
+.scene-ui {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 260ms var(--ease-scene);
+}
+
+/* Every control inside has to opt back in, so the scene stays draggable and
+   the photograph is never covered by an invisible hit area. */
+.scene-ui > * {
+    pointer-events: auto;
+}
+
+.scene.is-immersive .scene-ui {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scene-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(6% + 100px);
+    text-align: center;
+    color: #f5efe4;
+    padding: 0 20px;
+    /* A scrim, not a box: the caption has to stay legible over stone without
+       putting a card on top of the photograph. */
+    text-shadow: 0 1px 24px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.scene-dish-name {
+    font-size: clamp(26px, 3.1vw, 41px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.scene-dish-desc {
+    margin: 5px auto 0;
+    max-width: 46ch;
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(245, 239, 228, 0.72);
+}
+
+.scene-macros {
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+    margin-top: 14px;
+}
+
+.scene-macro {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.scene-macro-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f5efe4;
+}
+
+.scene-macro-key {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(245, 239, 228, 0.55);
+}
+
+/* ============ Navigation, beneath the dish ============ */
+
+.scene-nav {
+    position: absolute;
+    left: 50%;
+    bottom: 4%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.scene-arrow {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(245, 239, 228, 0.22);
+    background: rgba(11, 9, 7, 0.42);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #f5efe4;
+    font-size: 26px;
+    line-height: 1;
+    padding: 0 0 3px;
+    transition: background 160ms, border-color 160ms, transform 160ms;
+}
+
+.scene-arrow:hover {
+    background: rgba(11, 9, 7, 0.66);
+    border-color: rgba(245, 239, 228, 0.42);
+}
+
+.scene-arrow:active {
+    transform: scale(0.94);
+}
+
+.scene-arrow:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* ============ Counter readout + dismiss ============ */
+
+.scene-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 132px;
+    font-size: 12px;
+    color: rgba(245, 239, 228, 0.75);
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+}
+
+.scene-counter-total {
+    font-size: 11px;
+    color: rgba(245, 239, 228, 0.4);
+}
+
+.scene-toggle {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    z-index: 10;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid rgba(245, 239, 228, 0.2);
+    background: rgba(11, 9, 7, 0.42);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #f5efe4;
+    font-size: 15px;
+    line-height: 1;
+    transition: background 160ms, opacity 260ms;
+}
+
+.scene-toggle:hover {
+    background: rgba(11, 9, 7, 0.7);
+}
+
+.scene-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* In immersive mode the restore control fades back rather than vanishing —
+   a control you cannot find is a trap. */
+.scene.is-immersive .scene-toggle {
+    opacity: 0.28;
+}
+
+.scene.is-immersive .scene-toggle:hover,
+.scene.is-immersive .scene-toggle:focus-visible {
+    opacity: 1;
+}
+
+.scene.is-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scene.is-empty .empty-note {
+    color: rgba(245, 239, 228, 0.6);
+    max-width: 44ch;
+}
+
+/* ============ Motion ============ */
+
+@media (prefers-reduced-motion: reduce) {
+    .dish,
+    .dish-img,
+    .dish-shadow,
+    .scene,
+    .scene-ui {
+        transition-duration: 1ms;
+    }
+}
+
+/* ============ Mobile ============ */
+
+@media (max-width: 720px) {
+    .scene {
+        /* Measured height of the wrapped two-row header. */
+        --scene-top: 102px;
+    }
+
+    .scene-stage {
+        /* Portrait windows crop the 4:3 hard from the sides; bias toward the
+           counter so the dish keeps its stone. */
+        width: max(100%, calc(100vh * 1448 / 1086));
+    }
+
+    .dish {
+        bottom: 29%;
+    }
+
+    .scene-arrow {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+    }
+
+    .scene-caption {
+        top: calc(4% + 56px);
+    }
+
+    .scene-macros {
+        gap: 16px;
+    }
+
+    .scene-dish-desc {
+        display: none;
+    }
+}
+
+/* ============ Body states ============
+   The scene is a fixed full-height stage, so the page behind it must not
+   scroll. Immersive mode additionally hides the app header, which is what
+   makes the photograph go edge to edge. */
+
+body.is-scene {
+    overflow: hidden;
+}
+
+body.is-immersive .app-header {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.app-header {
+    transition: transform 320ms var(--ease-scene), opacity 260ms var(--ease-scene);
+}
