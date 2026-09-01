@@ -1,10 +1,34 @@
 {
     "meta": {
         "version": "3.2.0",
-        "lastUpdated": "Aug 8, 2026",
+        "lastUpdated": "Aug 31, 2026",
         "author": "Jake Posner"
     },
     "projects": [
+        {
+            "id": "meal-planner",
+            "title": "Meal Planner",
+            "shortDescription": "Plan a week of meals against macro targets, then shop it.",
+            "description": "A weekly meal planner built for a body recomposition: an ingredient library with per-serving macros, preset dishes composed from those ingredients, and a seven-day grid of slots you fill from them. Macros are computed from ingredients on every read rather than stored, so correcting one ingredient corrects every dish that uses it. Each day is measured against a named target set -- training or rest -- with a tolerance band, and the week's shopping list rolls the planned quantities up into what you actually buy, converting units where the dimensions allow and falling back to package sizes where they do not. All persistence goes through a storage adapter interface, so the localStorage implementation can be swapped for a database without touching the UI. JSON export and import included.",
+            "category": "tool",
+            "categoryLabel": "App",
+            "thumbnail": "/assets/thumbnails/meal-planner.svg",
+            "screenshots": [],
+            "path": "/projects/meal-planner/",
+            "externalUrl": "",
+            "sourceUrl": "https://github.com/jposn3r/ronin-ventures/tree/main/projects/meal-planner",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "ES Modules",
+                "localStorage"
+            ],
+            "status": "active",
+            "featured": false,
+            "comingSoon": false,
+            "lastUpdated": "Aug 31, 2026"
+        },
         {
             "id": "harvest-voice",
             "title": "HarvestVoice",

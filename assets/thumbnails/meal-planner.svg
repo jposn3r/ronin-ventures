@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="mpBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0e0b07"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </linearGradient>
+    <linearGradient id="mpBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#mpBg)"/>
+
+  <!-- Week header -->
+  <g font-family="monospace">
+    <text x="60" y="62" fill="#f5efe4" font-size="16" font-weight="700" letter-spacing="2">AUG 31 &#8211; SEP 6</text>
+    <text x="60" y="82" fill="#f59e0b" font-size="10" letter-spacing="2" opacity="0.85">THIS WEEK</text>
+  </g>
+  <line x1="60" y1="98" x2="740" y2="98" stroke="#f5efe4" stroke-opacity="0.1"/>
+
+  <!-- Day labels -->
+  <g font-family="monospace" font-size="9" fill="#f5efe4" opacity="0.4" letter-spacing="1.5">
+    <text x="60" y="120">MON</text>
+    <text x="157" y="120">TUE</text>
+    <text x="254" y="120">WED</text>
+    <text x="351" y="120">THU</text>
+    <text x="448" y="120">FRI</text>
+    <text x="545" y="120">SAT</text>
+    <text x="642" y="120">SUN</text>
+  </g>
+
+  <!-- Seven day columns, four plates each. Plates land in reading order:
+       the week fills the way you actually plan it, one slot at a time. -->
+  <g>
+    <!-- Empty plate beds -->
+    <g fill="#f5efe4" fill-opacity="0.05" stroke="#f5efe4" stroke-opacity="0.09" stroke-dasharray="3 3">
+      <rect x="60"  y="132" width="89" height="42" rx="6"/><rect x="60"  y="182" width="89" height="42" rx="6"/><rect x="60"  y="232" width="89" height="42" rx="6"/><rect x="60"  y="282" width="89" height="42" rx="6"/>
+      <rect x="157" y="132" width="89" height="42" rx="6"/><rect x="157" y="182" width="89" height="42" rx="6"/><rect x="157" y="232" width="89" height="42" rx="6"/><rect x="157" y="282" width="89" height="42" rx="6"/>
+      <rect x="254" y="132" width="89" height="42" rx="6"/><rect x="254" y="182" width="89" height="42" rx="6"/><rect x="254" y="232" width="89" height="42" rx="6"/><rect x="254" y="282" width="89" height="42" rx="6"/>
+      <rect x="351" y="132" width="89" height="42" rx="6"/><rect x="351" y="182" width="89" height="42" rx="6"/><rect x="351" y="232" width="89" height="42" rx="6"/><rect x="351" y="282" width="89" height="42" rx="6"/>
+      <rect x="448" y="132" width="89" height="42" rx="6"/><rect x="448" y="182" width="89" height="42" rx="6"/><rect x="448" y="232" width="89" height="42" rx="6"/><rect x="448" y="282" width="89" height="42" rx="6"/>
+      <rect x="545" y="132" width="89" height="42" rx="6"/><rect x="545" y="182" width="89" height="42" rx="6"/><rect x="545" y="232" width="89" height="42" rx="6"/><rect x="545" y="282" width="89" height="42" rx="6"/>
+      <rect x="642" y="132" width="89" height="42" rx="6"/><rect x="642" y="182" width="89" height="42" rx="6"/><rect x="642" y="232" width="89" height="42" rx="6"/><rect x="642" y="282" width="89" height="42" rx="6"/>
+    </g>
+
+    <!-- Filled plates, staggered across a 7s loop -->
+    <g fill="#f59e0b" fill-opacity="0.14" stroke="#f59e0b" stroke-opacity="0.8">
+      <rect x="60"  y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.08;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="60"  y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.08;0.16;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="60"  y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.16;0.24;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="60"  y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.24;0.32;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+
+      <rect x="157" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.30;0.38;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="157" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.34;0.42;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="157" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.38;0.46;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="157" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.42;0.50;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+
+      <rect x="254" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.46;0.53;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="254" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.49;0.56;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="254" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.52;0.59;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="254" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.55;0.62;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+
+      <rect x="351" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.58;0.64;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="351" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.60;0.66;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="351" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.62;0.68;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="351" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.64;0.70;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+
+      <rect x="448" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.66;0.72;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="448" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.68;0.73;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="448" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.70;0.75;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="448" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.72;0.77;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+
+      <rect x="545" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.74;0.78;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="545" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.76;0.80;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="545" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.77;0.81;0.85;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="545" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.79;0.82;0.86;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+
+      <rect x="642" y="132" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.80;0.83;0.87;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="642" y="182" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.81;0.84;0.88;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="642" y="232" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.82;0.85;0.89;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+      <rect x="642" y="282" width="89" height="42" rx="6" opacity="0"><animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.83;0.86;0.90;0.94;1" dur="7s" repeatCount="indefinite"/></rect>
+    </g>
+  </g>
+
+  <!-- Week total, filling toward target as the plates land -->
+  <line x1="60" y1="352" x2="740" y2="352" stroke="#f5efe4" stroke-opacity="0.1"/>
+
+  <g font-family="monospace">
+    <text x="60" y="382" fill="#f5efe4" font-size="9" opacity="0.4" letter-spacing="1.5">WEEK</text>
+    <text x="60" y="408" fill="#f59e0b" font-size="22" font-weight="700">
+      <tspan>17,850</tspan>
+      <animate attributeName="opacity" values="0.35;1" keyTimes="0;0.86" dur="7s" repeatCount="indefinite"/>
+    </text>
+    <text x="152" y="408" fill="#f5efe4" font-size="13" opacity="0.35">/ 17,900 cal</text>
+
+    <text x="300" y="382" fill="#f5efe4" font-size="9" opacity="0.4" letter-spacing="1.5">PROTEIN</text>
+    <text x="300" y="408" fill="#f5efe4" font-size="22" font-weight="700" opacity="0.9">1,412</text>
+    <text x="372" y="408" fill="#f5efe4" font-size="13" opacity="0.35">/ 1,400 g</text>
+  </g>
+
+  <!-- Target track -->
+  <rect x="530" y="392" width="210" height="6" rx="3" fill="#f5efe4" fill-opacity="0.08"/>
+  <rect x="530" y="392" width="0" height="6" rx="3" fill="url(#mpBar)">
+    <animate attributeName="width" values="0;206;206;0" keyTimes="0;0.86;0.94;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <text x="530" y="382" font-family="monospace" fill="#f5efe4" font-size="9" opacity="0.4" letter-spacing="1.5">ON TARGET</text>
+</svg>
