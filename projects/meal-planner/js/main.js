@@ -19,6 +19,11 @@ import { toast } from './ui/toast.js';
 import { renderWeekGrid, renderWeekLabel } from './ui/weekGrid.js';
 import { openMealPicker } from './ui/mealPicker.js';
 import { openSlotEditor, openDayCopy } from './ui/slotEditor.js';
+import { renderShoppingList, copyShoppingList } from './ui/shoppingList.js';
+import { renderPantry } from './ui/pantry.js';
+import { renderMeals, openMealBuilder } from './ui/mealBuilder.js';
+import { openIngredientForm } from './ui/ingredientForm.js';
+import { renderSettings } from './ui/settings.js';
 import { setDayType, copyWeek, isWeekEmpty } from './core/week.js';
 import { addDays, mondayOf, today } from './core/dates.js';
 
@@ -27,6 +32,12 @@ let weekStart = mondayOf(today());
 
 /** @type {string} */
 let activeView = 'plan';
+
+/** Per-view UI state that is intentionally not persisted. */
+const viewState = {
+  pantry: { query: '', showArchived: false },
+  meals: { query: '', showArchived: false },
+};
 
 /* ============ Context handed to every component ============ */
 
@@ -70,6 +81,47 @@ function buildContext() {
       openDayCopy({ dayIndex, ctx: buildContext() });
     },
 
+    /* ---- Library reads, including archived when asked ---- */
+    allIngredients: (includeArchived) => store.get.ingredients(includeArchived),
+    allMeals: (includeArchived) => store.get.meals(includeArchived),
+    allDayTypes: (includeArchived) => store.get.dayTypes(includeArchived),
+    slotTemplates: store.get.slotTemplates(),
+    mealsUsingIngredient: (id) => store.get.mealsUsingIngredient(id),
+    slotsUsingMeal: (id) => store.get.slotsUsingMeal(id),
+
+    /* ---- Writes. Every one repaints through the store subscription. ---- */
+    saveIngredient: (record) => store.saveIngredient(record),
+    saveMeal: (record) => store.saveMeal(record),
+    saveDayType: (record) => store.saveDayType(record),
+    saveSlotTemplate: (record) => store.saveSlotTemplate(record),
+    saveSettings: (patch) => store.saveSettings(patch),
+    setArchived: (entity, id, archived) => store.setArchived(entity, id, archived),
+    exportAll: () => store.exportAll(),
+    importAll: (payload, opts) => store.importAll(payload, opts),
+    resetToSeed: () => store.resetToSeed(),
+
+    toggleShoppingCheck(ingredientId, isChecked) {
+      const week = ctx.week;
+      const next = { ...week, shoppingChecked: { ...week.shoppingChecked } };
+      if (isChecked) next.shoppingChecked[ingredientId] = true;
+      else delete next.shoppingChecked[ingredientId];
+      ctx.update(next);
+    },
+
+    clearShoppingChecks() {
+      ctx.update({ ...ctx.week, shoppingChecked: {} });
+    },
+
+    setPantryView(patch) {
+      Object.assign(viewState.pantry, patch);
+      renderActiveView();
+    },
+
+    setMealsView(patch) {
+      Object.assign(viewState.meals, patch);
+      renderActiveView();
+    },
+
     toast,
   };
 
@@ -81,16 +133,23 @@ function buildContext() {
 function renderActiveView() {
   const ctx = buildContext();
 
-  if (activeView === 'plan') {
-    renderWeekLabel($('week-range'), $('week-sub'), weekStart);
-    renderWeekGrid($('week-grid'), $('week-summary'), ctx);
-    return;
-  }
-
-  // The remaining sections land in the next increment.
-  const host = { shopping: 'shopping-body', meals: 'meals-body', pantry: 'pantry-body', settings: 'settings-body' }[activeView];
-  if (host) {
-    render($(host), h('p.empty-note', { text: 'Coming in the next increment.' }));
+  switch (activeView) {
+    case 'plan':
+      renderWeekLabel($('week-range'), $('week-sub'), weekStart);
+      renderWeekGrid($('week-grid'), $('week-summary'), ctx);
+      break;
+    case 'shopping':
+      renderShoppingList($('shopping-body'), $('shopping-sub'), ctx);
+      break;
+    case 'pantry':
+      renderPantry($('pantry-body'), $('pantry-sub'), ctx, viewState.pantry);
+      break;
+    case 'meals':
+      renderMeals($('meals-body'), $('meals-sub'), ctx, viewState.meals);
+      break;
+    case 'settings':
+      renderSettings($('settings-body'), ctx);
+      break;
   }
 }
 
@@ -144,6 +203,23 @@ async function boot() {
   $('week-next').addEventListener('click', () => goToWeek(addDays(weekStart, 7)));
   $('week-today').addEventListener('click', () => goToWeek(mondayOf(today())));
   $('week-copy-prev').addEventListener('click', copyPreviousWeek);
+
+  $('shopping-copy').addEventListener('click', () => copyShoppingList(buildContext()));
+  $('shopping-uncheck').addEventListener('click', () => buildContext().clearShoppingChecks());
+
+  $('ingredient-new').addEventListener('click', () =>
+    openIngredientForm({ ingredient: null, ctx: buildContext() })
+  );
+  $('meal-new').addEventListener('click', () => openMealBuilder({ meal: null, ctx: buildContext() }));
+
+  $('pantry-search').addEventListener('input', (e) => {
+    viewState.pantry.query = e.target.value;
+    renderActiveView();
+  });
+  $('meals-search').addEventListener('input', (e) => {
+    viewState.meals.query = e.target.value;
+    renderActiveView();
+  });
 
   // Left and right arrows page the week, but not while a dialog or a text
   // field has focus — arrow keys mean something else there.

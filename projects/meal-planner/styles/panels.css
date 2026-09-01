@@ -382,3 +382,383 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ============ Forms ============ */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.form-row-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.form-section {
+    margin-top: 4px;
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 46px;
+    font-family: inherit;
+}
+
+.cross-check {
+    margin: -6px 0 0;
+}
+
+/* A gap too large to be label rounding is a typo in the macro numbers, and
+   that typo would propagate into every meal and every day downstream. */
+.cross-check.is-off {
+    color: var(--over);
+    font-weight: 600;
+}
+
+.inline-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    cursor: pointer;
+}
+
+.color-input {
+    width: 100%;
+    height: 32px;
+    padding: 2px;
+    border: 1px solid var(--plate-edge);
+    border-radius: var(--radius-sm);
+    background: var(--plate);
+    cursor: pointer;
+}
+
+.swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border: 1px solid var(--plate-edge);
+    flex-shrink: 0;
+}
+
+/* ============ Cards as buttons ============ */
+
+.card-button {
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    transition: border-color 120ms, box-shadow 120ms;
+}
+
+.card-button:hover {
+    border-color: var(--accent-edge);
+    box-shadow: var(--shadow-plate);
+}
+
+.card-button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.card-serving {
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+}
+
+.section-count {
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============ Meal builder ============ */
+
+.builder-totals-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--board);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--board-edge);
+}
+
+.builder-totals {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: var(--counter);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+}
+
+.builder-total {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.builder-total-key {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+}
+
+.builder-total-value {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.builder-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.builder-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 9px;
+    background: var(--counter);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+}
+
+.builder-line.is-archived {
+    opacity: 0.65;
+}
+
+.builder-line.is-missing {
+    border-color: #f3c9c9;
+    background: var(--over-soft);
+    color: var(--over);
+    justify-content: space-between;
+}
+
+.builder-line-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+    flex: 1;
+}
+
+.builder-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.builder-serving {
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-family: var(--font-mono);
+}
+
+.qty-input {
+    width: 76px;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.builder-remove {
+    flex-shrink: 0;
+}
+
+/* ============ Shopping list ============ */
+
+.shop-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.shop-line {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 12px;
+    background: var(--board);
+    border: 1px solid var(--board-edge);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: opacity 120ms, background 120ms;
+}
+
+.shop-line:hover {
+    border-color: var(--accent-edge);
+}
+
+.shop-line.is-ticked {
+    opacity: 0.5;
+    background: var(--counter);
+}
+
+.shop-line.is-ticked .shop-name {
+    text-decoration: line-through;
+}
+
+.shop-check {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.shop-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex: 1;
+    min-width: 0;
+}
+
+.shop-name {
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.shop-used,
+.shop-notes {
+    font-size: 11px;
+    color: var(--ink-faint);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.shop-notes {
+    font-style: italic;
+}
+
+.shop-amounts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+    flex-shrink: 0;
+}
+
+.shop-buy {
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+/* The quantity the package maths was derived from. Without it "10 bags" is
+   unverifiable in the aisle. */
+.shop-raw {
+    font-size: 10.5px;
+    color: var(--ink-faint);
+}
+
+.warn-note {
+    background: var(--over-soft);
+    border: 1px solid #f3c9c9;
+    color: var(--over);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    font-size: 12.5px;
+    margin: 0 0 12px;
+}
+
+/* ============ Settings ============ */
+
+.settings-block {
+    background: var(--board);
+    border: 1px solid var(--board-edge);
+    border-radius: var(--radius);
+    padding: 14px 16px 18px;
+    margin-bottom: 12px;
+}
+
+.settings-block .section-head {
+    margin-top: 0;
+}
+
+.settings-block .card-list {
+    margin-top: 8px;
+}
+
+.settings-block .card {
+    background: var(--counter);
+}
+
+.template-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0 0;
+    font-size: 12.5px;
+}
+
+.template-name {
+    font-weight: 600;
+}
+
+.template-slots {
+    color: var(--ink-faint);
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.template-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.template-slot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tolerance-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.slider {
+    flex: 1;
+    accent-color: var(--accent);
+}
+
+.tolerance-readout {
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 62px;
+    text-align: right;
+}
+
+.data-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+    .form-row,
+    .form-row-4 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .builder-totals {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .shop-used {
+        display: none;
+    }
+}
