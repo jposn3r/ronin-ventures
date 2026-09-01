@@ -154,6 +154,7 @@ function renderActiveView() {
 }
 
 function setView(view) {
+  if (view === activeView) return;
   activeView = view;
   for (const tab of $('view-tabs').children) {
     tab.classList.toggle('is-active', tab.dataset.view === view);
@@ -162,6 +163,13 @@ function setView(view) {
     section.classList.toggle('is-active', section.id === `view-${view}`);
   }
   renderActiveView();
+  // Open each tab at its top. Carrying the previous offset drops you into the
+  // middle of the new view, and a shorter view silently clamps the offset to
+  // zero — so scrolling down the Pantry and tabbing away loses the position
+  // anyway, just jarringly. Deliberately NOT in renderActiveView(), which the
+  // store calls on every save; scrolling to the top on each edit would be
+  // worse than the jump.
+  window.scrollTo(0, 0);
 }
 
 /* ============ Week navigation ============ */
