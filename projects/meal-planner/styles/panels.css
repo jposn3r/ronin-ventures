@@ -1,0 +1,384 @@
+/* ========================================
+   Meal Planner — Panels, modals, pickers
+   ----------------------------------------
+   Everything that is not the week grid: the
+   dialog host, the meal picker, and the list
+   surfaces the pantry, meals and shopping views
+   share.
+   ======================================== */
+
+.panel-bar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.panel-title {
+    font-size: 20px;
+    letter-spacing: -0.02em;
+}
+
+.panel-sub {
+    margin: 2px 0 0;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+}
+
+.panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ============ Modal ============ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(43, 38, 32, 0.42);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 200;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal {
+    background: var(--board);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-modal);
+    width: 100%;
+    max-width: 440px;
+    max-height: min(88vh, 760px);
+    display: flex;
+    flex-direction: column;
+    animation: modal-in 160ms ease-out;
+}
+
+.modal.is-wide {
+    max-width: 620px;
+}
+
+@keyframes modal-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.99); }
+    to   { opacity: 1; transform: none; }
+}
+
+.modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--board-edge);
+}
+
+.modal-title {
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.modal-body {
+    padding: 16px 18px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.modal-text {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 12px 18px 16px;
+    border-top: 1px solid var(--board-edge);
+}
+
+.modal-actions .btn-danger {
+    margin-right: auto;
+}
+
+.modal-actions button[disabled] {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.row-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.row-buttons .btn-ghost {
+    flex: 1;
+}
+
+/* ============ Meal picker ============ */
+
+.picker-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    background: var(--board);
+    z-index: 1;
+}
+
+.picker-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.tag-chip,
+.mult-chip {
+    border: 1px solid var(--board-edge);
+    background: var(--counter);
+    color: var(--ink-soft);
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 980px;
+    text-transform: capitalize;
+    transition: background 120ms, color 120ms, border-color 120ms;
+}
+
+.tag-chip:hover,
+.mult-chip:hover {
+    border-color: var(--accent-edge);
+    color: var(--ink);
+}
+
+.tag-chip.is-active,
+.mult-chip.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.picker-mult {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--board-edge);
+}
+
+.mult-chips {
+    display: flex;
+    gap: 5px;
+}
+
+.mult-chip {
+    text-transform: none;
+    min-width: 46px;
+}
+
+.picker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.picker-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+    text-align: left;
+    padding: 9px 11px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: var(--counter);
+    transition: background 120ms, border-color 120ms;
+}
+
+.picker-row:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent-edge);
+}
+
+.picker-row.is-current {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.picker-row-main {
+    min-width: 0;
+}
+
+.picker-name {
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.picker-desc {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    line-height: 1.35;
+    margin-top: 1px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.picker-macros {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+    flex-shrink: 0;
+}
+
+.picker-cal {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.picker-split {
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+}
+
+/* ============ Copy-day targets ============ */
+
+.copy-targets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+
+.copy-target {
+    border: 1px solid var(--board-edge);
+    background: var(--counter);
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    transition: background 120ms, color 120ms, border-color 120ms;
+}
+
+.copy-target:hover {
+    border-color: var(--accent-edge);
+    color: var(--ink);
+}
+
+.copy-target.is-chosen {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+/* ============ Shared list surfaces ============ */
+
+.card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+}
+
+.card {
+    background: var(--board);
+    border: 1px solid var(--board-edge);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card.is-archived {
+    opacity: 0.6;
+}
+
+.card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.card-name {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.card-sub {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    line-height: 1.4;
+}
+
+.card-macros {
+    display: flex;
+    gap: 10px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+}
+
+.card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 2px;
+}
+
+.section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 18px 0 8px;
+}
+
+.section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-faint);
+}
+
+@media (max-width: 720px) {
+    .modal {
+        max-width: none;
+        max-height: 92vh;
+    }
+
+    .panel-actions {
+        width: 100%;
+    }
+
+    .panel-actions .input.search {
+        flex: 1;
+    }
+
+    .card-list {
+        grid-template-columns: 1fr;
+    }
+}

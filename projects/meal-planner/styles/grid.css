@@ -1,0 +1,553 @@
+/* ========================================
+   Meal Planner — Week grid
+   ----------------------------------------
+   Days as columns, plates stacked inside each.
+
+   Desktop-first: all seven days visible at once,
+   because the point of the view is comparing days
+   against each other. Below 1100px the grid
+   scrolls sideways rather than shrinking the
+   columns past readability; below 720px it
+   restacks one day per row.
+   ======================================== */
+
+.week-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.week-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.week-label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    min-width: 148px;
+}
+
+.week-label > span:first-child {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.week-sub {
+    font-size: 12px;
+    color: var(--ink-faint);
+}
+
+.week-sub.is-current {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.week-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ============ Grid ============ */
+
+.grid-scroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-bottom: 4px;
+    /* Nudges the scroll to settle on whole columns. */
+    scroll-snap-type: x proximity;
+}
+
+.week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
+    min-width: 1040px;
+    align-items: start;
+}
+
+.day-col {
+    background: var(--board);
+    border: 1px solid var(--board-edge);
+    border-radius: var(--radius);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-snap-align: start;
+}
+
+.day-col.is-today {
+    border-color: var(--accent-edge);
+    box-shadow: 0 0 0 1px var(--accent-edge);
+}
+
+/* ============ Day header ============ */
+
+.day-head {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.day-head-top {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.day-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.is-today .day-name {
+    color: var(--accent);
+}
+
+.day-date {
+    font-size: 11px;
+    color: var(--ink-faint);
+}
+
+.day-menu {
+    margin-left: auto;
+    border: 0;
+    background: none;
+    color: var(--ink-faint);
+    font-size: 14px;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 120ms, color 120ms, background 120ms;
+}
+
+.day-col:hover .day-menu,
+.day-menu:focus-visible {
+    opacity: 1;
+}
+
+.day-menu:hover {
+    color: var(--ink);
+    background: var(--counter-edge);
+}
+
+.daytype-select {
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    width: 100%;
+    padding: 4px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--board-edge);
+    background: var(--counter);
+    color: var(--type-color, var(--ink-soft));
+    cursor: pointer;
+}
+
+.daytype-select:focus {
+    outline: 2px solid var(--accent-edge);
+    outline-offset: -1px;
+}
+
+/* ============ Plates ============ */
+
+.plates {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.plate {
+    position: relative;
+    border-radius: var(--radius-sm);
+    transition: box-shadow 120ms, border-color 120ms;
+}
+
+.plate-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    min-height: 70px;
+    padding: 8px 9px;
+    text-align: left;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--plate-edge);
+    background: var(--plate);
+    box-shadow: var(--shadow-plate);
+}
+
+.plate.is-empty .plate-body {
+    background: var(--plate-empty);
+    border-style: dashed;
+    border-color: var(--plate-edge);
+    box-shadow: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.plate-body:hover {
+    border-color: var(--accent-edge);
+}
+
+.plate.is-empty .plate-body:hover {
+    background: var(--accent-soft);
+}
+
+.plate-body:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.plate-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+}
+
+.plate.is-empty .plate-label {
+    position: absolute;
+    top: 8px;
+    left: 9px;
+}
+
+.plate-meal {
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--ink);
+}
+
+.plate-meal.is-archived {
+    text-decoration: line-through;
+    color: var(--ink-faint);
+}
+
+.plate-meal.is-missing {
+    color: var(--over);
+    font-style: italic;
+    font-weight: 500;
+}
+
+.plate-mult {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 0 4px;
+    border-radius: 3px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    vertical-align: 1px;
+}
+
+.plate-empty-hint {
+    font-size: 18px;
+    color: var(--ink-faint);
+    line-height: 1;
+}
+
+.plate-macros {
+    display: flex;
+    gap: 5px;
+    margin-top: auto;
+    padding-top: 4px;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+}
+
+.plate-macros-sep {
+    color: var(--ink-faint);
+}
+
+.plate-menu {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    border: 0;
+    background: none;
+    color: var(--ink-faint);
+    font-size: 13px;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 120ms, background 120ms;
+}
+
+.plate:hover .plate-menu,
+.plate-menu:focus-visible {
+    opacity: 1;
+}
+
+.plate-menu:hover {
+    background: var(--counter-edge);
+    color: var(--ink);
+}
+
+.add-slot {
+    border: 1px dashed var(--plate-edge);
+    background: none;
+    color: var(--ink-faint);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px;
+    border-radius: var(--radius-sm);
+    transition: color 120ms, border-color 120ms, background 120ms;
+}
+
+.add-slot:hover {
+    color: var(--accent);
+    border-color: var(--accent-edge);
+    background: var(--accent-soft);
+}
+
+/* ============ Day totals ============ */
+
+.day-totals {
+    border-top: 1px solid var(--board-edge);
+    padding-top: 8px;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.total-line {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.total-value {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.total-unit {
+    font-size: 10px;
+    color: var(--ink-faint);
+}
+
+.total-delta {
+    margin-left: auto;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+.total-bar {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--counter-edge);
+    overflow: hidden;
+}
+
+.total-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--ink-faint);
+    transition: width 200ms ease-out;
+}
+
+.total-bar-fill.state-under { background: var(--under); }
+.total-bar-fill.state-on    { background: var(--on); }
+.total-bar-fill.state-over  { background: var(--over); }
+
+.total-macros {
+    display: flex;
+    gap: 4px;
+}
+
+.macro-chip {
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: var(--counter);
+}
+
+.macro-chip.state-under { background: var(--under-soft); }
+.macro-chip.state-on    { background: var(--on-soft); }
+.macro-chip.state-over  { background: var(--over-soft); }
+
+.macro-key {
+    font-size: 9px;
+    opacity: 0.7;
+}
+
+.total-hint {
+    font-size: 10px;
+    color: var(--ink-faint);
+}
+
+.day-totals.is-untargeted .total-value {
+    color: var(--ink-soft);
+}
+
+/* ============ Week summary ============ */
+
+.week-summary {
+    margin-top: 14px;
+}
+
+.summary-inner {
+    background: var(--board);
+    border: 1px solid var(--board-edge);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.summary-head {
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+}
+
+.summary-title {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.summary-sub {
+    font-size: 11px;
+    color: var(--ink-faint);
+}
+
+.summary-stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.summary-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.summary-key {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+}
+
+.summary-value {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.summary-target {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-faint);
+}
+
+.summary-delta {
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+.summary-avg {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    text-align: right;
+}
+
+.summary-avg-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+}
+
+.summary-avg-value {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+}
+
+/* ============ Mobile ============ */
+
+@media (max-width: 720px) {
+    .week-bar {
+        gap: 10px;
+    }
+
+    .week-actions {
+        width: 100%;
+    }
+
+    .week-actions .btn-ghost {
+        flex: 1;
+    }
+
+    .grid-scroll {
+        overflow-x: visible;
+    }
+
+    /* One day per row. Comparing days sideways is a laptop activity; on a
+       phone the job is filling today's plates. */
+    .week-grid {
+        grid-template-columns: 1fr;
+        min-width: 0;
+    }
+
+    .day-col {
+        display: grid;
+        grid-template-columns: 104px 1fr;
+        grid-template-areas: 'head plates' 'totals plates';
+        gap: 10px 12px;
+    }
+
+    .day-head { grid-area: head; }
+    .plates   { grid-area: plates; }
+
+    .day-totals {
+        grid-area: totals;
+        border-top: 0;
+        padding-top: 0;
+        margin-top: 0;
+    }
+
+    .day-menu {
+        opacity: 1;
+    }
+
+    .plate-menu {
+        opacity: 1;
+    }
+
+    .summary-avg {
+        margin-left: 0;
+        text-align: left;
+        width: 100%;
+    }
+
+    .summary-stats {
+        gap: 18px;
+    }
+}

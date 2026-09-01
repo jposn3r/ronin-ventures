@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Weekly meal planner built on an ingredient library, preset dishes, automatic macro math and a seven-day slot grid. Plans one week at a time and generates the shopping list.">
+    <meta name="theme-color" content="#f6f1e7">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <title>Meal Planner | Ronin Ventures</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/projects/meal-planner/styles/base.css">
+    <link rel="stylesheet" href="/projects/meal-planner/styles/grid.css">
+    <link rel="stylesheet" href="/projects/meal-planner/styles/panels.css">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="app-header">
+    <div class="brand">
+        <span class="brand-mark" aria-hidden="true">&#127860;</span>
+        <span class="brand-name">Meal Planner</span>
+    </div>
+
+    <nav class="view-tabs" id="view-tabs" aria-label="Sections">
+        <button class="tab is-active" data-view="plan">Plan</button>
+        <button class="tab" data-view="shopping">Shopping</button>
+        <button class="tab" data-view="meals">Meals</button>
+        <button class="tab" data-view="pantry">Pantry</button>
+        <button class="tab" data-view="settings">Settings</button>
+    </nav>
+</header>
+
+<main id="app">
+
+    <!-- ============ PLAN ============ -->
+    <section class="view is-active" id="view-plan">
+        <div class="week-bar">
+            <div class="week-nav">
+                <button class="icon-btn" id="week-prev" aria-label="Previous week">&#8249;</button>
+                <div class="week-label">
+                    <span id="week-range">&mdash;</span>
+                    <span class="week-sub" id="week-sub"></span>
+                </div>
+                <button class="icon-btn" id="week-next" aria-label="Next week">&#8250;</button>
+            </div>
+            <div class="week-actions">
+                <button class="btn-ghost" id="week-today">Today</button>
+                <button class="btn-ghost" id="week-copy-prev">Copy last week</button>
+            </div>
+        </div>
+
+        <div class="grid-scroll">
+            <div class="week-grid" id="week-grid"></div>
+        </div>
+
+        <div class="week-summary" id="week-summary"></div>
+    </section>
+
+    <!-- ============ SHOPPING ============ -->
+    <section class="view" id="view-shopping">
+        <div class="panel-bar">
+            <div>
+                <h2 class="panel-title">Shopping list</h2>
+                <p class="panel-sub" id="shopping-sub">&mdash;</p>
+            </div>
+            <div class="panel-actions">
+                <button class="btn-ghost" id="shopping-uncheck">Clear ticks</button>
+                <button class="btn-ghost" id="shopping-copy">Copy as text</button>
+            </div>
+        </div>
+        <div id="shopping-body"></div>
+    </section>
+
+    <!-- ============ MEALS ============ -->
+    <section class="view" id="view-meals">
+        <div class="panel-bar">
+            <div>
+                <h2 class="panel-title">Meals</h2>
+                <p class="panel-sub" id="meals-sub">&mdash;</p>
+            </div>
+            <div class="panel-actions">
+                <input class="input search" id="meals-search" type="search" placeholder="Search meals" autocomplete="off">
+                <button class="btn-primary" id="meal-new">New meal</button>
+            </div>
+        </div>
+        <div id="meals-body"></div>
+    </section>
+
+    <!-- ============ PANTRY ============ -->
+    <section class="view" id="view-pantry">
+        <div class="panel-bar">
+            <div>
+                <h2 class="panel-title">Pantry</h2>
+                <p class="panel-sub" id="pantry-sub">&mdash;</p>
+            </div>
+            <div class="panel-actions">
+                <input class="input search" id="pantry-search" type="search" placeholder="Search ingredients" autocomplete="off">
+                <button class="btn-primary" id="ingredient-new">New ingredient</button>
+            </div>
+        </div>
+        <div id="pantry-body"></div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section class="view" id="view-settings">
+        <div class="panel-bar">
+            <div>
+                <h2 class="panel-title">Settings</h2>
+                <p class="panel-sub">Targets, slots, and your data.</p>
+            </div>
+        </div>
+        <div id="settings-body"></div>
+    </section>
+
+</main>
+
+<!-- ============ MODAL HOST ============ -->
+<div class="modal-overlay" id="modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-head">
+            <h2 class="modal-title" id="modal-title"></h2>
+            <button class="icon-btn" id="modal-close" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-actions" id="modal-actions"></div>
+    </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="/components/back-to-hub.js"></script>
+<script type="module" src="/projects/meal-planner/js/main.js"></script>
+</body>
+</html>
