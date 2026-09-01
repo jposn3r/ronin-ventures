@@ -314,12 +314,23 @@ button {
     pointer-events: none;
 }
 
-/* The scene fades without the rise. A transform on an ancestor re-anchors
-   fixed-position descendants to that ancestor, which would tear the scene's
-   fixed stage off the viewport for the length of the animation and lurch the
-   whole kitchen. Opacity has no such effect. */
+/* ============ The scene animates WITHOUT transforms ============
+   Any transform on an ancestor — including an identity matrix, and including
+   one that only exists because a keyframe mentions `transform` — makes that
+   ancestor the containing block for fixed-position descendants. The scene's
+   stage and its dishes are fixed, so the moment .view picks up a transform
+   they re-anchor to a 1225px-wide box inside #app and the plates jump ~316px
+   up the screen for the length of the animation.
+
+   BOTH directions need covering. Guarding only the entry left the exit
+   lurching. If another view animation is ever added, it needs a flat variant
+   here too. */
 #view-meals.is-active {
     animation-name: view-in-flat;
+}
+
+#view-meals.is-leaving {
+    animation-name: view-out-flat;
 }
 
 @keyframes view-in {
@@ -335,6 +346,11 @@ button {
 @keyframes view-out {
     from { opacity: 1; transform: none; }
     to   { opacity: 0; transform: translateY(-4px); }
+}
+
+@keyframes view-out-flat {
+    from { opacity: 1; }
+    to   { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
