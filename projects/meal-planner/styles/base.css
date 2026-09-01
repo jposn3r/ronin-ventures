@@ -11,37 +11,65 @@
    rather than rewriting components.
    ======================================== */
 
+html {
+    /* Tells the browser to render native controls — scrollbars, select
+       dropdowns, date pickers, checkboxes — in their dark variants. Without
+       it a dark app grows light-grey scrollbars and white dropdown panels. */
+    color-scheme: dark;
+}
+
 :root {
-    /* Surfaces, light to dark */
-    --counter: #f6f1e7;
-    --counter-edge: #e8dfcd;
-    --board: #fffdf9;
-    --board-edge: #e3d9c6;
-    --plate: #ffffff;
-    --plate-edge: #ddd3c0;
-    --plate-empty: #f2ece0;
+    /* ── Surfaces ───────────────────────────────────────────────────────────
+       Every surface is TRANSLUCENT. The kitchen photograph sits behind the
+       whole app and a scrim sits over it, so panels tint what is behind them
+       rather than covering it. Opacity climbs as elements come forward:
+       page < panel < card < input. */
+    --counter: #0d0f0e;                        /* the ink under everything */
+    --scrim-top: rgba(8, 10, 9, 0.52);
+    --scrim-mid: rgba(8, 10, 9, 0.30);
+    --scrim-bottom: rgba(8, 10, 9, 0.46);
 
-    --ink: #2b2620;
-    --ink-soft: #6d645a;
-    --ink-faint: #9a9186;
+    --board: rgba(18, 22, 20, 0.62);           /* panels, day columns */
+    --board-edge: rgba(255, 255, 255, 0.10);
+    --plate: rgba(28, 33, 30, 0.72);           /* cards, filled plates */
+    --plate-edge: rgba(255, 255, 255, 0.14);
+    --plate-empty: rgba(0, 0, 0, 0.26);        /* empty slots recess, not raise */
+    --counter-edge: rgba(255, 255, 255, 0.09);
+    --bg-glass: rgba(13, 15, 14, 0.82);
 
-    --accent: #b45309;
-    --accent-soft: #fdf0e1;
-    --accent-edge: #edc9a3;
+    /* ── Text ─────────────────────────────────────────────────────────────
+       Near-white primary: at 15.8:1 on the scrim it stays readable even
+       where the counter photograph is at its brightest. */
+    --ink: #f2f5f3;
+    --ink-soft: #a9b3ad;
+    --ink-faint: #737d77;
 
-    /* Target states. Under and over are distinguishable without colour
-       because the readout always carries a sign and a word. */
-    --under: #2563eb;
-    --under-soft: #eaf1fe;
-    --on: #3f6212;
-    --on-soft: #eef4e4;
-    --over: #b91c1c;
-    --over-soft: #fdecec;
+    /* ── Accent ─────────────────────────────────────────────────────────── */
+    --accent: #10b981;
+    --accent-hover: #34d399;
+    --accent-soft: rgba(16, 185, 129, 0.14);
+    --accent-edge: rgba(16, 185, 129, 0.42);
+    --accent-ink: #04140d;                     /* text ON an accent fill */
 
-    /* Macro accents, used for the small bars */
-    --macro-protein: #b45309;
-    --macro-carbs: #2563eb;
-    --macro-fat: #7c3aed;
+    /* ── Macro states ───────────────────────────────────────────────────────
+       Only DEVIATIONS carry colour. On target renders as ordinary text, so a
+       week of 28 plates shows colour exactly where something is wrong
+       instead of glowing at you everywhere. This is also why green is free
+       to be the brand accent. */
+    --on: var(--ink-soft);
+    --on-soft: transparent;
+    --over: #f59e0b;
+    --over-soft: rgba(245, 158, 11, 0.15);
+    --over-edge: rgba(245, 158, 11, 0.38);
+    --under: #38bdf8;
+    --under-soft: rgba(56, 189, 248, 0.15);
+    --danger: #f87171;
+    --danger-soft: rgba(248, 113, 113, 0.14);
+    --danger-edge: rgba(248, 113, 113, 0.36);
+
+    --macro-protein: #f59e0b;
+    --macro-carbs: #38bdf8;
+    --macro-fat: #c084fc;
 
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
@@ -50,12 +78,14 @@
     --radius: 10px;
     --radius-lg: 16px;
 
-    --shadow-plate: 0 1px 2px rgba(43, 38, 32, 0.06), 0 2px 8px rgba(43, 38, 32, 0.04);
-    --shadow-lift: 0 4px 16px rgba(43, 38, 32, 0.12);
-    --shadow-modal: 0 24px 64px rgba(43, 38, 32, 0.24);
+    --shadow-plate: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(0, 0, 0, 0.3);
+    --shadow-lift: 0 6px 22px rgba(0, 0, 0, 0.5);
+    --shadow-modal: 0 28px 70px rgba(0, 0, 0, 0.7);
 
-    --header-height: 56px;
+    /* Grown with the type scale so the tabs still breathe. */
+    --header-height: 64px;
 }
+
 
 *,
 *::before,
@@ -77,11 +107,52 @@ html {
     scrollbar-gutter: stable;
 }
 
+/* ============ The kitchen behind everything ============
+   Two fixed layers under the whole app: the photograph, and a scrim over it.
+   Both are FIXED rather than attached to the page, so scrolling a long
+   Pantry moves the content across a still room instead of dragging the
+   kitchen up with it — the counter is a place, not wallpaper.
+
+   The scrim is a gradient rather than a flat wash: heaviest at the top where
+   the header and the densest content sit, easing through the middle where
+   the counter's own darkness does the work, and closing again at the bottom.
+   It is the single control over how present the kitchen is. */
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('/projects/meal-planner/assets/scene/counter-desktop.webp');
+    background-size: cover;
+    background-position: center 42%;
+    z-index: -2;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        var(--scrim-top) 0%,
+        var(--scrim-mid) 46%,
+        var(--scrim-bottom) 100%
+    );
+    z-index: -1;
+}
+
+/* The scene supplies its own full-bleed photograph, so the page-level one
+   would sit behind it doing nothing but costing a paint. */
+body.is-scene::before,
+body.is-scene::after {
+    display: none;
+}
+
 body {
     background: var(--counter);
     color: var(--ink);
     font-family: var(--font);
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     /* The back-to-hub button floats top-left; keep the header clear of it. */
@@ -117,7 +188,7 @@ button {
     align-items: center;
     column-gap: 16px;
     padding: 0 20px;
-    background: rgba(246, 241, 231, 0.88);
+    background: var(--bg-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--counter-edge);
@@ -134,7 +205,7 @@ button {
 }
 
 .brand-mark {
-    font-size: 18px;
+    font-size: 20.5px;
 }
 
 .brand-name {
@@ -157,7 +228,7 @@ button {
     background: transparent;
     padding: 6px 14px;
     border-radius: 7px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--ink-soft);
     transition: background 120ms, color 120ms;
@@ -196,7 +267,7 @@ button {
 .btn-ghost,
 .btn-danger {
     border-radius: var(--radius-sm);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     padding: 7px 14px;
     border: 1px solid transparent;
@@ -206,12 +277,12 @@ button {
 
 .btn-primary {
     background: var(--accent);
-    color: #fff;
+    color: var(--accent-ink);
     border-color: var(--accent);
 }
 
 .btn-primary:hover {
-    background: #92400e;
+    background: var(--accent-hover);
 }
 
 .btn-ghost {
@@ -226,13 +297,13 @@ button {
 }
 
 .btn-danger {
-    background: var(--over-soft);
-    color: var(--over);
-    border-color: #f3c9c9;
+    background: var(--danger-soft);
+    color: var(--danger);
+    border-color: var(--danger-edge);
 }
 
 .btn-danger:hover {
-    background: #fbdcdc;
+    background: var(--danger-soft);
 }
 
 .icon-btn {
@@ -245,7 +316,7 @@ button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 17px;
+    font-size: 19.5px;
     line-height: 1;
     padding: 0;
     transition: background 120ms, color 120ms;
@@ -261,7 +332,7 @@ button {
     background: none;
     padding: 0;
     color: var(--accent);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 2px;
@@ -272,14 +343,20 @@ button {
 .input,
 .select {
     font: inherit;
-    font-size: 13px;
+    font-size: 15px;
     color: var(--ink);
-    background: var(--plate);
+    background: rgba(0, 0, 0, 0.30);
     border: 1px solid var(--plate-edge);
     border-radius: var(--radius-sm);
     padding: 7px 10px;
     width: 100%;
     min-width: 0;
+}
+
+.select option {
+    background: #171b19;
+    color: var(--ink);
+    font-weight: 600;
 }
 
 .input:focus,
@@ -300,7 +377,7 @@ button {
 }
 
 .field-label {
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -308,7 +385,7 @@ button {
 }
 
 .field-hint {
-    font-size: 11px;
+    font-size: 12.5px;
     color: var(--ink-faint);
 }
 
@@ -323,12 +400,13 @@ button {
     padding: 40px 20px;
     text-align: center;
     color: var(--ink-faint);
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .state-under { color: var(--under); }
 .state-on    { color: var(--on); }
 .state-over  { color: var(--over); }
+.state-on    { color: var(--ink-soft); }
 
 /* ============ Toasts ============ */
 
@@ -349,7 +427,7 @@ button {
     color: #fff;
     padding: 9px 16px;
     border-radius: var(--radius);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 500;
     box-shadow: var(--shadow-lift);
     animation: toast-in 180ms ease-out;
@@ -409,7 +487,7 @@ button {
 
     .tab {
         padding: 6px 8px;
-        font-size: 12px;
+        font-size: 14px;
     }
 
     #app {

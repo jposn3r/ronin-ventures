@@ -34,13 +34,13 @@
 }
 
 .week-label > span:first-child {
-    font-size: 17px;
+    font-size: 19.5px;
     font-weight: 700;
     letter-spacing: -0.02em;
 }
 
 .week-sub {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--ink-faint);
 }
 
@@ -74,6 +74,11 @@
 
 .day-col {
     background: var(--board);
+    /* Blur what is behind rather than hiding it. Lets the column sit at 62%
+       opacity — the kitchen stays legible through it — while still giving the
+       text a settled surface instead of busy stone. */
+    backdrop-filter: blur(14px) saturate(115%);
+    -webkit-backdrop-filter: blur(14px) saturate(115%);
     border: 1px solid var(--board-edge);
     border-radius: var(--radius);
     padding: 10px;
@@ -103,7 +108,7 @@
 }
 
 .day-name {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: -0.01em;
 }
@@ -113,7 +118,7 @@
 }
 
 .day-date {
-    font-size: 11px;
+    font-size: 12.5px;
     color: var(--ink-faint);
 }
 
@@ -122,7 +127,7 @@
     border: 0;
     background: none;
     color: var(--ink-faint);
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1;
     padding: 2px 4px;
     border-radius: 4px;
@@ -142,15 +147,29 @@
 
 .daytype-select {
     font: inherit;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 13px;
+    /* Bold white in BOTH states. The day type's own colour used to be the text
+       colour, which put #3f6212 green on a near-black column — technically
+       colour-coded, practically unreadable. The colour moves to the left edge
+       where it still identifies the day at a glance and costs no legibility. */
+    font-weight: 700;
+    color: var(--ink);
     width: 100%;
-    padding: 4px 6px;
+    padding: 5px 8px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--board-edge);
-    background: var(--counter);
-    color: var(--type-color, var(--ink-soft));
+    border: 1px solid var(--plate-edge);
+    border-left: 3px solid var(--type-color, var(--ink-faint));
+    background: rgba(0, 0, 0, 0.30);
     cursor: pointer;
+}
+
+/* The open list is drawn by the OS, which ignores almost everything above.
+   Setting the option's own colours is the one lever that lands, and without
+   it the list renders as dim text on black with the system highlight. */
+.daytype-select option {
+    background: #171b19;
+    color: var(--ink);
+    font-weight: 600;
 }
 
 .daytype-select:focus {
@@ -209,7 +228,7 @@
 }
 
 .plate-label {
-    font-size: 10px;
+    font-size: 11.5px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -223,7 +242,7 @@
 }
 
 .plate-meal {
-    font-size: 12.5px;
+    font-size: 14.5px;
     font-weight: 600;
     line-height: 1.25;
     color: var(--ink);
@@ -247,13 +266,13 @@
     border-radius: 3px;
     background: var(--accent-soft);
     color: var(--accent);
-    font-size: 10px;
+    font-size: 11.5px;
     font-weight: 700;
     vertical-align: 1px;
 }
 
 .plate-empty-hint {
-    font-size: 18px;
+    font-size: 20.5px;
     color: var(--ink-faint);
     line-height: 1;
 }
@@ -263,7 +282,7 @@
     gap: 5px;
     margin-top: auto;
     padding-top: 4px;
-    font-size: 10.5px;
+    font-size: 12px;
     color: var(--ink-soft);
 }
 
@@ -278,7 +297,7 @@
     border: 0;
     background: none;
     color: var(--ink-faint);
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1;
     padding: 2px 4px;
     border-radius: 4px;
@@ -300,7 +319,7 @@
     border: 1px dashed var(--plate-edge);
     background: none;
     color: var(--ink-faint);
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 600;
     padding: 5px;
     border-radius: var(--radius-sm);
@@ -331,19 +350,19 @@
 }
 
 .total-value {
-    font-size: 16px;
+    font-size: 18.5px;
     font-weight: 700;
     letter-spacing: -0.02em;
 }
 
 .total-unit {
-    font-size: 10px;
+    font-size: 11.5px;
     color: var(--ink-faint);
 }
 
 .total-delta {
     margin-left: auto;
-    font-size: 10.5px;
+    font-size: 12px;
     font-weight: 600;
 }
 
@@ -374,7 +393,7 @@
     display: flex;
     align-items: baseline;
     gap: 1px;
-    font-size: 10.5px;
+    font-size: 12px;
     font-weight: 600;
     padding: 1px 4px;
     border-radius: 3px;
@@ -386,12 +405,12 @@
 .macro-chip.state-over  { background: var(--over-soft); }
 
 .macro-key {
-    font-size: 9px;
+    font-size: 10.5px;
     opacity: 0.7;
 }
 
 .total-hint {
-    font-size: 10px;
+    font-size: 11.5px;
     color: var(--ink-faint);
 }
 
@@ -407,6 +426,8 @@
 
 .summary-inner {
     background: var(--board);
+    backdrop-filter: blur(14px) saturate(115%);
+    -webkit-backdrop-filter: blur(14px) saturate(115%);
     border: 1px solid var(--board-edge);
     border-radius: var(--radius);
     padding: 14px 16px;
@@ -423,12 +444,12 @@
 }
 
 .summary-title {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
 }
 
 .summary-sub {
-    font-size: 11px;
+    font-size: 12.5px;
     color: var(--ink-faint);
 }
 
@@ -445,7 +466,7 @@
 }
 
 .summary-key {
-    font-size: 10px;
+    font-size: 11.5px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -453,19 +474,19 @@
 }
 
 .summary-value {
-    font-size: 17px;
+    font-size: 19.5px;
     font-weight: 700;
     letter-spacing: -0.02em;
 }
 
 .summary-target {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--ink-faint);
 }
 
 .summary-delta {
-    font-size: 10.5px;
+    font-size: 12px;
     font-weight: 600;
 }
 
@@ -478,7 +499,7 @@
 }
 
 .summary-avg-label {
-    font-size: 10px;
+    font-size: 11.5px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -486,7 +507,7 @@
 }
 
 .summary-avg-value {
-    font-size: 12.5px;
+    font-size: 14.5px;
     color: var(--ink-soft);
 }
 

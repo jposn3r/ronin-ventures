@@ -339,8 +339,9 @@
 
 @media (max-width: 720px) {
     .scene {
-        /* Measured height of the wrapped two-row header. */
-        --scene-top: 102px;
+        /* Measured height of the wrapped two-row header, which grew with the
+           +15% type scale. */
+        --scene-top: 108px;
     }
 
     .scene-stage {
