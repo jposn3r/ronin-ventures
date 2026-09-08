@@ -8,8 +8,8 @@
         {
             "id": "product-visualizer",
             "title": "roninstudio",
-            "shortDescription": "A tactile 3D product studio. Every detail. Every angle.",
-            "description": "Explore a custom-modeled Ronin control deck in a real-time 3D studio. Orbit and zoom, press the mechanical keys, cycle the rotary dial, switch metal finishes and lighting, or pull the assembly apart with an animated exploded view. Includes optional synthesized key sounds, PNG snapshots, keyboard and touch controls, and local import of self-contained GLB models. No account or server required.",
+            "shortDescription": "Four iconic objects. A hands-on 3D collection.",
+            "description": "Discover four interactive 3D studies: the original Ronin Deck, an Iron Man-inspired arc reactor, a Skywalker-inspired lightsaber, and the 2001 iPod. Explore their materials and assemblies, ignite a blade, adjust reactor output, or browse music with a mechanical scroll wheel. Includes lighting controls, exploded views, optional synthesized sounds, PNG snapshots, and local GLB import in the Deck studio. No account or server required.",
             "category": "3d",
             "categoryLabel": "3D Experience",
             "thumbnail": "/assets/thumbnails/product-visualizer.svg",

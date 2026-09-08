@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101415">
+<title>Object studio | roninstudio</title><meta name="description" content="Explore interactive 3D objects, materials, light, and the details inside.">
+<link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./objects.css">
+<script type="importmap">{"imports":{"three":"./vendor/package/build/three.module.js","three/addons/":"./vendor/package/examples/jsm/"}}</script>
+</head><body class="object-page">
+<header class="topbar"><a class="back" href="./">↖ <span>THE COLLECTION</span></a><a class="brand" href="./"><img class="brand-mark" src="/assets/favicon.svg" alt="" width="31" height="31">ronin<span>studio</span></a><button id="capture" class="outline" disabled>↗ Save image</button></header>
+<main><section id="product-preview" class="stage" aria-label="Interactive product preview" tabindex="-1">
+<div class="intro"><p class="eyebrow"><span class="dot"></span> THE INTERACTIVE OBJECT SERIES</p><h1 id="object-tagline">An object.<br><span>A story.</span></h1><p id="object-edition">Explore every detail.</p></div>
+<div id="viewport" tabindex="0" role="application" aria-label="3D object. Drag to orbit, pinch or scroll to zoom. Arrow keys rotate; plus and minus zoom; R resets."></div>
+<div id="loading" role="status">Preparing your object…</div><div class="stage-meta"><span id="object-code"></span><span class="live"><span class="dot"></span> LIVE 3D</span></div>
+<div class="stage-bottom"><div><span class="eyebrow" id="material-caption"></span><p id="model-caption"></p></div><button id="reset" class="icon-btn" aria-label="Reset camera">↺</button></div>
+<div class="gesture">↔ Drag to orbit <span>·</span> Scroll or pinch to zoom <span>·</span> Tap to interact</div>
+</section>
+<aside id="configuration" class="inspector" aria-label="Product controls" tabindex="-1">
+<div class="product-head"><div class="eyebrow" id="edition-label">01 / THE OBJECT</div><h2 id="product-title">Object studio</h2><p id="product-description"></p><div class="tags"><span>INTERACTIVE STUDY</span><span>WEBGL</span></div></div>
+<fieldset id="object-actions" disabled><legend>02 / MAKE IT MOVE</legend><div id="action-controls"></div></fieldset>
+<fieldset id="surface-controls" disabled><legend>03 / THE SURFACE</legend><label class="range-label" for="roughness">Metal roughness <output id="roughness-value">28%</output></label><input id="roughness" type="range" min="8" max="80" value="28"></fieldset>
+<fieldset id="light-controls" disabled><legend>04 / THE LIGHT</legend><div class="segmented"><button data-light="studio" class="active" aria-pressed="true">Studio</button><button data-light="daylight" aria-pressed="false">Daylight</button><button data-light="noir" aria-pressed="false">Noir</button></div><label class="range-label" for="exposure">Intensity <output id="exposure-value">100%</output></label><input id="exposure" type="range" min="30" max="180" value="100"></fieldset>
+<fieldset id="detail-controls" disabled><legend>05 / THE DETAILS</legend><div class="toggle-row"><label for="rotate">Turntable</label><input id="rotate" type="checkbox" role="switch"></div><div class="toggle-row"><label for="explode">Exploded view</label><input id="explode" type="checkbox" role="switch"></div><div class="toggle-row"><label for="sound">Sound</label><input id="sound" type="checkbox" role="switch"></div></fieldset>
+<div class="activity"><span class="eyebrow"><span class="dot"></span> OBJECT ACTIVITY</span><p id="activity" role="status" aria-live="polite">Preparing…</p></div><dl id="object-facts"></dl>
+<a class="collection-return" href="./">← Explore the collection</a><p class="study-note">Independent 3D design study. Original procedural modeling; not an official product.</p>
+</aside></main>
+<a class="mobile-jump" href="#configuration" aria-controls="configuration">Customize ↓</a>
+<footer><span>RONINSTUDIO <span class="muted">BY RONIN VENTURES</span></span><span>Objects worth a closer look.</span></footer><div id="toast" role="status" aria-live="polite"></div>
+<noscript><p class="no-script">Enable JavaScript to explore this object. <a href="./">Back to collection</a></p></noscript>
+<script type="module">import('./viewer.js').catch(error => { console.error(error); document.querySelector('#loading').textContent = 'The 3D viewer could not start. Enable WebGL 2 and reload, or return to the collection.'; });</script><script src="./navigation.js" defer></script>
+</body></html>

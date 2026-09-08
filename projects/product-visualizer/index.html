@@ -1,45 +1,13 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="An interactive product studio. Explore the Ronin Deck in 3D, customize materials and lighting, or bring your own GLB model.">
-  <meta name="theme-color" content="#101415">
-  <title>roninstudio · 3D Product Visualizer | Ronin Ventures</title>
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css">
-  <script type="importmap">{"imports":{"three":"./vendor/package/build/three.module.js","three/addons/":"./vendor/package/examples/jsm/"}}</script>
-</head>
-<body>
-  <header class="topbar">
-    <a href="/" class="back" aria-label="Back to Ronin Ventures">↖ <span>RONIN VENTURES</span></a>
-    <a class="brand" href="./"><img class="brand-mark" src="/assets/favicon.svg" alt="" width="31" height="31">ronin<span>studio</span><sup> / 01</sup></a>
-    <button id="capture" class="outline" disabled>↗ <span>Save image</span></button>
-  </header>
-  <main>
-    <section id="product-preview" class="stage" aria-label="Interactive product preview" tabindex="-1">
-      <div class="intro"><p class="eyebrow"><span class="dot"></span> THE INTERACTIVE OBJECT SERIES</p><h1>Good design.<br><span>Every angle.</span></h1><p>Less looking. More exploring.<br>A little closer to the real thing.</p></div>
-      <div id="viewport" tabindex="0" role="application" aria-label="3D product. Drag to orbit, scroll or pinch to zoom. Arrow keys rotate, plus and minus zoom, R resets."></div>
-      <div id="loading" role="status">Preparing your studio<span class="loading-dot">…</span></div>
-      <div class="stage-meta"><span id="object-code">RV—001 / CONTROL DECK</span><span class="live"><span class="dot"></span> LIVE 3D</span></div>
-      <div class="stage-bottom"><div><span class="eyebrow">DESIGNED TO BE FELT</span><p id="model-caption">An everyday object. An extraordinary amount of detail.</p></div><button id="reset" class="icon-btn" title="Reset camera" aria-label="Reset camera">↺</button></div>
-      <div class="gesture">↔ Drag to orbit <span>·</span> Scroll to get closer <span>·</span> Tap a key</div>
-      <div id="drop-hint">Drop a .glb to enter the studio</div>
-    </section>
-    <aside id="configuration" class="inspector" aria-label="Product controls" tabindex="-1">
-      <div class="product-head"><div class="eyebrow">01 / THE OBJECT</div><h2 id="product-title">Ronin Deck<span>™</span></h2><p id="product-description">A tactile little home for your big ideas.<br>Machined metal. Mechanical soul.</p><div class="tags"><span id="model-tag">INTERACTIVE CONCEPT</span><span>WEBGL</span></div></div>
-      <fieldset id="finish-controls"><legend>02 / THE FINISH <span id="finish-name">Graphite</span></legend><div class="swatches"><button class="swatch active" data-finish="graphite" style="--swatch:#363a3a" aria-label="Graphite finish" aria-pressed="true"></button><button class="swatch" data-finish="silver" style="--swatch:#bac0bc" aria-label="Silver finish" aria-pressed="false"></button><button class="swatch" data-finish="sand" style="--swatch:#c6b699" aria-label="Sand finish" aria-pressed="false"></button><button class="swatch" data-finish="teal" style="--swatch:#416a68" aria-label="Teal finish" aria-pressed="false"></button><button class="swatch retro-swatch" data-finish="transparent" aria-label="90s Transparent finish" aria-pressed="false" title="90s Transparent"></button></div><label class="range-label" for="roughness">Surface roughness <output id="roughness-value">35%</output></label><input id="roughness" type="range" min="5" max="90" value="35"></fieldset>
-      <fieldset><legend>03 / THE LIGHT</legend><div class="segmented" id="lights"><button data-light="studio" aria-pressed="true" class="active">Studio</button><button data-light="daylight" aria-pressed="false">Daylight</button><button data-light="noir" aria-pressed="false">Noir</button></div><label class="range-label" for="exposure">Intensity <output id="exposure-value">100%</output></label><input id="exposure" type="range" min="30" max="180" value="100"></fieldset>
-      <fieldset><legend>04 / THE DETAILS</legend><div class="toggle-row"><label for="rotate">Turntable</label><input id="rotate" type="checkbox" role="switch"></div><div class="toggle-row"><label for="explode">Exploded view</label><input id="explode" type="checkbox" role="switch"></div><div class="toggle-row"><label for="sound">Key sounds</label><input id="sound" type="checkbox" role="switch"></div></fieldset>
-      <div class="activity"><span class="eyebrow"><span class="dot"></span> DECK ACTIVITY</span><p id="activity" role="status" aria-live="polite">Ready when you are.</p><div id="wave" aria-hidden="true"></div><details id="key-access"><summary>Try the keys <span>↗</span></summary><div id="key-buttons"></div></details></div>
-      <div class="bring-own"><input type="file" id="model-file" accept=".glb" hidden><button id="import" class="import-btn" disabled><span>＋</span> Bring your own object <span>↗</span></button><p>Self-contained .GLB · up to 25 MB · stays on your device</p><button id="demo" hidden>↩ Return to Ronin Deck</button></div>
-    </aside>
-  </main>
-  <a class="mobile-jump" href="#configuration" aria-controls="configuration">Customize ↓</a>
-  <footer><span>RONINSTUDIO <span class="muted">BY RONIN VENTURES</span></span><span>A playground for product perspective. <span class="footer-star">✳</span></span></footer>
-  <div id="toast" role="status" aria-live="polite"></div>
-  <noscript><p class="no-script">Enable JavaScript to use the 3D studio.</p></noscript>
-  <script type="module">import('./studio.js').catch(error => { console.error(error); document.querySelector('#loading').textContent = 'The 3D studio could not start. Enable WebGL 2 and reload in a modern browser.'; });</script>
-  <script src="./navigation.js" defer></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101415"><title>The collection | roninstudio</title><meta name="description" content="Four objects worth a closer look. Explore the Ronin Deck, Arc Reactor, Lightsaber and original iPod in an interactive 3D studio."><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./gallery.css"><script type="importmap">{"imports":{"three":"./vendor/package/build/three.module.js","three/addons/":"./vendor/package/examples/jsm/"}}</script></head>
+<body class="gallery-page"><header class="topbar"><a class="back" href="/#projects">↖ <span>RONIN VENTURES</span></a><a class="brand" href="./"><img class="brand-mark" src="/assets/favicon.svg" alt="" width="31" height="31">ronin<span>studio</span></a><a class="collection-link" href="#collection">THE COLLECTION ↘</a></header>
+<main class="gallery-main"><section class="gallery-hero"><div class="hero-copy"><p class="eyebrow"><span class="dot"></span> A COLLECTION OF INTERACTIVE OBJECTS</p><h1>Good design.<br>Great stories.<br><span>In your hands.</span></h1><p>From a familiar click to a fictional source of limitless energy. Get closer to the objects that stay with us.</p><a class="explore-link" href="#collection">Find your object <span>↓</span></a><div class="hero-footnote"><span>04 OBJECTS</span><span>360° OF CURIOSITY</span></div></div><a class="hero-object" href="./object.html?object=arc-reactor" aria-label="Explore Arc Reactor"><div class="hero-grid"></div><div class="preview-host" data-model="arc-reactor"><span class="preview-fallback">◉</span></div><span class="hero-index">02 / IN THE SPOTLIGHT</span><div class="hero-caption"><div><span>IRON MAN INSPIRED / 2008</span><h2>Arc Reactor</h2></div><span class="round-arrow">↗</span></div><span class="orbit-note">A LITTLE FICTION. A LOT TO EXPLORE.</span></a></section>
+<section id="collection" class="collection-section"><div class="collection-heading"><div><p class="eyebrow">PICK SOMETHING UP</p><h2>The collection<span> / 04</span></h2></div><div class="filters" aria-label="Filter objects"><button data-filter="All" aria-pressed="true" class="active">All objects</button><button data-filter="Cinema" aria-pressed="false">Cinema</button><button data-filter="Technology" aria-pressed="false">Technology</button><button data-filter="Originals" aria-pressed="false">Originals</button></div></div>
+<p id="filter-status" class="sr-only" role="status" aria-live="polite">Showing 4 objects</p>
+<div class="object-grid">
+<a class="object-card" data-category="Originals" href="./deck.html"><div class="card-visual"><span class="card-index">01 / ORIGINALS</span><span class="card-year">2026</span><div class="preview-host" data-model="ronin-deck"><span class="preview-fallback">▦</span></div><span class="preview-invite">DRAG. TAP. MAKE IT YOURS.</span></div><div class="card-copy"><div><h3>Ronin Deck</h3><p>Keys · finishes · teardown</p></div><span class="round-arrow">↗</span></div></a>
+<a class="object-card" data-category="Cinema" href="./object.html?object=arc-reactor"><div class="card-visual"><span class="card-index">02 / CINEMA</span><span class="card-year">2008</span><div class="preview-host" data-model="arc-reactor"><span class="preview-fallback">◉</span></div><span class="preview-invite">A SMALL WONDER. SWITCHED ON.</span></div><div class="card-copy"><div><h3>Arc Reactor</h3><p>Power · output · teardown</p></div><span class="round-arrow">↗</span></div></a>
+<a class="object-card" data-category="Cinema" href="./object.html?object=lightsaber"><div class="card-visual"><span class="card-index">03 / CINEMA</span><span class="card-year">1977</span><div class="preview-host" data-model="lightsaber"><span class="preview-fallback">│</span></div><span class="preview-invite">YOU KNOW WHAT TO DO.</span></div><div class="card-copy"><div><h3>Lightsaber</h3><p>Ignite · blade colors · chamber</p></div><span class="round-arrow">↗</span></div></a>
+<a class="object-card" data-category="Technology" href="./object.html?object=ipod"><div class="card-visual"><span class="card-index">04 / TECHNOLOGY</span><span class="card-year">2001</span><div class="preview-host" data-model="ipod"><span class="preview-fallback">▣</span></div><span class="preview-invite">TAKE IT FOR A SPIN.</span></div><div class="card-copy"><div><h3>iPod <span>Original</span></h3><p>Browse · play · hold · teardown</p></div><span class="round-arrow">↗</span></div></a>
+</div></section><section class="collection-outro"><p>Some objects are useful.<br><span>Some make you feel something.</span></p><a href="./deck.html">Have an object of your own?<br><span>Open the Deck studio to import a GLB ↗</span></a></section></main>
+<footer><span>RONINSTUDIO <span class="muted">BY RONIN VENTURES</span></span><span>Independent design studies. Made to be explored.</span></footer><script type="module" src="./gallery.js"></script></body></html>
