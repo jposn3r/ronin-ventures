@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-labelledby="rs-title rs-desc">
+<title id="rs-title">roninstudio interactive product studio</title><desc id="rs-desc">An animated miniature studio interface: a control deck orbits, its assembly separates, and finish and lighting controls cycle.</desc>
+<defs><linearGradient id="rs-bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1a1a1a"/><stop offset="1" stop-color="#0c0c0c"/></linearGradient><radialGradient id="rs-light"><stop stop-color="#8fc9c3" stop-opacity=".17"/><stop offset="1" stop-color="#8fc9c3" stop-opacity="0"/></radialGradient></defs>
+<style>
+.rs-orbit{transform-box:fill-box;transform-origin:center;animation:rs-orbit 9s ease-in-out infinite}
+.rs-top{animation:rs-top 9s ease-in-out infinite}.rs-board{animation:rs-board 9s ease-in-out infinite}
+.rs-finish{animation:rs-finish 9s ease-in-out infinite}.rs-knob{animation:rs-knob 9s ease-in-out infinite}.rs-beam{animation:rs-beam 9s ease-in-out infinite}
+.rs-cursor{animation:rs-cursor 9s ease-in-out infinite}.rs-explode-switch{animation:rs-switch 9s ease-in-out infinite}
+@keyframes rs-orbit{0%,15%{transform:rotate(-10deg) skewX(-8deg)}35%,65%{transform:rotate(8deg) skewX(5deg)}90%,100%{transform:rotate(-10deg) skewX(-8deg)}}
+@keyframes rs-top{0%,45%,90%,100%{transform:translateY(0)}58%,72%{transform:translateY(-38px)}}
+@keyframes rs-board{0%,45%,90%,100%{transform:translateY(0)}58%,72%{transform:translateY(-18px)}}
+@keyframes rs-finish{0%,19%,92%,100%{transform:translateX(0)}28%,43%{transform:translateX(35px)}50%,82%{transform:translateX(70px)}}
+@keyframes rs-knob{0%,28%,100%{transform:translateX(0)}42%,72%{transform:translateX(44px)}}
+@keyframes rs-beam{0%,28%,100%{opacity:.4}42%,72%{opacity:1}}
+@keyframes rs-cursor{0%,10%{transform:translate(300px,250px)}25%{transform:translate(610px,150px)}42%{transform:translate(653px,219px)}56%,72%{transform:translate(681px,274px)}90%,100%{transform:translate(300px,250px)}}
+@keyframes rs-switch{0%,45%,90%,100%{transform:translateX(0)}56%,75%{transform:translateX(13px)}}
+@media(prefers-reduced-motion:reduce){.rs-orbit,.rs-top,.rs-board,.rs-finish,.rs-knob,.rs-beam,.rs-cursor,.rs-explode-switch{animation:none}}
+</style>
+<rect width="800" height="450" fill="url(#rs-bg)"/>
+<rect x="80" y="58" width="640" height="324" rx="9" fill="#111616" stroke="#8fc9c3" stroke-width="1.5" stroke-opacity=".55"/>
+<circle cx="101" cy="78" r="4" fill="#ff5f56"/><circle cx="117" cy="78" r="4" fill="#ffbd2e"/><circle cx="133" cy="78" r="4" fill="#27c93f"/>
+<rect x="172" y="69" width="330" height="18" rx="9" fill="#0c1010" stroke="#8fc9c3" stroke-opacity=".15"/><text x="190" y="82" fill="#8fc9c3" opacity=".7" font-family="monospace" font-size="10">roninstudio / product visualizer</text>
+<path d="M80 99h640M545 99v283" stroke="#8fc9c3" stroke-opacity=".22"/>
+<text x="102" y="126" fill="#8fc9c3" font-family="monospace" font-size="9" letter-spacing="1.5">RONIN DECK / 01</text><circle cx="521" cy="122" r="3" fill="#8fc9c3"/>
+<ellipse class="rs-beam" cx="316" cy="254" rx="185" ry="125" fill="url(#rs-light)"/>
+<ellipse cx="319" cy="316" rx="132" ry="32" fill="none" stroke="#8fc9c3" stroke-opacity=".2" stroke-dasharray="3 7"/>
+<path d="M447 310l7 6-8 4" fill="none" stroke="#8fc9c3" stroke-opacity=".5"/>
+<g transform="translate(228 163)"><g class="rs-orbit">
+<path d="M24 146v25l132-9v-18" fill="#122321" stroke="#8fc9c3" stroke-opacity=".4"/>
+<rect x="0" y="10" width="180" height="160" rx="13" fill="#142625" stroke="#8fc9c3" stroke-opacity=".65"/>
+<g class="rs-board"><rect x="6" y="4" width="168" height="152" rx="9" fill="#172e2a" stroke="#8fc9c3" stroke-opacity=".5"/>
+<g stroke="#8fc9c3" stroke-opacity=".35" fill="none"><path d="M24 49v85h60V30m17 0v109h53V54M41 30v103h90V30M22 97h134M22 63h134"/><rect x="73" y="112" width="30" height="23" rx="2"/></g></g>
+<g class="rs-top"><rect width="180" height="160" rx="12" fill="#142322" fill-opacity=".93" stroke="#a5d7cf" stroke-width="1.4"/>
+<rect x="17" y="14" width="93" height="28" rx="4" fill="#0a1414" stroke="#8fc9c3" stroke-opacity=".4"/><circle cx="28" cy="25" r="4" fill="#8fc9c3"/><path d="M39 23h55m-55 7h36" stroke="#8fc9c3" stroke-opacity=".6" stroke-width="2"/>
+<circle cx="145" cy="29" r="17" fill="#101919" stroke="#8fc9c3" stroke-opacity=".7"/><path d="M145 16v6" stroke="#b4e1da" stroke-width="2"/>
+<rect x="18" y="53" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M29 65h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="54" y="53" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M65 65h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="90" y="53" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M101 65h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="126" y="53" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M137 65h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="18" y="85" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M29 97h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="54" y="85" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M65 97h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="90" y="85" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M101 97h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="126" y="85" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M137 97h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="18" y="117" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M29 129h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="54" y="117" width="64" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M83 129h6" stroke="#b4e1da" stroke-width="1.5"/><rect x="126" y="117" width="28" height="25" rx="4" fill="#8fc9c3" fill-opacity=".12" stroke="#8fc9c3" stroke-opacity=".65"/><path d="M137 129h6" stroke="#b4e1da" stroke-width="1.5"/>
+<circle cx="9" cy="9" r="2" fill="#8fc9c3" opacity=".6"/><circle cx="171" cy="150" r="2" fill="#8fc9c3" opacity=".6"/>
+</g></g></g>
+<g font-family="monospace" fill="#8fc9c3"><text x="566" y="127" font-size="10" letter-spacing="1.7">FINISH</text>
+<circle cx="579" cy="150" r="10" fill="#364641"/><circle cx="614" cy="150" r="10" fill="#81928e"/><circle cx="649" cy="150" r="10" fill="#386663"/>
+<circle class="rs-finish" cx="579" cy="150" r="14" fill="none" stroke="#8fc9c3" stroke-width="1.6"/>
+<path d="M565 180h135" stroke="#8fc9c3" stroke-opacity=".2"/><text x="566" y="202" font-size="10" letter-spacing="1.7">LIGHT</text>
+<path d="M568 219h125" stroke="#8fc9c3" stroke-opacity=".3" stroke-width="3"/><path d="M568 219h44" stroke="#8fc9c3" stroke-width="3"/>
+<circle class="rs-knob" cx="612" cy="219" r="6" fill="#a5d7cf"/>
+<path d="M565 243h135" stroke="#8fc9c3" stroke-opacity=".2"/><text x="566" y="276" font-size="10">EXPLODE</text><rect x="668" y="265" width="30" height="16" rx="8" fill="#8fc9c3" fill-opacity=".2"/><circle class="rs-explode-switch" cx="676" cy="273" r="5" fill="#8fc9c3"/>
+<rect x="566" y="313" width="132" height="28" rx="5" fill="#8fc9c3" fill-opacity=".1" stroke="#8fc9c3" stroke-opacity=".4"/><text x="632" y="331" text-anchor="middle" font-size="10">↑ IMPORT OBJECT</text>
+<text x="314" y="364" text-anchor="middle" font-size="9" opacity=".5" letter-spacing="1.5">ORBIT · CUSTOMIZE · EXPLORE</text></g>
+<path class="rs-cursor" d="M0 0v18l5-5 4 9 3-2-4-8h8z" fill="#b3e5da" stroke="#0a1313" stroke-width="1"/>
+<text x="400" y="420" fill="#8fc9c3" font-family="monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="3" opacity=".45">RONINSTUDIO</text>
+</svg>

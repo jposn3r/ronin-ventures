@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="An interactive product studio. Explore the Ronin Deck in 3D, customize materials and lighting, or bring your own GLB model.">
+  <meta name="theme-color" content="#101415">
+  <title>roninstudio · 3D Product Visualizer | Ronin Ventures</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/package/build/three.module.js","three/addons/":"./vendor/package/examples/jsm/"}}</script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="back" aria-label="Back to Ronin Ventures">↖ <span>RONIN VENTURES</span></a>
+    <a class="brand" href="./"><img class="brand-mark" src="/assets/favicon.svg" alt="" width="31" height="31">ronin<span>studio</span><sup> / 01</sup></a>
+    <button id="capture" class="outline" disabled>↗ <span>Save image</span></button>
+  </header>
+  <main>
+    <section class="stage" aria-label="Interactive product preview">
+      <div class="intro"><p class="eyebrow"><span class="dot"></span> THE INTERACTIVE OBJECT SERIES</p><h1>Good design.<br><span>Every angle.</span></h1><p>Less looking. More exploring.<br>A little closer to the real thing.</p></div>
+      <div id="viewport" tabindex="0" role="application" aria-label="3D product. Drag to orbit, scroll or pinch to zoom. Arrow keys rotate, plus and minus zoom, R resets."></div>
+      <div id="loading" role="status">Preparing your studio<span class="loading-dot">…</span></div>
+      <div class="stage-meta"><span id="object-code">RV—001 / CONTROL DECK</span><span class="live"><span class="dot"></span> LIVE 3D</span></div>
+      <div class="stage-bottom"><div><span class="eyebrow">DESIGNED TO BE FELT</span><p id="model-caption">An everyday object. An extraordinary amount of detail.</p></div><button id="reset" class="icon-btn" title="Reset camera" aria-label="Reset camera">↺</button></div>
+      <div class="gesture">↔ Drag to orbit <span>·</span> Scroll to get closer <span>·</span> Tap a key</div>
+      <div id="drop-hint">Drop a .glb to enter the studio</div>
+    </section>
+    <aside class="inspector" aria-label="Product controls">
+      <div class="product-head"><div class="eyebrow">01 / THE OBJECT</div><h2 id="product-title">Ronin Deck<span>™</span></h2><p id="product-description">A tactile little home for your big ideas.<br>Machined metal. Mechanical soul.</p><div class="tags"><span id="model-tag">INTERACTIVE CONCEPT</span><span>WEBGL</span></div></div>
+      <fieldset id="finish-controls"><legend>02 / THE FINISH <span id="finish-name">Graphite</span></legend><div class="swatches"><button class="swatch active" data-finish="graphite" style="--swatch:#363a3a" aria-label="Graphite finish" aria-pressed="true"></button><button class="swatch" data-finish="silver" style="--swatch:#bac0bc" aria-label="Silver finish" aria-pressed="false"></button><button class="swatch" data-finish="sand" style="--swatch:#c6b699" aria-label="Sand finish" aria-pressed="false"></button><button class="swatch" data-finish="teal" style="--swatch:#416a68" aria-label="Teal finish" aria-pressed="false"></button><button class="swatch retro-swatch" data-finish="transparent" aria-label="90s Transparent finish" aria-pressed="false" title="90s Transparent"></button></div><label class="range-label" for="roughness">Surface roughness <output id="roughness-value">35%</output></label><input id="roughness" type="range" min="5" max="90" value="35"></fieldset>
+      <fieldset><legend>03 / THE LIGHT</legend><div class="segmented" id="lights"><button data-light="studio" aria-pressed="true" class="active">Studio</button><button data-light="daylight" aria-pressed="false">Daylight</button><button data-light="noir" aria-pressed="false">Noir</button></div><label class="range-label" for="exposure">Intensity <output id="exposure-value">100%</output></label><input id="exposure" type="range" min="30" max="180" value="100"></fieldset>
+      <fieldset><legend>04 / THE DETAILS</legend><div class="toggle-row"><label for="rotate">Turntable</label><input id="rotate" type="checkbox" role="switch"></div><div class="toggle-row"><label for="explode">Exploded view</label><input id="explode" type="checkbox" role="switch"></div><div class="toggle-row"><label for="sound">Key sounds</label><input id="sound" type="checkbox" role="switch"></div></fieldset>
+      <div class="activity"><span class="eyebrow"><span class="dot"></span> DECK ACTIVITY</span><p id="activity" role="status" aria-live="polite">Ready when you are.</p><div id="wave" aria-hidden="true"></div><details id="key-access"><summary>Try the keys <span>↗</span></summary><div id="key-buttons"></div></details></div>
+      <div class="bring-own"><input type="file" id="model-file" accept=".glb" hidden><button id="import" class="import-btn" disabled><span>＋</span> Bring your own object <span>↗</span></button><p>Self-contained .GLB · up to 25 MB · stays on your device</p><button id="demo" hidden>↩ Return to Ronin Deck</button></div>
+    </aside>
+  </main>
+  <footer><span>RONINSTUDIO <span class="muted">BY RONIN VENTURES</span></span><span>A playground for product perspective. <span class="footer-star">✳</span></span></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="no-script">Enable JavaScript to use the 3D studio.</p></noscript>
+  <script type="module">import('./studio.js').catch(error => { console.error(error); document.querySelector('#loading').textContent = 'The 3D studio could not start. Enable WebGL 2 and reload in a modern browser.'; });</script>
+</body>
+</html>

@@ -1,10 +1,29 @@
 {
     "meta": {
         "version": "3.2.0",
-        "lastUpdated": "Aug 31, 2026",
+        "lastUpdated": "Sep 7, 2026",
         "author": "Jake Posner"
     },
     "projects": [
+        {
+            "id": "product-visualizer",
+            "title": "roninstudio",
+            "shortDescription": "A tactile 3D product studio. Every detail. Every angle.",
+            "description": "Explore a custom-modeled Ronin control deck in a real-time 3D studio. Orbit and zoom, press the mechanical keys, cycle the rotary dial, switch metal finishes and lighting, or pull the assembly apart with an animated exploded view. Includes optional synthesized key sounds, PNG snapshots, keyboard and touch controls, and local import of self-contained GLB models. No account or server required.",
+            "category": "3d",
+            "categoryLabel": "3D Experience",
+            "thumbnail": "/assets/thumbnails/product-visualizer.svg",
+            "screenshots": [],
+            "path": "/projects/product-visualizer/",
+            "externalUrl": "",
+            "sourceUrl": "",
+            "tech": ["Three.js", "WebGL", "JavaScript"],
+            "status": "active",
+            "featured": false,
+            "comingSoon": false,
+            "preview": { "type": "svg", "src": "/assets/thumbnails/product-visualizer.svg" },
+            "lastUpdated": "Sep 7, 2026"
+        },
         {
             "id": "meal-planner",
             "title": "Meal Planner",
